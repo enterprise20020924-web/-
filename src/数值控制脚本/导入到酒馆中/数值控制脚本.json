@@ -1,0 +1,17 @@
+{
+  "type": "script",
+  "enabled": true,
+  "name": "数值控制脚本-本地导入-v2",
+  "id": "e6e1ad6c-5f5a-4d71-b5b9-7f30e72df1d2",
+  "content": "const SCRIPT_SCOPE={type:'script',script_id:getScriptId()};const DEFAULT_STATE={lock_trait_name:'同族化完成',toast_on_adjust:false,poll_ms:1500};let timer=null;let state={};function clone(v){return _.cloneDeep(v);}function c(v){const n=typeof v==='number'?v:Number(v);if(!Number.isFinite(n))return 0;return _.clamp(Math.floor(n),0,100);}function readState(){const raw=getVariables(SCRIPT_SCOPE)||{};state=_.defaultsDeep(clone(raw),clone(DEFAULT_STATE));state.lock_trait_name=String(state.lock_trait_name||'').trim()||'同族化完成';state.poll_ms=_.clamp(Math.floor(Number(state.poll_ms)||1500),500,10000);}function saveState(){replaceVariables(clone(state),SCRIPT_SCOPE);}function collectTargets(stat){const out=[];const traitName=state.lock_trait_name;if(_.has(stat,'绿帽王状态.堕落度')){out.push({name:String(_.get(stat,'绿帽王状态.姓名','玩家'))||'玩家',cp:['绿帽王状态','堕落度'],tp:['绿帽王状态','永久特性',traitName]});}const conquered=_.get(stat,'被征服者状态',{});if(_.isObject(conquered)){Object.entries(conquered).forEach(([k,v])=>{if(!_.isObject(v)||!_.has(v,'堕落度'))return;out.push({name:String(_.get(v,'姓名',k)).trim()||k,cp:['被征服者状态',k,'堕落度'],tp:['被征服者状态',k,'永久特性',traitName],ap:['被征服者状态',k,'出轨次数']});});}return out;}function applyRules(stat){const next=clone(stat);const list=collectTargets(next);const logs=[];list.forEach(t=>{const cur=c(_.get(next,t.cp));const sameClanDone=_.get(next,t.tp)===true;const isConquered=t.cp[0]==='被征服者状态';let limit=cur;if(isConquered&&t.ap){const affair=Number(_.get(next,t.ap)??0);if(!Number.isFinite(affair)||affair<1){limit=Math.min(limit,49);}}if(isConquered){const userCorruption=c(_.get(next,['绿帽王状态','堕落度']));const soulBound=_.get(next,['被征服者状态',t.cp[1],'永久特性','灵魂绑定'])===true;if(soulBound&&userCorruption<=49&&!sameClanDone){limit=0;}}if(!(isConquered&&limit===0)){limit=sameClanDone?100:Math.min(limit,99);}if(limit!==cur){_.set(next,t.cp,limit);logs.push(`${t.name}: ${cur} -> ${limit}`);}});return {next,changed:logs.length>0,logs};}function processScope(scope){const vars=getVariables(scope);if(!vars||!_.isObject(vars))return false;const stat=_.get(vars,'stat_data');if(!stat||!_.isObject(stat))return false;const r=applyRules(clone(stat));if(!r.changed)return false;const nv=clone(vars);_.set(nv,'stat_data',r.next);replaceVariables(nv,scope);if(state.toast_on_adjust)toastr.info(`已执行数值约束：${r.logs.join(' | ')}`);return true;}function tick(){try{const a=processScope({type:'chat'});const b=processScope({type:'message',message_id:'latest'});if(a||b)saveState();}catch(err){console.error('[数值控制脚本] 执行失败',err);}}$(()=>{readState();saveState();tick();timer=window.setInterval(tick,state.poll_ms);toastr.success('数值控制脚本已启动（同族化判定 + 被征服者<1锁49）');});$(window).on('pagehide',()=>{if(timer!==null){window.clearInterval(timer);timer=null;}});",
+  "info": "本地导入版v2：已用MCP确认变量名就是‘出轨次数’，并按出轨次数<1时将被征服者堕落度压到49处理。",
+  "button": {
+    "enabled": true,
+    "buttons": []
+  },
+  "data": {
+    "lock_trait_name": "同族化完成",
+    "toast_on_adjust": false,
+    "poll_ms": 1500
+  }
+}
