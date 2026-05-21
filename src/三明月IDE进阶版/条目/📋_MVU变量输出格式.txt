@@ -1,0 +1,108 @@
+﻿{{addvar::template_knowledge::现在你需要帮助用户创作变量输出格式文件，参考<variable_output_format>标签内的指导}}{{trim}}
+<variable_output_format>
+# 变量规则创作指导
+
+你的任务是帮用户写MVU变量的变量输出格式文件，它负责告诉AI应该以什么格式更新变量
+
+## 变量输出格式的格式
+
+完全固定：
+
+```yaml
+---
+变量输出格式:
+  rule:
+    - you must output the update analysis and the actual update commands at once in the end of the next reply
+    - the update commands works like the **JSON Patch (RFC 6902)** standard, must be a valid JSON array containing operation objects, but supports the following operations instead:
+      - replace: replace the value of existing paths
+      - delta: update the value of existing number paths by a delta value
+      - insert: insert new items into an object or array (using `-` as array index intends appending to the end)
+      - remove
+      - move
+    - don't update field names starts with `_` as they are readonly, such as `_变量`
+  format: |-
+    <UpdateVariable>
+    <Analysis>$(IN ENGLISH, no more than 80 words)
+    - ${calculate time passed: ...}
+    - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
+    - ${analyze every variable based on its corresponding `check`, according only to current reply instead of previous plots: ...}
+    </Analysis>
+    <JSONPatch>
+    [
+      { "op": "replace", "path": "${/path/to/variable}", "value": "${new_value}" },
+      { "op": "delta", "path": "${/path/to/number/variable}", "value": "${positive_or_negative_delta}" },
+      { "op": "insert", "path": "${/path/to/object/new_key}", "value": "${new_value}" },
+      { "op": "insert", "path": "${/path/to/array/-}", "value": "${new_value}" },
+      { "op": "remove", "path": "${/path/to/object/key}" },
+      { "op": "remove", "path": "${/path/to/array/0}" },
+      { "op": "move", "from": "${/path/to/variable}", "to": "${/path/to/another/path}" },
+      ...
+    ]
+    </JSONPatch>
+    </UpdateVariable>
+```
+
+## 工作流程
+
+原封不动地输出
+
+```yaml
+---
+变量输出格式:
+  rule:
+    - you must output the update analysis and the actual update commands at once in the end of the next reply
+    - the update commands works like the **JSON Patch (RFC 6902)** standard, must be a valid JSON array containing operation objects, but supports the following operations instead:
+      - replace: replace the value of existing paths
+      - delta: update the value of existing number paths by a delta value
+      - insert: insert new items into an object or array (using `-` as array index intends appending to the end)
+      - remove
+      - move
+    - don't update field names starts with `_` as they are readonly, such as `_变量`
+  format: |-
+    <UpdateVariable>
+    <Analysis>$(IN ENGLISH, no more than 80 words)
+    - ${calculate time passed: ...}
+    - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
+    - ${analyze every variable based on its corresponding `check`, according only to current reply instead of previous plots: ...}
+    </Analysis>
+    <JSONPatch>
+    [
+      { "op": "replace", "path": "${/path/to/variable}", "value": "${new_value}" },
+      { "op": "delta", "path": "${/path/to/number/variable}", "value": "${positive_or_negative_delta}" },
+      { "op": "insert", "path": "${/path/to/object/new_key}", "value": "${new_value}" },
+      { "op": "insert", "path": "${/path/to/array/-}", "value": "${new_value}" },
+      { "op": "remove", "path": "${/path/to/object/key}" },
+      { "op": "remove", "path": "${/path/to/array/0}" },
+      { "op": "move", "from": "${/path/to/variable}", "to": "${/path/to/another/path}" },
+      ...
+    ]
+    </JSONPatch>
+    </UpdateVariable>
+```
+
+重点：这就是你要输出给用户的完整格式！整个内容用代码块包裹，一次性完整输出！
+
+开始协作吧！
+
+---
+
+## 完成后的引导
+
+当变量输出格式创作完成并输出后：
+
+1. 使用 Write 工具将变量输出格式写入用户世界书：
+   - 路径：/Worldbooks/<用户世界书名>/[mvu_update]变量输出格式
+2. 使用 SetAttribute 工具设置条目配置（先询问用户使用的模型）：
+   - Gemini: position: { type: "at_depth", depth: 0, role: "system", order: 200 }
+   - Claude: position: { type: "at_depth", depth: 4, role: "system", order: 200 }
+   - recursion: { prevent_incoming: true, prevent_outgoing: true }
+3. 使用 Read 工具读取世界书中名为"写卡知识库"的世界书中的"MVU自查"条目（重点参考"五、变量输出格式自查"部分）
+4. 按照自查标准逐项检查刚才的输出，发现问题直接修改并输出修正后的完整版本
+5. 修改完成后询问用户："是否需要将修正后的内容同步更新到世界书对应条目？"
+   - 如果用户同意，使用 Edit 工具更新世界书中的条目
+6. 输出提醒：
+
+哥哥，变量输出格式已完成并写入世界书，配置也已设置！
+
+下一步：创建变量输出格式强调。对我说"写变量输出格式强调"。
+</variable_output_format>

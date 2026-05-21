@@ -1,0 +1,198 @@
+﻿{{addvar::template_knowledge::前端状态栏创作指导<status_bar_creation_guide>}}{{trim}}
+<status_bar_creation_guide>
+
+前端美化状态栏创作指导
+
+你的任务是根据用户的MVU初始变量，生成一个简单直接的HTML状态栏
+
+---
+
+工作流程
+
+第一步：了解用户的初始变量结构
+
+询问用户：
+"哥哥，我需要先看一下你的MVU变量结构脚本内容，才能生成对应的状态栏代码
+
+请把你变量结构脚本的代码块内容直接复制发给我。"
+
+用户提供后，仔细阅读变量结构，识别：
+- 变量路径是什么？（例如：角色.络络.好感度）
+- 有哪些核心字段需要显示？
+- 数据是怎么组织的？
+
+---
+
+第二步：询问显示需求
+
+询问用户想显示哪些信息：
+
+"哥哥，我已经看到了你的变量结构脚本
+
+现在需要确定状态栏要显示哪些内容
+
+请告诉我你想显示哪些变量，我会按照你的需求生成状态栏
+
+提示：可以按类别分组显示，比如：
+- 核心状态（好感度、信任度等）
+- 世界状态（时间、地点等）
+- 角色状态（情绪、想法等）
+"
+
+---
+
+第三步：询问UI风格
+
+在了解显示需求后，询问用户想要什么样的UI风格：
+
+"哥哥，你想要什么样的UI风格？
+
+可以自由描述，比如：
+- 简约黑色卡片风格
+- 赛博朋克霓虹风格
+- 古风水墨画风格
+- 科幻全息投影风格
+- 游戏UI仪表盘风格
+- 极简主义线条风格
+- 或者直接说"简单就行"
+
+我会根据你的需求设计样式。"
+
+重要提示：
+- 必须根据用户要求的风格自由设计
+- 可以直接使用 jquery、jqueryui、lodash、yaml、zod、toastr，无需额外导入
+- 在入口处需要`await waitGlobalInitialized('Mvu');`，但除此之外，除非我提供给你了Mvu的具体接口，禁止你使用Mvu做任何事（Mvu.watch等接口并不存在）
+- 变量应从已全局定义的 `_.get(getAllVariables(), 'stat_data')` 获取
+- 使用 jquery 而非原生的 DOM 操作
+- 仅能使用 `/*注释*/`，禁止使用 `// 注释`，不然可能渲染失败
+- 将函数经过 `errorCatched` 包装后加载放置在 `$(() => {})` 中
+- 当对前端界面高度进行调整时, 禁止使用 `vh` 单位等会受宿主高度影响的单位, 而是使用 `width` 和 `aspect-ratio` 来让高度根据宽度动态调整
+- 避免使用会强制撑高父容器的元素 (如 `min-height`、`overflow: auto`)
+- 页面必须有外部支撑, 主体内容不能使用 `position: absolute` 等会脱离文档流的样式
+- 页面整体应适配容器宽度，不产生横向滚动条
+- 如果样式更适合卡片形状，则不要有背景颜色，除非用户有明确要求
+
+---
+
+第四步：生成完整的HTML代码
+
+根据用户的变量结构、显示需求和UI风格，输出 NOTE 及完整html代码：
+
+NOTE: 这个状态栏只能显示变量, 不能修改变量. 如果需要编写复杂前端,
+- 电脑请使用: [🔗mvu状态栏教程](https://stagedog.github.io/络络/教程/手写mvu变量卡/状态栏/)
+- 手机请在生成状态栏时发送[🔗这段提示词](https://github.com/StageDog/tavern_helper_template/blob/main/.cursor/rules/mvu变量框架.mdc)给 AI, 也可以按需发送请求 AI 生成、修改世界书、播放音乐等酒馆助手功能[🔗对应的类型定义文件](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/功能详情/请求生成.html)
+```html
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 在这里根据用户要求的UI风格自由设计样式 */
+  </style>
+  <script type="module">
+    function populateCharacterData() {
+      const all_variables = getAllVariables();
+
+      // 注意：所有变量路径必须以 'stat_data.' 开头
+
+      // 普通变量
+      const variable1 = _.get(all_variables, 'stat_data.xxx', 'N/A');
+      $('#id1').text(variable1);
+
+      // 数组类型变量（如背包、记忆列表）
+      const items = _.get(all_variables, 'stat_data.背包', []);
+      const html = items.map(i => `<li>${i}</li>`).join('');
+      $('#items-list').html(html);
+
+      // 对象类型变量（如NPCs）
+      const npcs = _.get(all_variables, 'stat_data.NPCs', {});
+      Object.entries(npcs).forEach(([name, data]) => {
+        const relation = _.get(data, '关系值', 0);
+        console.log(`${name}: 关系${relation}`);
+      });
+
+      // 嵌套对象（推荐使用可选链）
+      const user = _.get(all_variables, 'stat_data.用户信息', {});
+      const weapon = user.法宝?.本命法宝 || '无';
+      $('#weapon').text(weapon);
+
+      // ... 更多变量
+    }
+
+    async function init() {
+      await waitGlobalInitialized('Mvu');
+      populateCharacterData();
+
+      // 监听变量更新事件，实现自动刷新
+      eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, () => {
+        populateCharacterData();
+      });
+
+      $('.section-header').on('click', function () {
+        toggleSection($(this));
+      });
+    }
+
+    $(errorCatched(init));
+  </script>
+</head>
+<body>
+  <!-- 在这里根据用户要求的UI风格自由设计HTML结构 -->
+  <!-- 每个需要显示的变量必须有唯一的 id，在 populateCharacterData 中用 $('#id').text(value) 填充 -->
+</body>
+</html>
+```
+
+---
+
+完成后的引导
+
+当状态栏代码生成完成后：
+
+1. 使用 Read 工具读取世界书中名为"写卡知识库"的世界书中的"MVU前端状态栏自查"条目
+2. 按照自查标准逐项检查刚才的HTML代码，发现问题直接修改并输出修正后的完整版本
+3. 修改完成后询问用户："是否需要将修正后的内容同步更新？"
+4. 使用 Write 工具将状态栏HTML代码写入角色正则：
+   - 路径：/Characters/<角色名>/Regex/状态栏美化
+   - 内容：完整的HTML代码，必须用 ``` 代码块包裹（即 ``` 开头 ``` 结尾，中间是完整HTML）
+   - 说明：这会自动创建一个局部正则，无需用户手动配置
+5. 创建正则后，需要手动在酒馆正则面板中确认以下设置：
+   - 查找正则表达式：`<StatusPlaceHolderImpl/>`
+   - 勾选：AI输出 ✅、在编辑时运行 ✅、仅格式显示 ✅
+   - 不勾选：用户输入、快捷命令、世界信息、推理
+6. 输出提醒：
+
+哥哥，状态栏代码已完成并写入角色正则！
+
+说明：
+- `<StatusPlaceHolderImpl/>` 是MVU变量输出格式中定义的占位标签，AI每次输出时会包含这个标签
+- 正则会将该标签替换为你的HTML状态栏代码
+- 状态栏代码在正则的"替换为"字段中，不需要写入世界书
+
+请打开SillyTavern → 扩展 → 正则脚本，确认以下设置：
+- 查找正则表达式已填入 `<StatusPlaceHolderImpl/>`
+- 已勾选"AI输出"、"在编辑时运行"、"仅格式显示"
+
+这个状态栏只能显示变量，不能修改变量。
+
+**如果需要更复杂的前端功能**（如修改变量、播放音频、请求AI生成等），告诉我你想要什么功能，我会从知识库读取对应的酒馆助手接口文档来帮你实现。
+
+如果需要编写复杂前端：
+- 电脑请使用: [🔗mvu状态栏教程](https://stagedog.github.io/络络/教程/手写mvu变量卡/状态栏/)
+- 手机请在生成状态栏时发送[🔗这段提示词](https://github.com/StageDog/tavern_helper_template/blob/main/.cursor/rules/mvu变量框架.mdc)给 AI
+
+---
+
+酒馆助手接口查询
+
+当用户描述需要某个功能时：
+1. 使用 Read 工具读取"写卡知识库"世界书中的"00_接口索引"条目
+2. 根据用户描述的功能，从索引中找到对应的接口文档文件名
+3. 使用 Read 工具读取对应的接口文档（如"06_事件监听"）
+4. 根据文档中的接口说明，帮用户在代码中实现所需功能
+
+</status_bar_creation_guide>

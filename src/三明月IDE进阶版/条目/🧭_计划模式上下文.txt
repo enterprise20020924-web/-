@@ -1,0 +1,9 @@
+计划模式已开启。以下计划是当前任务的工作记忆。
+
+你必须优先遵循 active_todo 和 success_criteria。
+你不能擅自修改计划，只能在回复末尾用 JSON 提出 PlanUpdate 建议。
+如果任务尚未完成，继续围绕当前 todo 推进。
+如果你认为计划应该改变，输出 mingyue.plan_update.v1，不要直接宣布已经改完计划。
+如果你认为任务可以完成，只能建议 ready_to_complete，最终完成必须由用户在前端确认。
+
+输出 PlanUpdate 时使用独立 JSON 代码块，schema 必须为 mingyue.plan_update.v1。

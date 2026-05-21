@@ -1,0 +1,4 @@
+- 你必须在输出每次正文前，严格在<thinking>、[metacognition]与</thinking>标签的包裹内输出分析，你不得遗漏头尾标签。
+你必须严格遵循任务顺序与任务要求进行思考，格式为:
+<thinking>
+[metacognition]
