@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>明月秋青 IDE index.js 预览</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: #0a0e1a;
+      color: #d8e6ff;
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      overflow: hidden;
+    }
+
+    .preview-toolbar {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 100000;
+      display: grid;
+      gap: 8px;
+      width: min(360px, calc(100vw - 24px));
+      padding: 12px;
+      box-sizing: border-box;
+      border: 1px solid rgba(130, 170, 255, 0.32);
+      border-radius: 14px;
+      background: rgba(8, 12, 24, 0.82);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(14px);
+    }
+
+    .preview-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .preview-status {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(80, 120, 210, 0.13);
+      color: #b9cdfd;
+      font-size: 12px;
+      line-height: 1.5;
+      word-break: break-all;
+    }
+
+    .preview-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preview-button {
+      border: 1px solid rgba(117, 160, 255, 0.4);
+      border-radius: 999px;
+      background: rgba(60, 100, 200, 0.18);
+      color: #dbe7ff;
+      padding: 7px 11px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .preview-button:hover {
+      background: rgba(90, 135, 230, 0.3);
+    }
+
+    .preview-error {
+      background: rgba(230, 80, 96, 0.15);
+      color: #ffd0d5;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-toolbar">
+    <div class="preview-title">
+      <span>明月秋青 IDE 预览</span>
+      <button class="preview-button" id="preview-hide" type="button">隐藏面板</button>
+    </div>
+    <div class="preview-status" id="preview-status">准备加载运行时...</div>
+    <div class="preview-actions" id="preview-buttons"></div>
+  </div>
+
+  <script>
+    (function setupPreviewRuntime() {
+      const statusEl = document.getElementById('preview-status');
+      const buttonsEl = document.getElementById('preview-buttons');
+      const listeners = new Map();
+      const variablesKey = 'qz-ide-preview:variables';
+      const sampleWorldbookName = '写卡知识库';
+      const sampleCharacterName = '明月秋青';
+      const samplePresetName = '秋青子写卡预设';
+
+      const sampleWorldbooks = {
+        [sampleWorldbookName]: [
+          {
+            uid: 1,
+            name: '📋_角色基础',
+            content: '这里是预览用世界书条目。真实读写需要在酒馆环境中测试。',
+            enabled: true,
+            strategy: 'constant',
+            position: 0,
+            probability: 100,
+            recursion: true,
+            effect: 'normal',
+          },
+          {
+            uid: 2,
+            name: '🧭_计划模式上下文',
+            content: '预览环境会用本地变量模拟计划模式状态。',
+            enabled: true,
+            strategy: 'constant',
+            position: 0,
+            probability: 100,
+            recursion: false,
+            effect: 'normal',
+          },
+        ],
+      };
+
+      const sampleCharacters = {
+        [sampleCharacterName]: {
+          name: sampleCharacterName,
+          description: '预览用角色卡描述。',
+          first_mes: '你好，这里是预览模式。',
+          first_messages: ['你好，这里是预览模式。'],
+          extensions: {
+            regex_scripts: [
+              {
+                script_name: '预览正则',
+                find_regex: 'preview',
+                replace_string: 'preview',
+                disabled: false,
+              },
+            ],
+            tavern_helper: {
+              scripts: [
+                { type: 'script', enabled: false, name: '变量结构', id: 'preview-mvu-schema', content: '预览用 MVU 变量结构脚本。', info: '', button: { enabled: false, buttons: [] }, data: {} },
+              ],
+              variables: {},
+            },
+          },
+        },
+      };
+
+      const samplePreset = {
+        name: samplePresetName,
+        prompts: [
+          { name: '【一般条目】', enabled: true, role: 'system', content: '' },
+          { name: '📋 角色基础', enabled: true, role: 'system', content: '预览用一般条目。' },
+          { name: '📋 世界观', enabled: false, role: 'system', content: '预览用世界观条目。' },
+          { name: '【/一般条目】', enabled: true, role: 'system', content: '' },
+          { name: '【MVU条目】', enabled: true, role: 'system', content: '' },
+          { name: '📋 MVU变量结构脚本', enabled: false, role: 'system', content: '预览用 MVU 条目。' },
+          { name: '【/MVU条目】', enabled: true, role: 'system', content: '' },
+        ],
+      };
+
+      const chatMessages = [
+        {
+          message_id: 0,
+          role: 'user',
+          name: 'User',
+          message: '打开预览。',
+          is_hidden: false,
+        },
+        {
+          message_id: 1,
+          role: 'assistant',
+          name: sampleCharacterName,
+          message: '<details><summary>已识别计划草稿</summary><pre>{"schema":"mingyue.plan_draft.v2","title":"预览计划","userGoal":"检查 UI 是否能启动","successCriteria":["能看到计划草稿"],"assumptions":[],"todos":[{"id":"todo-1","title":"检查 UI 是否能启动","detail":"确认界面能渲染计划模式 v2","required":true}],"activeTodoId":"todo-1","blockers":[],"writeBoundary":[],"questions":[],"confidence":"enough"}</pre></details>',
+          is_hidden: false,
+        },
+      ];
+
+      function setStatus(message, isError) {
+        statusEl.textContent = message;
+        statusEl.classList.toggle('preview-error', Boolean(isError));
+      }
+
+      function emit(eventName, payload) {
+        const handlers = listeners.get(eventName) || [];
+        handlers.slice().forEach(handler => {
+          try {
+            handler(payload);
+          } catch (error) {
+            console.error('[preview] event handler failed:', eventName, error);
+          }
+        });
+      }
+
+      function readPreviewVariables() {
+        try {
+          return JSON.parse(localStorage.getItem(variablesKey) || '{}');
+        } catch {
+          return {};
+        }
+      }
+
+      function writePreviewVariables(value) {
+        localStorage.setItem(variablesKey, JSON.stringify(value || {}));
+      }
+
+      function clone(value) {
+        return JSON.parse(JSON.stringify(value));
+      }
+
+      function parseMessageRange(range) {
+        if (typeof range === 'number') return [range, range];
+        const text = String(range ?? '');
+        if (/^\d+-\d+$/.test(text)) {
+          const [start, end] = text.split('-').map(Number);
+          return [start, end];
+        }
+        const id = Number.parseInt(text, 10);
+        return Number.isFinite(id) ? [id, id] : [0, chatMessages.length - 1];
+      }
+
+      window.getScriptId = () => 'preview-mingyue-ide';
+      window.getButtonEvent = name => `preview:button:${name}`;
+      window.replaceScriptButtons = buttons => {
+        buttonsEl.innerHTML = '';
+        buttons.forEach(button => {
+          if (button.visible === false) return;
+          const el = document.createElement('button');
+          el.className = 'preview-button';
+          el.type = 'button';
+          el.textContent = button.name;
+          el.addEventListener('click', () => emit(window.getButtonEvent(button.name)));
+          buttonsEl.appendChild(el);
+        });
+      };
+      window.eventOn = (eventName, handler) => {
+        const handlers = listeners.get(eventName) || [];
+        handlers.push(handler);
+        listeners.set(eventName, handlers);
+
+        if (String(eventName).startsWith('preview:button:')) {
+          window.setTimeout(() => handler(), 80);
+        }
+
+        return {
+          stop() {
+            const current = listeners.get(eventName) || [];
+            listeners.set(eventName, current.filter(item => item !== handler));
+          },
+        };
+      };
+      window.eventMakeLast = window.eventOn;
+      window.tavern_events = new Proxy({}, { get: (_target, key) => String(key) });
+      window.SillyTavern = {
+        getCurrentChatId: () => 'preview-chat',
+      };
+      window.TavernHelper = window;
+
+      window.getVariables = () => readPreviewVariables();
+      window.getAllVariables = () => readPreviewVariables();
+      window.replaceVariables = variables => writePreviewVariables(variables);
+      window.updateVariablesWith = updater => {
+        const previous = readPreviewVariables();
+        const next = typeof updater === 'function' ? updater(previous) : updater;
+        writePreviewVariables(next);
+        return next;
+      };
+
+      window.getLastMessageId = () => chatMessages.length - 1;
+      window.getCurrentMessageId = () => window.getLastMessageId();
+      window.getChatMessages = range => {
+        const [start, end] = parseMessageRange(range);
+        return chatMessages
+          .filter(message => message.message_id >= start && message.message_id <= end)
+          .map(clone);
+      };
+      window.setChatMessages = async messages => {
+        messages.forEach(update => {
+          const index = chatMessages.findIndex(message => message.message_id === update.message_id);
+          if (index >= 0) {
+            chatMessages[index] = { ...chatMessages[index], ...update };
+          }
+        });
+      };
+      window.deleteChatMessages = async ids => {
+        ids.forEach(id => {
+          const index = chatMessages.findIndex(message => message.message_id === id);
+          if (index >= 0) chatMessages.splice(index, 1);
+        });
+      };
+      window.triggerSlash = async command => {
+        console.info('[preview] triggerSlash:', command);
+        return '';
+      };
+
+      window.getWorldbookNames = () => Object.keys(sampleWorldbooks);
+      window.getWorldbook = async name => clone(sampleWorldbooks[name] || []);
+      window.createWorldbook = async (name, entries) => {
+        sampleWorldbooks[name] = clone(entries || []);
+        return true;
+      };
+      window.updateWorldbookWith = async (name, updater) => {
+        const current = clone(sampleWorldbooks[name] || []);
+        sampleWorldbooks[name] = await updater(current);
+        return sampleWorldbooks[name];
+      };
+      window.createWorldbookEntries = async (name, entries) => {
+        const current = sampleWorldbooks[name] || [];
+        const nextUid = current.reduce((max, entry) => Math.max(max, Number(entry.uid) || 0), 0) + 1;
+        entries.forEach((entry, index) => current.push({ uid: nextUid + index, content: '', enabled: true, ...entry }));
+        sampleWorldbooks[name] = current;
+        return true;
+      };
+      window.getCharWorldbookNames = () => [sampleWorldbookName];
+      window.replaceCurrentCharWorldbook = async () => true;
+
+      window.getCharacterNames = () => Object.keys(sampleCharacters);
+      window.getCurrentCharacterName = () => sampleCharacterName;
+      window.getCharacter = async name => clone(sampleCharacters[name] || sampleCharacters[sampleCharacterName]);
+      window.updateCharacterWith = async (name, updater) => {
+        const current = clone(sampleCharacters[name] || { name });
+        sampleCharacters[name] = await updater(current);
+        return sampleCharacters[name];
+      };
+      window.getScriptTrees = option => {
+        if (option.type !== 'character') return [];
+        return clone(sampleCharacters[sampleCharacterName].extensions?.tavern_helper?.scripts || []);
+      };
+      window.updateScriptTreesWith = (updater, option) => {
+        if (option.type !== 'character') return [];
+        const character = sampleCharacters[sampleCharacterName];
+        character.extensions = character.extensions || {};
+        character.extensions.tavern_helper = character.extensions.tavern_helper || { scripts: [], variables: {} };
+        const current = clone(character.extensions.tavern_helper.scripts || []);
+        const assign = next => {
+          character.extensions.tavern_helper.scripts = clone(next);
+          return clone(character.extensions.tavern_helper.scripts);
+        };
+        const next = updater(current);
+        return next && typeof next.then === 'function' ? next.then(assign) : assign(next);
+      };
+      window.createCharacter = async name => {
+        if (sampleCharacters[name]) return false;
+        sampleCharacters[name] = { name, description: '', first_messages: [], extensions: { regex_scripts: [] } };
+        return true;
+      };
+      window.deleteCharacter = async name => {
+        if (name === sampleCharacterName) return false;
+        delete sampleCharacters[name];
+        return true;
+      };
+      window.importRawCharacter = async () => true;
+
+      window.getLoadedPresetName = () => samplePresetName;
+      window.getPreset = () => clone(samplePreset);
+      window.updatePresetWith = async (_name, updater) => {
+        const next = await updater(clone(samplePreset));
+        samplePreset.prompts = next.prompts || samplePreset.prompts;
+        return samplePreset;
+      };
+      window.isPresetNormalPrompt = value => Boolean(value && typeof value === 'object' && 'name' in value);
+      window.isPresetSystemPrompt = window.isPresetNormalPrompt;
+      window.injectPrompts = prompts => console.info('[preview] injectPrompts:', prompts);
+      window.EjsTemplate = {
+        setFeatures(value) {
+          console.info('[preview] EjsTemplate.setFeatures:', value);
+        },
+      };
+
+      if (!window.toastr) {
+        window.toastr = {
+          info: console.info.bind(console),
+          success: console.info.bind(console),
+          warning: console.warn.bind(console),
+          error: console.error.bind(console),
+        };
+      }
+
+      document.getElementById('preview-hide').addEventListener('click', () => {
+        document.querySelector('.preview-toolbar').style.display = 'none';
+      });
+
+      window.__mingyuePreview = {
+        emit,
+        setStatus,
+        variablesKey,
+        open() {
+          emit(window.getButtonEvent('打开明月秋青'));
+        },
+      };
+    })();
+  </script>
+
+  <script type="module">
+    const params = new URLSearchParams(location.search);
+    const rootPrefix = location.pathname.includes('/src/') ? '../../../' : '../../../';
+    const classicScripts = [
+      [
+        `${rootPrefix}node_modules/jquery/dist/jquery.min.js`,
+        'https://testingcf.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js',
+      ],
+      [
+        `${rootPrefix}node_modules/lodash/lodash.min.js`,
+        'https://testingcf.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
+      ],
+      [
+        `${rootPrefix}node_modules/toastr/build/toastr.min.js`,
+        'https://testingcf.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js',
+      ],
+      [
+        `${rootPrefix}node_modules/vue/dist/vue.global.prod.js`,
+        'https://testingcf.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js',
+      ],
+    ];
+
+    function defaultScriptUrl() {
+      if (location.pathname.includes('/dist/')) {
+        return new URL('./index.js', location.href).href;
+      }
+      return new URL('../../../dist/三明月IDE进阶版/伪IDE/index.js', location.href).href;
+    }
+
+    function loadClassicScript(src) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`加载依赖失败: ${src}`));
+        document.head.appendChild(script);
+      });
+    }
+
+    async function loadFirstAvailable(sources) {
+      let lastError;
+      for (const src of sources) {
+        try {
+          await loadClassicScript(src);
+          return src;
+        } catch (error) {
+          lastError = error;
+        }
+      }
+      throw lastError || new Error('加载依赖失败');
+    }
+
+    async function loadPreview() {
+      const targetScript = params.get('script') || defaultScriptUrl();
+      window.__mingyuePreview.setStatus(`加载依赖中...`);
+
+      for (const sources of classicScripts) {
+        await loadFirstAvailable(sources);
+      }
+
+      window.__mingyuePreview.setStatus(`加载 ${decodeURIComponent(targetScript)} ...`);
+      await import(targetScript);
+      window.__mingyuePreview.setStatus('index.js 已加载，正在自动打开明月秋青。');
+      window.setTimeout(() => window.__mingyuePreview.open(), 200);
+    }
+
+    loadPreview().catch(error => {
+      console.error(error);
+      const hint = location.protocol === 'file:'
+        ? '当前是 file:// 打开，浏览器可能会拦截 ES module。请在项目根目录启动本地 HTTP 服务后访问本文件。'
+        : '请确认已经运行 pnpm build，并且目标 index.js 路径存在。';
+      window.__mingyuePreview.setStatus(`${error.message}\n${hint}`, true);
+    });
+  </script>
+</body>
+</html>

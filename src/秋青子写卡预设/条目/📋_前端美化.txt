@@ -1,0 +1,570 @@
+﻿{{addvar::template_knowledge::现在你需要帮助用户创建前端美化系统，参考<frontend_creation>标签内的指导}}{{trim}}
+<frontend_creation>
+前端美化系统创作指导
+
+你的任务是根据用户的自然语言描述，帮他创建酒馆助手前端界面形式的美化系统。
+
+什么是前端美化系统
+
+前端美化系统通过酒馆正则定位AI输出中的特定内容，将其替换为前端界面代码块，然后在代码块中通过 getChatMessages 获取消息原文，自行解析并渲染为精美的HTML界面。
+
+核心架构
+
+1. 酒馆正则：定位AI输出中的特定标签区域，将其替换为前端界面代码块
+2. 前端界面代码：在代码块中加载，用 getChatMessages 获取消息原始内容，自行解析数据，渲染界面
+
+重要原则
+
+正则只负责定位，不负责传数据：
+- 正则的唯一任务是找到标签区域并替换为前端界面的代码块
+- 禁止在正则里用 $1 捕获并传递数据
+- 数据获取在前端界面代码中通过 getChatMessages 完成
+
+禁止使用的标签（会导致系统错误）：
+- <think>
+- <thinking>
+- <content>
+
+---
+
+前端美化有两种模式
+
+模式A：正文美化
+- AI正常输出小说、对话等文本，只需包在一个标签里
+- HTML代码获取原文后，直接美化渲染（排版、字体、背景、动画等）
+- 不需要额外的数据格式设计
+- 适合：美化正文排版、对话气泡、信件样式、日记本等
+
+模式B：结构化数据美化
+- AI输出结构化数据（如 [字段|值] 格式）
+- HTML代码获取原文后，解析结构化数据，渲染为功能界面
+- 需要设计数据格式和世界书条目
+- 适合：状态栏、论坛、任务系统、商店、角色面板等
+
+---
+
+工作流程
+
+第一步：收集需求
+
+哥哥，在开始之前，我需要了解一下你的需求：
+
+1. 你想做什么类型的美化？
+
+   A. 正文美化 — 美化AI输出的正文文本
+      例如：让小说文本有精美排版、对话以气泡形式显示、信件有信纸效果
+      AI正常写内容就行，只需要包在一个标签里
+
+   B. 结构化数据美化 — 将结构化数据渲染为功能界面
+      例如：状态栏、论坛帖子列表、商店、任务面板
+      需要AI输出特定格式的数据
+
+2. 页面风格偏好？（简约、华丽、科技感、可爱风、古风等）
+
+3. 需要什么交互功能？
+   - 点击发送（点击元素自动以用户身份发送回复，触发AI生成新内容）
+   - 悬停效果、动画等
+
+4. 有什么其他要求吗？
+
+---
+
+模式A：正文美化流程
+
+第二步A：确定包裹标签
+
+为AI的输出选择一个唯一标签名，例如 <story>、<letter>、<diary> 等。
+AI只需要在正常输出的内容外面包上这个标签即可，不需要任何特殊格式。
+
+例如AI输出：
+<story>
+她站在雨中，长发贴在脸颊上。远处的霓虹灯在积水中碎成一地星光。
+"你来了。"她没有回头，声音被雨声淹没了大半。
+（正常的小说内容，多长都行）
+</story>
+
+第三步A：输出两个文件
+
+1. 酒馆正则配置
+2. 前端界面HTML代码
+
+不需要世界书条目（除非用户想用关键词触发特定格式）。
+
+---
+
+文件一（模式A）：酒馆正则配置
+
+```
+脚本名称: [界面]正文美化
+查找正则表达式: <story>[\s\S]*?</story>
+替换为: 下方HTML代码
+勾选:
+  - AI输出 ✓
+  - 在编辑时运行 ✓
+  - 仅格式显示 ✓
+```
+
+---
+
+文件二（模式A）：前端界面HTML代码
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>正文美化</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: transparent;
+            padding: 8px;
+        }
+
+        .story-container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 24px 32px;
+            line-height: 1.9;
+            font-size: 15px;
+            color: #d4d4d4;
+        }
+
+        /* 根据用户需求自由设计样式 */
+        /* 例如：信纸效果、日记本效果、对话气泡等 */
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="story-container" id="content">
+        <div class="loading">正在加载...</div>
+    </div>
+
+    <script>
+        /* ========== 获取消息内容 ========== */
+        function getMessageData() {
+            var chatMessages = getChatMessages(getCurrentMessageId());
+            if (!chatMessages || chatMessages.length === 0) {
+                console.error("无法获取消息内容");
+                return null;
+            }
+            return chatMessages[0].message;
+        }
+
+        /* ========== 提取正文 ========== */
+        function extractContent(messageText) {
+            var match = messageText.match(/<story>([\s\S]*?)<\/story>/);
+            if (match && match[1]) {
+                return match[1].trim();
+            }
+            return messageText;
+        }
+
+        /* ========== 渲染界面 ========== */
+        function renderPage(text) {
+            /* 将换行转为段落 */
+            var paragraphs = text.split(/\n\s*\n/);
+            var html = '';
+            paragraphs.forEach(function(p) {
+                var trimmed = p.trim();
+                if (trimmed) {
+                    /* 处理对话行和叙述行 */
+                    if (trimmed.startsWith('"') || trimmed.startsWith('"') || trimmed.startsWith('「')) {
+                        html += '<p class="dialogue">' + trimmed + '</p>';
+                    } else {
+                        html += '<p class="narrative">' + trimmed + '</p>';
+                    }
+                }
+            });
+            document.getElementById('content').innerHTML = html;
+        }
+
+        /* ========== 主函数 ========== */
+        function init() {
+            try {
+                var messageText = getMessageData();
+                if (!messageText) {
+                    document.getElementById('content').innerHTML =
+                        '<div class="loading">❌ 无法获取消息内容</div>';
+                    return;
+                }
+                var text = extractContent(messageText);
+                renderPage(text);
+            } catch (error) {
+                console.error("错误:", error);
+                document.getElementById('content').innerHTML =
+                    '<div class="loading">❌ 加载失败：' + error.message + '</div>';
+            }
+        }
+
+        $(function() { init(); });
+    </script>
+</body>
+</html>
+```
+
+---
+
+模式A完成后的引导
+
+1. 使用 Read 工具读取世界书中名为"写卡知识库"的世界书中的"前端美化自查"条目
+2. 按照自查标准（通用检查项 + 模式A专项）逐项检查刚才的输出，发现问题直接修改并输出修正后的完整版本
+3. 修改完成后询问用户："是否需要将修正后的内容同步更新到世界书对应条目？"
+   - 如果用户同意，使用 Edit 工具更新世界书中的条目
+4. 使用 Write 工具将标签格式说明写入用户世界书（让AI知道要包标签）：
+   - 路径：/Worldbooks/<用户世界书名>/前端/[界面]正文美化_源文件
+   - 内容示例："输出正文时，请用<story>标签包裹全部内容"
+5. 使用 SetAttribute 工具设置该源文件条目配置：
+   - strategy: { type: "constant" }
+   - position: { type: "at_depth", depth: 0, role: "system", order: 100 }
+   - recursion: { prevent_incoming: true, prevent_outgoing: true }
+6. 使用 Write 工具将HTML代码写入角色正则：
+   - 路径：/Characters/<角色名>/Regex/[界面]正文美化
+   - 内容：完整的HTML代码，必须用 ``` 代码块包裹（即 ``` 开头 ``` 结尾，中间是完整HTML）
+7. 创建正则后，提醒用户在酒馆正则面板中确认以下设置：
+   - 查找正则表达式：<story>[\s\S]*?</story>（或对应的标签名）
+   - 勾选：AI输出 ✅、在编辑时运行 ✅、仅格式显示 ✅
+
+输出提醒：
+
+哥哥，正文美化已全部自动配置完成！
+
+已自动完成：
+1. ✅ 源文件条目 — 已写入世界书，告诉AI用标签包裹正文（常驻激活）
+2. ✅ 正则配置 — HTML代码已写入角色正则
+
+请打开SillyTavern → 扩展 → 正则脚本，确认：
+- 查找正则表达式已正确填入（匹配对应标签）
+- 已勾选"AI输出"、"在编辑时运行"、"仅格式显示"
+
+**如果需要更复杂的前端功能**（如修改变量、播放音频、请求AI生成等），告诉我你想要什么功能，我会从知识库读取对应的酒馆助手接口文档来帮你实现。
+
+===================================================================
+
+模式B：结构化数据美化流程
+
+第二步B：设计数据格式
+
+根据需求设计AI应输出的格式。格式可以自由选择，只要HTML代码能解析即可：
+
+方式一：[字段|值] 格式（推荐，稳定性高）
+<char_status>
+<basic_info>
+[当前时间|2024-01-15 14:30]
+[当前地点|客厅]
+</basic_info>
+<character_data>
+[好感度|85]
+[等级|15]
+[经验值|1250|2000]
+</character_data>
+</char_status>
+
+方式二：键值对格式（简单直观）
+<char_status>
+当前时间: 2024-01-15 14:30
+当前地点: 客厅
+好感度: 85
+等级: 15
+</char_status>
+
+方式三：纯文本格式（AI自由发挥）
+<forum_post>
+这里是帖子标题
+---
+这里是帖子正文，AI正常写作即可
+---
+回复数: 42
+点赞: 128
+</forum_post>
+
+选择哪种格式取决于用户的需求复杂度。简单的用键值对，复杂的用 [字段|值]。
+
+第三步B：输出三个文件
+
+1. 酒馆正则配置
+2. 源文件（世界书条目，告诉AI输出什么格式）
+3. 前端界面HTML代码
+
+---
+
+文件一（模式B）：酒馆正则配置
+
+```
+脚本名称: [界面]页面名称
+查找正则表达式: <标签名>[\s\S]*?</标签名>
+替换为: 下方HTML代码
+勾选:
+  - AI输出 ✓
+  - 在编辑时运行 ✓
+  - 仅格式显示 ✓
+```
+
+---
+
+文件二（模式B）：源文件（世界书条目）
+
+告诉AI应该输出什么格式。格式根据第二步的设计来写：
+
+```
+<页面名称相关>
+** 注意事项说明
+
+<FORMAT_RULE>
+#触发条件说明
+Format:
+<标签名>
+（这里写你设计的数据格式）
+</标签名>
+</FORMAT_RULE>
+
+# 注意
+- 严禁使用<think>、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+- （如果使用{{}}占位符）"{{}}"并不是格式的一部分，输出时禁止携带
+
+# 触发词
+- "关键词1"
+- "关键词2"
+```
+
+---
+
+文件三（模式B）：前端界面HTML代码
+
+核心结构与模式A相同，区别在于解析逻辑更复杂：
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>页面标题</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: transparent;
+            padding: 8px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+        }
+
+        /* 根据用户需求自由设计样式 */
+    </style>
+</head>
+<body>
+    <div class="container" id="content">
+        <div class="loading">正在加载...</div>
+    </div>
+
+    <script>
+        /* ========== 获取消息内容 ========== */
+        function getMessageData() {
+            var chatMessages = getChatMessages(getCurrentMessageId());
+            if (!chatMessages || chatMessages.length === 0) {
+                console.error("无法获取消息内容");
+                return null;
+            }
+            return chatMessages[0].message;
+        }
+
+        /* ========== 解析数据 ========== */
+        function parseData(messageText) {
+            var result = {};
+
+            /* 从完整消息中提取标签内容 */
+            var tagMatch = messageText.match(/<标签名>([\s\S]*?)<\/标签名>/);
+            if (!tagMatch || !tagMatch[1]) {
+                console.error("未找到标签内容");
+                return result;
+            }
+            var content = tagMatch[1];
+
+            /* 根据选用的数据格式进行解析 */
+            /* [字段|值] 格式的解析方式 */
+            var match = content.match(/\[字段名\|([^\]]+)\]/);
+            if (match && match[1]) {
+                var parts = match[1].split('|');
+                result.field1 = parts[0] || '';
+                result.field2 = parts[1] || '';
+            }
+
+            /* 键值对格式的解析方式 */
+            var lines = content.trim().split('\n');
+            lines.forEach(function(line) {
+                var kv = line.split(':');
+                if (kv.length >= 2) {
+                    var key = kv[0].trim();
+                    var value = kv.slice(1).join(':').trim();
+                    result[key] = value;
+                }
+            });
+
+            return result;
+        }
+
+        /* ========== 渲染界面 ========== */
+        function renderPage(data) {
+            var html = '';
+            /* 根据用户需求构建HTML */
+            document.getElementById('content').innerHTML = html;
+        }
+
+        /* ========== 交互函数 ========== */
+        function handleClick(keyword, param) {
+            if (typeof triggerSlash === 'function') {
+                triggerSlash('/send ' + keyword + '：' + param + '|/trigger');
+            }
+        }
+
+        /* ========== 主函数 ========== */
+        function init() {
+            try {
+                var messageText = getMessageData();
+                if (!messageText) {
+                    document.getElementById('content').innerHTML =
+                        '<div class="loading">❌ 无法获取消息内容</div>';
+                    return;
+                }
+                var data = parseData(messageText);
+                renderPage(data);
+            } catch (error) {
+                console.error("错误:", error);
+                document.getElementById('content').innerHTML =
+                    '<div class="loading">❌ 加载失败：' + error.message + '</div>';
+            }
+        }
+
+        $(function() { init(); });
+    </script>
+</body>
+</html>
+```
+
+---
+
+模式B完成后的引导
+
+1. 使用 Read 工具读取世界书中名为"写卡知识库"的世界书中的"前端美化自查"条目
+2. 按照自查标准（通用检查项 + 模式B专项）逐项检查刚才的输出，发现问题直接修改并输出修正后的完整版本
+3. 修改完成后询问用户："是否需要将修正后的内容同步更新到世界书对应条目？"
+   - 如果用户同意，使用 Edit 工具更新世界书中的条目
+4. 使用 Write 工具将源文件（世界书条目）写入用户世界书：
+   - 路径：/Worldbooks/<用户世界书名>/前端/[界面]<页面名>_源文件
+5. 使用 SetAttribute 工具为源文件条目设置属性：
+   - strategy: { type: "selective", keys: ["触发关键词1", "触发关键词2"] }
+   - position: { type: "at_depth", depth: 0, role: "system", order: 100 }
+   - recursion: { prevent_incoming: true, prevent_outgoing: true }
+   说明：
+   - strategy.type 为 "selective"（绿灯/关键词触发），keys 填入用户定义的触发词
+   - position 设为 D0 system 确保格式定义在AI输出时可见
+   - recursion 双向阻断防止条目间递归干扰
+   - 如果用户希望该界面在每次AI输出都生效（而非关键词触发），改为 strategy: { type: "constant" }
+6. 使用 Write 工具将HTML代码写入角色正则：
+   - 路径：/Characters/<角色名>/Regex/[界面]<页面名>
+   - 内容：完整的HTML代码，必须用 ``` 代码块包裹（即 ``` 开头 ``` 结尾，中间是完整HTML）
+7. 创建正则后，提醒用户在酒馆正则面板中确认以下设置：
+   - 查找正则表达式：<标签名>[\s\S]*?</标签名>（对应AI输出的标签）
+   - 勾选：AI输出 ✅、在编辑时运行 ✅、仅格式显示 ✅
+
+输出提醒：
+
+哥哥，前端美化已全部自动配置完成！
+
+已自动完成：
+1. ✅ 源文件条目 — 已写入世界书，告诉AI输出什么格式（关键词触发/常驻激活）
+2. ✅ 正则配置 — HTML代码已写入角色正则
+
+请打开SillyTavern → 扩展 → 正则脚本，确认：
+- 查找正则表达式已正确填入（匹配对应标签）
+- 已勾选"AI输出"、"在编辑时运行"、"仅格式显示"
+
+**测试：**
+1. 聊天中使用触发词
+2. AI输出标签格式内容
+3. 正则自动替换成美化界面
+4. F12查看调试信息
+
+**如果需要更复杂的前端功能**（如修改变量、播放音频、请求AI生成等），告诉我你想要什么功能，我会从知识库读取对应的酒馆助手接口文档来帮你实现。
+
+===================================================================
+
+代码编写通用规范
+
+1. 数据获取：必须使用 getChatMessages(getCurrentMessageId()) 获取消息
+2. 注释格式：仅使用 /* 注释 */，禁止使用 // 注释（会导致渲染失败）
+3. 加载时机：使用 $(function() { init(); }); 而不是 DOMContentLoaded
+4. 高度适配：禁止使用 vh 单位，使用 width 和 aspect-ratio 让高度动态调整
+5. 背景颜色：如果样式更适合卡片形状，不要有背景颜色，除非用户明确要求
+6. 页面适配：页面整体应适配容器宽度，不产生横向滚动条
+7. 避免使用 min-height、overflow: auto 等强制撑高父容器的属性
+8. 主体内容不能使用 position: absolute 等脱离文档流的样式
+9. 空值处理：所有渲染的字段都要有 || '' 或 || '默认值' 的兜底
+10. 错误处理：用 try-catch 包裹核心逻辑
+
+点击发送功能说明（两种模式通用）：
+   工作流程（4步）：
+   1. 点击元素 → 以用户身份自动发送一条回复
+   2. AI收到用户回复 → 识别关键词
+   3. 关键词触发世界书条目 → AI读取格式定义
+   4. AI输出对应内容 → 正则替换为美化界面
+
+   实现方式：
+   function handleClick(keyword, param) {
+       if (typeof triggerSlash === 'function') {
+           triggerSlash('/send ' + keyword + '：' + param + '|/trigger');
+       }
+   }
+
+   核心理解：
+   - 点击 = 自动替用户发一条回复 + 触发AI生成
+   - 不是页面跳转，是LLM的对话流程
+
+输出原则
+
+1. 文件必须完整输出
+2. 每个文件用代码块包裹
+3. 不要用 ... 省略
+4. 不要让用户"自己补充"
+5. HTML必须包含完整的获取、解析和渲染逻辑
+6. 根据用户需求自由设计CSS样式
+7. 标签名在所有文件中必须完全一致
+
+===================================================================
+
+酒馆助手接口查询（两种模式通用）
+
+当用户描述需要某个额外功能时（如修改变量、播放音频、请求AI生成、监听事件等）：
+1. 使用 Read 工具读取"写卡知识库"世界书中的"00_接口索引"条目
+2. 根据用户描述的功能，从索引中找到对应的接口文档文件名
+3. 使用 Read 工具读取对应的接口文档（如"04_AI生成请求"、"06_事件监听"）
+4. 根据文档中的接口说明，帮用户在HTML代码的 <script> 中实现所需功能
+</frontend_creation>
