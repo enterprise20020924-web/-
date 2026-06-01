@@ -53,6 +53,31 @@
       word-break: break-all;
     }
 
+    .preview-pet-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border: 1px solid rgba(130, 170, 255, 0.24);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #c9d8ff;
+      font-size: 12px;
+    }
+
+    .preview-pet-check img {
+      width: 54px;
+      height: 90px;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+    }
+
+    .preview-pet-check span {
+      min-width: 0;
+      line-height: 1.45;
+    }
+
     .preview-actions {
       display: flex;
       gap: 8px;
@@ -86,6 +111,10 @@
       <button class="preview-button" id="preview-hide" type="button">隐藏面板</button>
     </div>
     <div class="preview-status" id="preview-status">准备加载运行时...</div>
+    <div class="preview-pet-check">
+      <img src="https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/%E5%8A%A8%E6%80%81%E5%B0%8F%E4%BA%BA/%E7%A7%8B%E9%9D%92%E5%AD%90.webp" alt="">
+      <span>动图验证：154×256 / 62 帧 WebP</span>
+    </div>
     <div class="preview-actions" id="preview-buttons"></div>
   </div>
 
@@ -422,7 +451,7 @@
       if (location.pathname.includes('/dist/')) {
         return new URL('./index.js', location.href).href;
       }
-      return new URL('../../../dist/三明月IDE进阶版/伪IDE/index.js', location.href).href;
+      return new URL('../../../dist/秋青子写卡预设/伪IDE/index.js', location.href).href;
     }
 
     function loadClassicScript(src) {

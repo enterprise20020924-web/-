@@ -6,6 +6,7 @@ import { extractPlanProtocolDisplayBlocks } from '../../utils/plan-protocol';
 const props = defineProps<{
   streamingContent?: string;
   showWorkspaceToggle?: boolean;
+  showExitButton?: boolean;
   mobileInputMode?: boolean;
 }>();
 
@@ -592,7 +593,7 @@ function attachFile() {
           <span>触发回复</span>
         </button>
         <button
-          v-if="props.showWorkspaceToggle"
+          v-if="props.showExitButton || props.showWorkspaceToggle"
           class="cp-quick-btn cp-quick-btn-danger"
           title="退出 IDE"
           @click="emit('exitIde')"

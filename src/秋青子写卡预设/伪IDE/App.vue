@@ -5,15 +5,18 @@ import EditorPanel from './components/editor/EditorPanel.vue';
 import ActivityPanel from './components/activity/ActivityPanel.vue';
 import ChatPanel from './components/chat/ChatPanel.vue';
 import WorkshopHome from './components/workshop/WorkshopHome.vue';
+import ArtifactWorkspace from './components/workshop/ArtifactWorkspace.vue';
 import { usePresetStore } from './stores/preset';
 import { useCharacterStore } from './stores/character';
 import { useActivityStore } from './stores/activity';
 import { useChatStore } from './stores/chat';
+import { useEditorStore } from './stores/editor';
 import { useFileSystemStore } from './stores/fileSystem';
 import { usePlanStore } from './stores/plan';
 import { useWorkshopStore } from './stores/workshop';
 import { registerPlanContextInjection } from './utils/plan-context';
 import { parsePlanProtocolFromText } from './utils/plan-protocol';
+import { TAMAMO_FLOATING_PET_URL as tamamoFloatingPet } from './utils/external-assets';
 
 const emit = defineEmits<{ exit: [] }>();
 
@@ -21,22 +24,38 @@ const presetStore = usePresetStore();
 const charStore = useCharacterStore();
 const activityStore = useActivityStore();
 const chatStore = useChatStore();
+const editorStore = useEditorStore();
 const fsStore = useFileSystemStore();
 const planStore = usePlanStore();
 const workshopStore = useWorkshopStore();
 
-const parentWin = window.parent || window;
 const MOBILE_LAYOUT_MAX_WIDTH = 768;
 const PORTRAIT_LAYOUT_MAX_WIDTH = 1200;
 const PORTRAIT_LAYOUT_RATIO = 1.5;
 const viewportSize = ref({ width: window.innerWidth, height: window.innerHeight });
+
+function getParentWindow() {
+  try {
+    return window.parent || window;
+  } catch {
+    return window;
+  }
+}
+
 function readViewportSize() {
   const visualWidth = window.visualViewport?.width;
   const visualHeight = window.visualViewport?.height;
   const docWidth = document.documentElement.clientWidth;
   const docHeight = document.documentElement.clientHeight;
-  const parentWidth = parentWin.innerWidth;
-  const parentHeight = parentWin.innerHeight;
+  const parentWin = getParentWindow();
+  let parentWidth = window.innerWidth;
+  let parentHeight = window.innerHeight;
+  try {
+    parentWidth = parentWin.innerWidth;
+    parentHeight = parentWin.innerHeight;
+  } catch {
+    /* keep local viewport fallback */
+  }
   const width = visualWidth && visualWidth > 0 ? visualWidth : docWidth || window.innerWidth;
   const height = visualHeight && visualHeight > 0 ? visualHeight : docHeight || window.innerHeight;
   return {
@@ -65,21 +84,53 @@ onMounted(() => {
   window.setTimeout(onResize, 250);
   window.addEventListener('resize', onResize);
   window.visualViewport?.addEventListener('resize', onResize);
-  parentWin.addEventListener('resize', onResize);
+  try {
+    getParentWindow().addEventListener('resize', onResize);
+  } catch {
+    /* keep local resize listener */
+  }
 });
 onUnmounted(() => {
   window.removeEventListener('resize', onResize);
   window.visualViewport?.removeEventListener('resize', onResize);
-  parentWin.removeEventListener('resize', onResize);
+  try {
+    getParentWindow().removeEventListener('resize', onResize);
+  } catch {
+    /* keep unmount cleanup best effort */
+  }
 });
 
 type MobileTab = 'files' | 'editor' | 'chat';
 type MobileWorkspaceTab = 'files' | 'editor';
+type TamamoWorkspaceTab = MobileWorkspaceTab | 'artifacts';
 type AppArea = 'workshop' | 'expert';
 
 const mobileTab = ref<MobileTab>('chat');
 const mobileWorkspaceTab = ref<MobileWorkspaceTab>('files');
 const activeArea = ref<AppArea>('workshop');
+const tamamoFloatingPetRef = ref<HTMLElement | null>(null);
+const tamamoFloatingPosition = ref<{ x: number; y: number } | null>(null);
+const tamamoFloatingDrag = ref<{
+  pointerId: number;
+  startX: number;
+  startY: number;
+  originX: number;
+  originY: number;
+  moved: boolean;
+} | null>(null);
+const tamamoWorkspaceOpen = ref(false);
+const tamamoWorkspaceTab = ref<TamamoWorkspaceTab>('files');
+const TAMAMO_CLICK_MOVE_LIMIT = 6;
+const tamamoFloatingStyle = computed(() => {
+  if (!tamamoFloatingPosition.value) return undefined;
+
+  return {
+    top: `${tamamoFloatingPosition.value.y}px`,
+    right: 'auto',
+    bottom: 'auto',
+    left: `${tamamoFloatingPosition.value.x}px`,
+  };
+});
 const mobileTabLabel = computed(() => {
   if (activeArea.value === 'workshop') return '明月秋青';
   switch (mobileTab.value) {
@@ -91,6 +142,78 @@ const mobileTabLabel = computed(() => {
       return '聊天';
   }
 });
+
+function clampTamamoFloatingPosition(next: { x: number; y: number }) {
+  const rect = tamamoFloatingPetRef.value?.getBoundingClientRect();
+  const petWidth = rect?.width || (isMobile.value ? 156 : 220);
+  const petHeight = rect?.height || (isMobile.value ? 160 : 224);
+  const padding = 8;
+  const { width, height } = viewportSize.value;
+
+  return {
+    x: Math.min(Math.max(next.x, padding), Math.max(padding, width - petWidth - padding)),
+    y: Math.min(Math.max(next.y, padding), Math.max(padding, height - petHeight - padding)),
+  };
+}
+
+function startTamamoFloatingDrag(event: PointerEvent) {
+  if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+  const target = tamamoFloatingPetRef.value;
+  if (!target) return;
+
+  const rect = target.getBoundingClientRect();
+  const origin = tamamoFloatingPosition.value ?? { x: rect.left, y: rect.top };
+  tamamoFloatingPosition.value = clampTamamoFloatingPosition(origin);
+  tamamoFloatingDrag.value = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    originX: tamamoFloatingPosition.value.x,
+    originY: tamamoFloatingPosition.value.y,
+    moved: false,
+  };
+  target.setPointerCapture?.(event.pointerId);
+  event.preventDefault();
+}
+
+function moveTamamoFloatingDrag(event: PointerEvent) {
+  const drag = tamamoFloatingDrag.value;
+  if (!drag || drag.pointerId !== event.pointerId) return;
+
+  const deltaX = event.clientX - drag.startX;
+  const deltaY = event.clientY - drag.startY;
+  if (Math.hypot(deltaX, deltaY) > TAMAMO_CLICK_MOVE_LIMIT) {
+    drag.moved = true;
+  }
+  tamamoFloatingPosition.value = clampTamamoFloatingPosition({
+    x: drag.originX + deltaX,
+    y: drag.originY + deltaY,
+  });
+}
+
+function endTamamoFloatingDrag(event: PointerEvent) {
+  const drag = tamamoFloatingDrag.value;
+  if (!drag || drag.pointerId !== event.pointerId) return;
+
+  tamamoFloatingPetRef.value?.releasePointerCapture?.(event.pointerId);
+  tamamoFloatingDrag.value = null;
+  if (!drag.moved) {
+    openTamamoWorkspace();
+  }
+}
+
+async function openTamamoWorkspace(tab: TamamoWorkspaceTab = editorStore.activeTab ? 'editor' : 'files') {
+  showMobileMenu.value = false;
+  showMobileWorkspace.value = false;
+  tamamoWorkspaceTab.value = tab;
+  tamamoWorkspaceOpen.value = true;
+  await fsStore.refresh();
+}
+
+function closeTamamoWorkspace() {
+  tamamoWorkspaceOpen.value = false;
+}
 const mobileExpertToggleLabel = computed(() => (activeArea.value === 'expert' ? '普通' : '专家'));
 const mobileExpertToggleTitle = computed(() => (
   activeArea.value === 'expert' ? '返回明月秋青' : '进入专家工作区'
@@ -750,7 +873,26 @@ watch(mobileTab, () => {
   }
 });
 
+watch(
+  () => editorStore.activeTabPath,
+  path => {
+    if (path && tamamoWorkspaceOpen.value && tamamoWorkspaceTab.value === 'files') {
+      tamamoWorkspaceTab.value = 'editor';
+    }
+  },
+);
+
+watch(viewportSize, () => {
+  if (tamamoFloatingPosition.value) {
+    tamamoFloatingPosition.value = clampTamamoFloatingPosition(tamamoFloatingPosition.value);
+  }
+});
+
 watch(activeArea, area => {
+  tamamoFloatingDrag.value = null;
+  if (area === 'expert') {
+    tamamoWorkspaceOpen.value = false;
+  }
   if (area === 'expert') {
     fsStore.refresh();
   }
@@ -1147,6 +1289,65 @@ async function onCharClick(name: string) {
       </div>
     </TransitionGroup>
 
+    <Transition name="tamamo-workspace">
+      <section
+        v-if="tamamoWorkspaceOpen && activeArea === 'workshop'"
+        class="tamamo-workspace-backdrop"
+        @click.self="closeTamamoWorkspace"
+      >
+        <div class="tamamo-workspace-panel">
+          <header class="tamamo-workspace-head">
+            <div>
+              <span>玉藻前工作台</span>
+              <strong>文件 / 编辑 / Diff</strong>
+            </div>
+            <button type="button" class="tamamo-workspace-close" title="关闭玉藻前工作台" @click="closeTamamoWorkspace">
+              <SvgIcons name="x" :size="16" />
+            </button>
+          </header>
+
+          <nav class="tamamo-workspace-tabs" aria-label="玉藻前工作台切换">
+            <button
+              type="button"
+              :class="{ active: tamamoWorkspaceTab === 'files' }"
+              @click="tamamoWorkspaceTab = 'files'"
+            >
+              <SvgIcons name="folder" :size="15" />
+              <span>文件</span>
+            </button>
+            <button
+              type="button"
+              :class="{ active: tamamoWorkspaceTab === 'editor' }"
+              @click="tamamoWorkspaceTab = 'editor'"
+            >
+              <SvgIcons name="edit" :size="15" />
+              <span>编辑 / Diff</span>
+            </button>
+            <button
+              type="button"
+              :class="{ active: tamamoWorkspaceTab === 'artifacts' }"
+              @click="tamamoWorkspaceTab = 'artifacts'"
+            >
+              <SvgIcons name="file-code" :size="15" />
+              <span>产物 Diff</span>
+            </button>
+          </nav>
+
+          <div class="tamamo-workspace-body">
+            <aside class="tamamo-workspace-files" :class="{ active: tamamoWorkspaceTab === 'files' }">
+              <FileTree />
+            </aside>
+            <main class="tamamo-workspace-editor" :class="{ active: tamamoWorkspaceTab === 'editor' }">
+              <EditorPanel />
+            </main>
+            <section class="tamamo-workspace-artifacts" :class="{ active: tamamoWorkspaceTab === 'artifacts' }">
+              <ArtifactWorkspace />
+            </section>
+          </div>
+        </div>
+      </section>
+    </Transition>
+
     <div class="ide-body">
       <template v-if="activeArea === 'workshop'">
         <WorkshopHome
@@ -1154,6 +1355,7 @@ async function onCharClick(name: string) {
           :streaming-content="streamingContent"
           :is-mobile="isMobile"
           @open-expert="openExpert"
+          @exit-ide="emit('exit')"
           @send-start="handleWorkStart"
           @send-failed="handleWorkFailed"
         />
@@ -1198,6 +1400,26 @@ async function onCharClick(name: string) {
           />
         </div>
       </template>
+    </div>
+
+    <div
+      v-if="activeArea === 'workshop'"
+      ref="tamamoFloatingPetRef"
+      class="tamamo-floating-pet"
+      :class="{ 'is-dragging': Boolean(tamamoFloatingDrag) }"
+      :style="tamamoFloatingStyle"
+      aria-label="拖动玉藻前"
+      role="img"
+      tabindex="0"
+      @pointerdown="startTamamoFloatingDrag"
+      @pointermove="moveTamamoFloatingDrag"
+      @pointerup="endTamamoFloatingDrag"
+      @pointercancel="endTamamoFloatingDrag"
+      @lostpointercapture="endTamamoFloatingDrag"
+      @keydown.enter.prevent="openTamamoWorkspace()"
+      @keydown.space.prevent="openTamamoWorkspace()"
+    >
+      <img :src="tamamoFloatingPet" alt="" draggable="false" />
     </div>
   </div>
 </template>
@@ -1691,6 +1913,155 @@ async function onCharClick(name: string) {
   transform: translateX(-18px);
 }
 
+.tamamo-workspace-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 36;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(236, 72, 153, 0.12), transparent 32%),
+    rgba(8, 12, 24, 0.54);
+  backdrop-filter: blur(8px);
+}
+
+.tamamo-workspace-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(1180px, calc(100vw - 36px));
+  height: min(760px, calc(100vh - 36px));
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--ide-accent) 32%, var(--ide-border));
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--ide-bg2) 92%, #251122);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+}
+
+.tamamo-workspace-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--ide-border);
+  background:
+    linear-gradient(90deg, rgba(236, 72, 153, 0.12), transparent 48%),
+    var(--ide-bg2);
+}
+
+.tamamo-workspace-head div {
+  display: grid;
+  gap: 3px;
+}
+
+.tamamo-workspace-head span {
+  color: var(--ide-dim);
+  font-size: 12px;
+}
+
+.tamamo-workspace-head strong {
+  color: var(--ide-text);
+  font-size: 16px;
+}
+
+.tamamo-workspace-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--ide-border);
+  border-radius: 10px;
+  background: var(--ide-surface);
+  color: var(--ide-dim);
+  cursor: pointer;
+}
+
+.tamamo-workspace-close:hover {
+  border-color: var(--ide-danger-border);
+  background: var(--ide-danger-soft);
+  color: var(--ide-danger-text);
+}
+
+.tamamo-workspace-tabs {
+  display: none;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--ide-border);
+  background: var(--ide-bg2);
+}
+
+.tamamo-workspace-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 7px 12px;
+  border: 1px solid var(--ide-border-soft);
+  border-radius: 999px;
+  background: var(--ide-surface);
+  color: var(--ide-dim);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tamamo-workspace-tabs button:hover,
+.tamamo-workspace-tabs button.active {
+  border-color: var(--ide-accent-border-strong);
+  background: var(--ide-accent-soft);
+  color: var(--ide-accent-text);
+}
+
+.tamamo-workspace-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  background: var(--ide-bg);
+}
+
+.tamamo-workspace-files {
+  min-width: 0;
+  min-height: 0;
+  border-right: 1px solid var(--ide-border);
+  overflow: hidden;
+}
+
+.tamamo-workspace-editor,
+.tamamo-workspace-artifacts {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tamamo-workspace-editor {
+  border-right: 1px solid var(--ide-border);
+}
+
+.tamamo-workspace-enter-active,
+.tamamo-workspace-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.tamamo-workspace-enter-active .tamamo-workspace-panel,
+.tamamo-workspace-leave-active .tamamo-workspace-panel {
+  transition: transform 0.2s ease;
+}
+
+.tamamo-workspace-enter-from,
+.tamamo-workspace-leave-to {
+  opacity: 0;
+}
+
+.tamamo-workspace-enter-from .tamamo-workspace-panel,
+.tamamo-workspace-leave-to .tamamo-workspace-panel {
+  transform: translateY(10px) scale(0.985);
+}
+
 .ide-work-toast-layer {
   position: absolute;
   top: 56px;
@@ -2066,6 +2437,43 @@ async function onCharClick(name: string) {
   min-height: 0;
 }
 
+.tamamo-floating-pet {
+  position: fixed;
+  right: clamp(16px, 3vw, 32px);
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 18;
+  width: clamp(170px, 16vw, 220px);
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  opacity: 0.96;
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.34));
+  animation: tamamo-float 4.6s ease-in-out infinite;
+}
+
+.tamamo-floating-pet.is-dragging {
+  z-index: 32;
+  cursor: grabbing;
+}
+
+.tamamo-floating-pet img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes tamamo-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
 @media (max-width: 768px) {
   .ide-brand {
     margin-right: 0;
@@ -2075,6 +2483,53 @@ async function onCharClick(name: string) {
   .ide-work-toast-layer {
     top: calc(66px + env(safe-area-inset-top, 0px));
     width: min(320px, calc(100% - 24px));
+  }
+
+  .tamamo-workspace-backdrop {
+    padding: 0;
+  }
+
+  .tamamo-workspace-panel {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .tamamo-workspace-tabs {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .tamamo-workspace-body {
+    display: block;
+    position: relative;
+  }
+
+  .tamamo-workspace-files,
+  .tamamo-workspace-editor,
+  .tamamo-workspace-artifacts {
+    display: none;
+    height: 100%;
+    border-right: none;
+  }
+
+  .tamamo-workspace-files.active,
+  .tamamo-workspace-editor.active,
+  .tamamo-workspace-artifacts.active {
+    display: block;
+  }
+
+  .tamamo-floating-pet {
+    right: 10px;
+    bottom: calc(164px + env(safe-area-inset-bottom, 0px));
+    width: clamp(136px, 26vw, 156px);
+    z-index: 16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tamamo-floating-pet {
+    animation: none;
   }
 }
 </style>

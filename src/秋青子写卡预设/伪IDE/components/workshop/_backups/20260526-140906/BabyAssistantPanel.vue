@@ -3,7 +3,7 @@ import SvgIcons from '../SvgIcons.vue';
 import { useChatStore } from '../../stores/chat';
 import { useWorkshopStore } from '../../stores/workshop';
 import { usePresetStore } from '../../stores/preset';
-import { QIUQINGZI_CHIBI_URL as qiuqingziChibi } from '../../utils/external-assets';
+import qiuqingziChibi from '../../assets/qiuqingzi-chibi.png?url';
 import {
   BABY_KNOWLEDGE_WORLDBOOK,
   buildBabyAssistantPrompt,
@@ -596,8 +596,8 @@ watch(() => chatStore.messages.length, refreshContextStats);
 
 .assistant-float-button img {
   display: block;
-  width: 66px;
-  height: 86px;
+  width: 58px;
+  height: 74px;
   object-fit: contain;
   object-position: center bottom;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.28));
@@ -640,8 +640,8 @@ watch(() => chatStore.messages.length, refreshContextStats);
 }
 
 .assistant-float-title img {
-  width: 42px;
-  height: 52px;
+  width: 34px;
+  height: 40px;
   object-fit: contain;
   filter: drop-shadow(0 5px 9px rgba(0, 0, 0, 0.24));
 }
@@ -674,7 +674,7 @@ watch(() => chatStore.messages.length, refreshContextStats);
 
 .assistant-main {
   display: grid;
-  grid-template-columns: 110px minmax(0, 1fr);
+  grid-template-columns: 72px minmax(0, 1fr);
   gap: 10px;
   align-items: end;
 }
@@ -684,21 +684,18 @@ watch(() => chatStore.messages.length, refreshContextStats);
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  width: 116px;
-  height: 148px;
-  margin: -8px -2px 0 -6px;
+  width: 72px;
+  height: 92px;
   overflow: visible;
 }
 
 .qiuqinzi-avatar img {
   display: block;
   width: auto;
-  max-width: none;
-  height: 150px;
+  max-width: 72px;
+  height: 92px;
   object-fit: contain;
   object-position: center bottom;
-  transform: translateY(6px) scale(1.3);
-  transform-origin: center bottom;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.28));
 }
 

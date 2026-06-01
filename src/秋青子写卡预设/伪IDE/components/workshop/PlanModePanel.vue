@@ -118,13 +118,14 @@ async function continuePlan() {
     const suggestion = pendingUpdate.value?.statusSuggestion;
     const ok = await planStore.continueFromCheckpoint();
     if (ok) {
+      const enteredWriteConfirmation = suggestion === 'ready_to_complete' || planStore.activePlan?.status === 'ready_to_complete';
       const message = suggestion === 'pause' || suggestion === 'blocked'
         ? '已应用检查点更新，计划已暂停继续'
-        : suggestion === 'ready_to_complete'
+        : enteredWriteConfirmation
           ? '已进入写入确认，请在写入计划区 Dryrun / 确认执行'
           : '已应用检查点更新，并触发下一步';
       toastr.success(message);
-      if (suggestion === 'ready_to_complete') emit('openWritePanel');
+      if (enteredWriteConfirmation) emit('openWritePanel');
     } else {
       toastr.warning('缺少有效 Checkpoint + PlanUpdate，不能继续');
     }

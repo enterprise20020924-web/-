@@ -75,7 +75,7 @@ async function getCharacterPaths(): Promise<{ path: string; source: 'character';
         }
         if (char.extensions?.regex_scripts?.length) {
           char.extensions.regex_scripts.forEach((r, i) => {
-            paths.push({ path: `/角色卡/${name}/正则/${r.script_name || i}`, source: 'character', meta: { charName: name, field: 'regex', index: i } });
+            paths.push({ path: `/角色卡/${name}/正则/${r.scriptName || r.script_name || i}`, source: 'character', meta: { charName: name, field: 'regex', index: i } });
           });
         }
       } catch {
@@ -178,6 +178,16 @@ export async function writeVfsFile(path: string, content: string, source: VfsNod
         await updateCharacterWith(meta.charName, char => {
           if (!char.first_messages) char.first_messages = [];
           char.first_messages[meta.index] = content;
+          return char;
+        });
+        return true;
+      }
+      if (meta.field === 'regex' && meta.index !== undefined) {
+        const regex = JSON.parse(content);
+        await updateCharacterWith(meta.charName, char => {
+          if (!char.extensions) char.extensions = {};
+          if (!char.extensions.regex_scripts) char.extensions.regex_scripts = [];
+          char.extensions.regex_scripts[meta.index] = regex;
           return char;
         });
         return true;

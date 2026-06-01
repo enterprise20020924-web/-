@@ -752,7 +752,13 @@ export const usePlanStore = defineStore('plan', () => {
     const todoId = checkpoint.todoId;
     const checkpointId = checkpoint.checkpointId;
     if (!applyUpdate()) return false;
-    if (statusSuggestion === 'pause' || statusSuggestion === 'blocked' || statusSuggestion === 'ready_to_complete') {
+    const updatedPlan = activePlan.value;
+    if (
+      statusSuggestion === 'pause'
+      || statusSuggestion === 'blocked'
+      || statusSuggestion === 'ready_to_complete'
+      || updatedPlan?.status === 'ready_to_complete'
+    ) {
       state.continueIntent = null;
       state.adjustmentIntent = null;
       persist();

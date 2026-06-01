@@ -66,12 +66,60 @@ function sourceLabel(source: string | undefined): string {
   }
 }
 
-type ViewMode = 'edit' | 'preview';
+type ViewMode = 'edit' | 'preview' | 'diff';
 const viewMode = ref<ViewMode>('edit');
 
 const isHtmlContent = computed(() => {
   const content = editorStore.activeTab?.content || '';
   return /<(?:html|!doctype|body|head|div|style|script)\b/i.test(content);
+});
+
+type DiffKind = 'same' | 'add' | 'remove' | 'info';
+interface DiffRow {
+  kind: DiffKind;
+  oldLine?: number;
+  newLine?: number;
+  text: string;
+}
+
+function buildLineDiffRows(previous: string, current: string, maxRows = 500): DiffRow[] {
+  if (previous === current) {
+    return [{ kind: 'info', text: '当前内容与打开时版本一致。' }];
+  }
+
+  const before = previous.split(/\r?\n/);
+  const after = current.split(/\r?\n/);
+  const max = Math.max(before.length, after.length);
+  const rows: DiffRow[] = [];
+  for (let index = 0; index < max; index += 1) {
+    const oldText = before[index];
+    const newText = after[index];
+    if (oldText === newText) {
+      rows.push({ kind: 'same', oldLine: index + 1, newLine: index + 1, text: oldText ?? '' });
+    } else {
+      if (oldText !== undefined) rows.push({ kind: 'remove', oldLine: index + 1, text: oldText });
+      if (newText !== undefined) rows.push({ kind: 'add', newLine: index + 1, text: newText });
+    }
+    if (rows.length >= maxRows) {
+      rows.push({ kind: 'info', text: `diff 已截断，仅显示前 ${maxRows} 行变化上下文。` });
+      break;
+    }
+  }
+  return rows;
+}
+
+const editorDiffRows = computed(() => {
+  const tab = editorStore.activeTab;
+  if (!tab) return [];
+  return buildLineDiffRows(tab.originalContent, tab.content);
+});
+
+const editorDiffStats = computed(() => {
+  const rows = editorDiffRows.value;
+  return {
+    added: rows.filter(row => row.kind === 'add').length,
+    removed: rows.filter(row => row.kind === 'remove').length,
+  };
 });
 
 watch(
@@ -109,16 +157,22 @@ watch(
           <span class="ep-source-tag">{{ sourceLabel(editorStore.activeTab.source) }}</span>
           <span v-if="editorStore.activeTab.dirty" class="ep-unsaved-badge">未保存</span>
 
-          <template v-if="isHtmlContent">
-            <div class="ep-view-toggle">
-              <button class="ep-view-btn" :class="{ active: viewMode === 'edit' }" @click="viewMode = 'edit'">
-                编辑
-              </button>
-              <button class="ep-view-btn" :class="{ active: viewMode === 'preview' }" @click="viewMode = 'preview'">
-                预览
-              </button>
-            </div>
-          </template>
+          <div class="ep-view-toggle">
+            <button class="ep-view-btn" :class="{ active: viewMode === 'edit' }" @click="viewMode = 'edit'">
+              编辑
+            </button>
+            <button class="ep-view-btn" :class="{ active: viewMode === 'diff' }" @click="viewMode = 'diff'">
+              Diff
+            </button>
+            <button
+              v-if="isHtmlContent"
+              class="ep-view-btn"
+              :class="{ active: viewMode === 'preview' }"
+              @click="viewMode = 'preview'"
+            >
+              预览
+            </button>
+          </div>
 
           <span class="ep-spacer" />
           <button
@@ -148,6 +202,26 @@ watch(
           placeholder="文件内容为空"
           @input="onInput"
         />
+
+        <div v-else-if="viewMode === 'diff'" class="ep-diff-wrap">
+          <div class="ep-diff-head">
+            <span>相对打开时版本</span>
+            <strong>+{{ editorDiffStats.added }} / -{{ editorDiffStats.removed }}</strong>
+          </div>
+          <div class="ep-diff-list">
+            <div
+              v-for="(row, index) in editorDiffRows"
+              :key="`${row.kind}-${index}`"
+              class="ep-diff-row"
+              :class="`is-${row.kind}`"
+            >
+              <span class="ep-diff-mark">{{ row.kind === 'add' ? '+' : row.kind === 'remove' ? '-' : row.kind === 'same' ? ' ' : 'i' }}</span>
+              <span class="ep-diff-line">{{ row.oldLine ?? '' }}</span>
+              <span class="ep-diff-line">{{ row.newLine ?? '' }}</span>
+              <pre>{{ row.text || ' ' }}</pre>
+            </div>
+          </div>
+        </div>
 
         <div v-else-if="viewMode === 'preview' && isHtmlContent" class="ep-preview-wrap">
           <div class="ep-preview-hint">纯静态预览，酒馆助手 API 调用不会在这里生效。</div>
@@ -379,8 +453,8 @@ watch(
   transition: all 0.15s;
 }
 
-.ep-view-btn:first-child {
-  border-right: 1px solid var(--ide-border-soft);
+.ep-view-btn + .ep-view-btn {
+  border-left: 1px solid var(--ide-border-soft);
 }
 
 .ep-view-btn:hover {
@@ -391,6 +465,82 @@ watch(
 .ep-view-btn.active {
   background: var(--ide-accent-soft-strong);
   color: var(--ide-accent-text);
+}
+
+.ep-diff-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--ide-code-bg);
+}
+
+.ep-diff-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--ide-border-soft);
+  color: var(--ide-dim);
+  font-size: 12px;
+}
+
+.ep-diff-head strong {
+  color: var(--ide-text);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.ep-diff-list {
+  flex: 1;
+  overflow: auto;
+  padding: 8px 0;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.ep-diff-row {
+  display: grid;
+  grid-template-columns: 20px 42px 42px minmax(0, 1fr);
+  gap: 6px;
+  padding: 1px 12px;
+  color: var(--ide-dim);
+}
+
+.ep-diff-row pre {
+  margin: 0;
+  min-width: 0;
+  overflow: visible;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: inherit;
+}
+
+.ep-diff-mark,
+.ep-diff-line {
+  color: var(--ide-dim-3);
+  text-align: right;
+  user-select: none;
+}
+
+.ep-diff-row.is-add {
+  background: var(--ide-success-soft);
+  color: var(--ide-success-text);
+}
+
+.ep-diff-row.is-remove {
+  background: var(--ide-danger-soft);
+  color: var(--ide-danger-text);
+}
+
+.ep-diff-row.is-info {
+  grid-template-columns: 20px minmax(0, 1fr);
+  color: var(--ide-dim-2);
+}
+
+.ep-diff-row.is-info .ep-diff-line {
+  display: none;
 }
 
 .ep-textarea {

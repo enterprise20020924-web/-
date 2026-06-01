@@ -7,6 +7,7 @@ import {
   resolveFileNode,
   resolveWritableFileNode,
   setAttributeAction,
+  validateWriteContentForPath,
   writeAction,
 } from './wtc-compat';
 import type {
@@ -148,6 +149,12 @@ export async function dryrunWorkshopPlan(
       const artifact = findArtifact(artifacts, operation);
       if (!artifact) {
         records.push(makeRecord(operation, 'blocked', '缺少写入内容', '这个 Write 动作没有绑定前端生成产物。'));
+        continue;
+      }
+      try {
+        validateWriteContentForPath(normalized, artifact.content);
+      } catch (error) {
+        records.push(makeRecord(operation, 'blocked', '正则内容无效', errorMessage(error)));
         continue;
       }
       const contentExists = await writeContentAlreadyExists(operation, normalized).catch(error => {

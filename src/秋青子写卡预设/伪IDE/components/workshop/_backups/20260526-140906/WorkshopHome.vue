@@ -5,7 +5,7 @@ import ActivityPanel from '../activity/ActivityPanel.vue';
 import BabyWizard from './BabyWizard.vue';
 import BabyAssistantPanel from './BabyAssistantPanel.vue';
 import PlanModePanel from './PlanModePanel.vue';
-import { QIUQINGZI_CHIBI_URL as qiuqingziChibi } from '../../utils/external-assets';
+import qiuqingziChibi from '../../assets/qiuqingzi-chibi.png?url';
 import { useWorkshopStore, type TaskDefinition, type WorkshopMode, type WorkshopWriteOperation } from '../../stores/workshop';
 import { usePresetStore } from '../../stores/preset';
 import { useChatStore } from '../../stores/chat';
@@ -22,7 +22,6 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   openExpert: [];
-  exitIde: [];
   sendStart: [];
   sendFailed: [];
 }>();
@@ -42,8 +41,8 @@ const WORKSHOP_MOBILE_LAYOUT_MAX_WIDTH = 768;
 const WORKSHOP_PORTRAIT_LAYOUT_MAX_WIDTH = 1200;
 const WORKSHOP_PORTRAIT_LAYOUT_RATIO = 1.5;
 const mobileFoldOpen = ref<Record<MobileFoldSection, boolean>>({
-  mode: false,
-  tasks: false,
+  mode: true,
+  tasks: true,
   brief: false,
   next: false,
 });
@@ -543,7 +542,7 @@ async function activateSelectedTaskPrompt(showToast = false) {
 async function selectMode(mode: WorkshopMode) {
   workshopStore.selectMode(mode);
   if (effectiveIsMobile.value) {
-    mobileFoldOpen.value = { mode: false, tasks: false, brief: false, next: false };
+    mobileFoldOpen.value = { mode: true, tasks: true, brief: false, next: false };
   }
   await activateSelectedTaskPrompt();
 }
@@ -602,26 +601,12 @@ function materializeWritePlanFromArtifacts() {
   return true;
 }
 
-function hydrateWritePanelFromActivePlan() {
-  const tree = planStore.activePlan?.artifacts;
-  if (!tree || (!tree.artifacts.length && !tree.operations.length)) return false;
-  if (workshopStore.generatedArtifacts.length && workshopStore.generatedWritePlan.length) return false;
-
-  workshopStore.setGeneratedOutput([...tree.artifacts], [...tree.operations]);
-  activeArtifactId.value = tree.artifacts[0]?.id ?? '';
-  return true;
-}
-
 async function openWritePanel() {
-  mobileFoldOpen.value.next = true;
-  const hydrated = hydrateWritePanelFromActivePlan();
   const filled = materializeWritePlanFromArtifacts();
   if (!workshopStore.generatedArtifacts.length && !workshopStore.generatedWritePlan.length) {
     toastr.warning('当前还没有可写入产物，请先让计划节点输出 ArtifactDelta');
   } else if (filled) {
     toastr.info('已根据产物路径补全写入动作，请先 Dryrun 预检');
-  } else if (hydrated) {
-    toastr.info('已载入计划产物工作区，请先 Dryrun 预检');
   }
   await nextTick();
   writePanelRef.value?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1110,7 +1095,6 @@ async function draftPlan() {
                 <strong>{{ record.status }}</strong>
                 <span>{{ record.title }}</span>
                 <small>{{ record.status === 'blocked' || record.status === 'failed' ? '这一项需要先修一下' : '这一项可以继续' }}</small>
-                <em v-if="record.status === 'blocked' || record.status === 'failed'">{{ record.detail }}</em>
               </li>
             </ul>
           </div>
@@ -1132,10 +1116,8 @@ async function draftPlan() {
           <ChatPanel
             :streaming-content="streamingContent"
             :mobile-input-mode="effectiveIsMobile"
-            :show-exit-button="effectiveIsMobile"
             @send-start="emit('sendStart')"
             @send-failed="emit('sendFailed')"
-            @exit-ide="emit('exitIde')"
           />
         </section>
       </main>
@@ -1193,10 +1175,8 @@ async function draftPlan() {
             <ChatPanel
               :streaming-content="streamingContent"
               :mobile-input-mode="effectiveIsMobile"
-              :show-exit-button="effectiveIsMobile"
               @send-start="emit('sendStart')"
               @send-failed="emit('sendFailed')"
-              @exit-ide="emit('exitIde')"
             />
           </div>
           <div v-if="!isBabyMode" class="activity-wrap">
@@ -1210,10 +1190,8 @@ async function draftPlan() {
       <ChatPanel
         :streaming-content="streamingContent"
         :mobile-input-mode="effectiveIsMobile"
-        :show-exit-button="effectiveIsMobile"
         @send-start="emit('sendStart')"
         @send-failed="emit('sendFailed')"
-        @exit-ide="emit('exitIde')"
       />
     </section>
 
@@ -2021,8 +1999,8 @@ async function draftPlan() {
 
 .workshop-right-float-button img {
   display: block;
-  width: 66px;
-  height: 86px;
+  width: 58px;
+  height: 74px;
   object-fit: contain;
   object-position: center bottom;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.28));
@@ -2066,8 +2044,8 @@ async function draftPlan() {
 }
 
 .workshop-right-float-title img {
-  width: 42px;
-  height: 52px;
+  width: 32px;
+  height: 40px;
   object-fit: contain;
   filter: drop-shadow(0 5px 9px rgba(0, 0, 0, 0.24));
 }

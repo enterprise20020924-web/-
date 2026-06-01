@@ -20,6 +20,12 @@ interface MvuVariableDraft {
   note: string;
 }
 
+interface MvuSystemDraft {
+  systemName: string;
+  updateIntent: string;
+  variables: MvuVariableDraft[];
+}
+
 interface EjsStageDraft {
   title: string;
   condition: string;
@@ -77,22 +83,41 @@ const wardrobeDraft = reactive({
   sceneNotes: '',
 });
 
+function createMvuVariableDraft(overrides: Partial<MvuVariableDraft> = {}): MvuVariableDraft {
+  return {
+    name: '',
+    type: 'number',
+    defaultValue: '0',
+    options: '',
+    min: '',
+    max: '',
+    aiVisible: true,
+    readonly: false,
+    note: '',
+    ...overrides,
+  };
+}
+
+function createMvuSystemDraft(overrides: Partial<MvuSystemDraft> = {}): MvuSystemDraft {
+  return {
+    systemName: overrides.systemName ?? '',
+    updateIntent: overrides.updateIntent ?? '',
+    variables:
+      overrides.variables && overrides.variables.length > 0
+        ? overrides.variables
+        : [
+            createMvuVariableDraft({
+              name: '好感度',
+              min: '0',
+              max: '100',
+              note: '关系推进用数值',
+            }),
+          ],
+  };
+}
+
 const mvuDraft = reactive({
-  systemName: '',
-  updateIntent: '',
-  variables: [
-    {
-      name: '好感度',
-      type: 'number' as VariableType,
-      defaultValue: '0',
-      options: '',
-      min: '0',
-      max: '100',
-      aiVisible: true,
-      readonly: false,
-      note: '关系推进用数值',
-    },
-  ] as MvuVariableDraft[],
+  systems: [createMvuSystemDraft()] as MvuSystemDraft[],
 });
 
 const ejsDraft = reactive({
@@ -156,17 +181,23 @@ const supported = computed(() =>
 const hasBoundWorldbook = computed(() => Boolean(currentBoundWorldbook.value.trim()));
 
 const mvuVariableOptions = computed(() =>
-  mvuDraft.variables
-    .map((variable, index) => {
-      const key = mvuVariableKey(variable, index);
-      const label = variable.name.trim() || `变量${index + 1}`;
-      return {
-        key,
-        label,
-        typeLabel: variableTypeLabels[variable.type],
-        note: variable.note.trim(),
-        path: `stat_data.${mvuSystemName()}.${key}`,
-      };
+  mvuDraft.systems
+    .flatMap((system, systemIndex) => {
+      const systemName = mvuSystemName(system, systemIndex);
+      return system.variables.map((variable, variableIndex) => {
+        const key = mvuVariableKey(variable, variableIndex);
+        const label = variable.name.trim() || `变量${variableIndex + 1}`;
+        const path = `stat_data.${systemName}.${key}`;
+        return {
+          id: `${systemIndex}:${variableIndex}:${path}`,
+          key,
+          label,
+          systemName,
+          typeLabel: variableTypeLabels[variable.type],
+          note: variable.note.trim(),
+          path,
+        };
+      });
     })
     .filter(item => item.key.trim()),
 );
@@ -174,13 +205,13 @@ const mvuVariableOptions = computed(() =>
 watch(
   mvuVariableOptions,
   options => {
-    const keys = options.map(item => item.key);
-    selectedStatusVariableKeys.value = selectedStatusVariableKeys.value.filter(key => keys.includes(key));
+    const ids = options.map(item => item.id);
+    selectedStatusVariableKeys.value = selectedStatusVariableKeys.value.filter(key => ids.includes(key));
     if (mvuSchemaReady.value && selectedStatusVariableKeys.value.length === 0) {
-      selectedStatusVariableKeys.value = keys;
+      selectedStatusVariableKeys.value = ids;
     }
-    if (!selectedEjsVariableKey.value || !keys.includes(selectedEjsVariableKey.value)) {
-      selectedEjsVariableKey.value = keys[0] ?? '';
+    if (!selectedEjsVariableKey.value || !ids.includes(selectedEjsVariableKey.value)) {
+      selectedEjsVariableKey.value = ids[0] ?? '';
     }
   },
   { immediate: true },
@@ -500,8 +531,13 @@ function buildWardrobeContent(): string {
   ].join('\n');
 }
 
-function mvuSystemName(): string {
-  return clean(mvuDraft.systemName === '' ? characterName('角色') : mvuDraft.systemName);
+function mvuSystemName(system: MvuSystemDraft, index = 0): string {
+  const fallback = mvuDraft.systems.length > 1 ? `变量系统${index + 1}` : characterName('角色');
+  return clean(system.systemName === '' ? fallback : system.systemName);
+}
+
+function primaryMvuSystemName(): string {
+  return mvuDraft.systems[0] ? mvuSystemName(mvuDraft.systems[0], 0) : characterName('角色');
 }
 
 function mvuVariableKey(variable: MvuVariableDraft, index: number): string {
@@ -589,18 +625,19 @@ function mvuSchemaExpression(variable: MvuVariableDraft): string {
 }
 
 function buildMvuSchemaContent(): string {
-  const systemName = mvuSystemName();
-  const fields = mvuDraft.variables.map((variable, index) => {
-    return `    ${JSON.stringify(mvuVariableKey(variable, index))}: ${mvuSchemaExpression(variable)},`;
+  const systemBlocks = mvuDraft.systems.flatMap((system, systemIndex) => {
+    const systemName = mvuSystemName(system, systemIndex);
+    const fields = system.variables.map((variable, variableIndex) => {
+      return `    ${JSON.stringify(mvuVariableKey(variable, variableIndex))}: ${mvuSchemaExpression(variable)},`;
+    });
+    return [`  ${JSON.stringify(systemName)}: z.object({`, ...fields, '  }),'];
   });
 
   return [
     "import { registerMvuSchema } from 'https://testingcf.jsdelivr.net/gh/StageDog/tavern_resource/dist/util/mvu_zod.js';",
     '',
     'export const Schema = z.object({',
-    `  ${JSON.stringify(systemName)}: z.object({`,
-    ...fields,
-    '  }),',
+    ...systemBlocks,
     '});',
     '',
     '$(() => {',
@@ -610,14 +647,18 @@ function buildMvuSchemaContent(): string {
 }
 
 function buildMvuInitvarContent(): string {
-  const systemName = mvuSystemName();
-  return [
-    `${systemName}:`,
-    ...mvuDraft.variables.map((variable, index) => {
-      const value = parseMvuValue(variable);
-      return `  ${mvuVariableKey(variable, index)}: ${typeof value === 'string' ? JSON.stringify(value) : value}`;
-    }),
-  ].join('\n');
+  return mvuDraft.systems
+    .flatMap((system, systemIndex) => {
+      const systemName = mvuSystemName(system, systemIndex);
+      return [
+        `${systemName}:`,
+        ...system.variables.map((variable, variableIndex) => {
+          const value = parseMvuValue(variable);
+          return `  ${mvuVariableKey(variable, variableIndex)}: ${typeof value === 'string' ? JSON.stringify(value) : value}`;
+        }),
+      ];
+    })
+    .join('\n');
 }
 
 function buildMvuListContent(): string {
@@ -627,22 +668,34 @@ function buildMvuListContent(): string {
 }
 
 function buildMvuUpdateRulesContent(): string {
-  const systemName = mvuSystemName();
-  const updateIntent = clean(mvuDraft.updateIntent);
-  const lines = ['---', '变量更新规则:', `  ${systemName}:`];
+  const lines = ['---', '变量更新规则:'];
   let writableCount = 0;
-  mvuDraft.variables.forEach((variable, index) => {
-    const key = mvuVariableKey(variable, index);
-    if (variable.readonly || !variable.aiVisible || key.startsWith('_') || key.startsWith('$')) return;
-    writableCount += 1;
-    const range = variable.type === 'number' ? mvuRangeText(variable) : '';
-    const type = mvuRuleType(variable);
-    lines.push(`    ${key}:`);
-    if (type) lines.push(`      type: ${type}`);
-    if (range) lines.push(`      range: ${range}`);
-    lines.push('      check:');
-    lines.push(`        - ${clean(variable.note === '' ? updateIntent : variable.note)}`);
+
+  mvuDraft.systems.forEach((system, systemIndex) => {
+    const systemName = mvuSystemName(system, systemIndex);
+    const updateIntent = clean(system.updateIntent);
+    const systemLines = [`  ${systemName}:`];
+    let systemWritableCount = 0;
+
+    system.variables.forEach((variable, variableIndex) => {
+      const key = mvuVariableKey(variable, variableIndex);
+      if (variable.readonly || !variable.aiVisible || key.startsWith('_') || key.startsWith('$')) return;
+      writableCount += 1;
+      systemWritableCount += 1;
+      const range = variable.type === 'number' ? mvuRangeText(variable) : '';
+      const type = mvuRuleType(variable);
+      systemLines.push(`    ${key}:`);
+      if (type) systemLines.push(`      type: ${type}`);
+      if (range) systemLines.push(`      range: ${range}`);
+      systemLines.push('      check:');
+      systemLines.push(`        - ${clean(variable.note === '' ? updateIntent : variable.note)}`);
+    });
+
+    if (systemWritableCount > 0) {
+      lines.push(...systemLines);
+    }
   });
+
   if (writableCount === 0) return ['---', '变量更新规则: {}'].join('\n');
   return lines.join('\n');
 }
@@ -696,8 +749,8 @@ function buildMvuOutputFormatEmphasizeContent(): string {
 }
 
 function selectedEjsVariablePath(): string {
-  const option = mvuVariableOptions.value.find(item => item.key === selectedEjsVariableKey.value);
-  return option?.path ?? `stat_data.${mvuSystemName()}.${mvuVariableOptions.value[0]?.key ?? '好感度'}`;
+  const option = mvuVariableOptions.value.find(item => item.id === selectedEjsVariableKey.value);
+  return option?.path ?? mvuVariableOptions.value[0]?.path ?? `stat_data.${primaryMvuSystemName()}.好感度`;
 }
 
 function escapeRegExp(value: string): string {
@@ -760,23 +813,27 @@ function buildEjsStagePaletteContent(): string {
   return lines.join('\n');
 }
 
-function addMvuVariable() {
-  mvuDraft.variables.push({
-    name: '',
-    type: 'number',
-    defaultValue: '0',
-    options: '',
-    min: '',
-    max: '',
-    aiVisible: true,
-    readonly: false,
-    note: '',
-  });
+function addMvuSystem() {
+  mvuDraft.systems.push(
+    createMvuSystemDraft({
+      systemName: `变量系统${mvuDraft.systems.length + 1}`,
+      variables: [createMvuVariableDraft()],
+    }),
+  );
 }
 
-function removeMvuVariable(index: number) {
-  if (mvuDraft.variables.length <= 1) return;
-  mvuDraft.variables.splice(index, 1);
+function removeMvuSystem(index: number) {
+  if (mvuDraft.systems.length <= 1) return;
+  mvuDraft.systems.splice(index, 1);
+}
+
+function addMvuVariable(system: MvuSystemDraft) {
+  system.variables.push(createMvuVariableDraft());
+}
+
+function removeMvuVariable(system: MvuSystemDraft, index: number) {
+  if (system.variables.length <= 1) return;
+  system.variables.splice(index, 1);
 }
 
 function addEjsStage() {
@@ -1012,7 +1069,7 @@ function applyWardrobeDraft() {
 }
 
 function applyMvuDraft() {
-  const target = cleanPathPart(worldbookName(mvuSystemName()));
+  const target = cleanPathPart(worldbookName(primaryMvuSystemName()));
   const character = 'current';
   const runtimeArtifactId = artifactId('mvu-runtime');
   const schemaArtifactId = artifactId('mvu-schema');
@@ -1083,24 +1140,29 @@ function applyMvuDraft() {
     '【宝宝辅食结构化素材：MVU基础变量】',
     '处理边界：宝宝辅食模式不让 AI 自由写 schema；请根据字段表生成完整 MVU 链路，并严格执行 MVU_ZOD 指南。',
     '',
-    `变量系统名: ${clean(mvuDraft.systemName)}`,
     `当前角色: ${character}`,
     `目标世界书: ${target}`,
-    `更新意图: ${clean(mvuDraft.updateIntent)}`,
     '',
-    '变量字段:',
-    ...mvuDraft.variables.map((variable, index) =>
+    '变量系统:',
+    ...mvuDraft.systems.map((system, systemIndex) =>
       [
-        `  - 序号: ${index + 1}`,
-        `    名称: ${clean(variable.name)}`,
-        `    类型: ${variable.type}`,
-        `    开局值: ${clean(variable.defaultValue)}`,
-        `    固定选项: ${clean(variable.options)}`,
-        `    最小值: ${clean(variable.min)}`,
-        `    最大值: ${clean(variable.max)}`,
-        `    发给AI: ${variable.aiVisible ? '是' : '否，使用$前缀或等效隐藏策略'}`,
-        `    只读: ${variable.readonly ? '是，使用_前缀或等效只读策略' : '否'}`,
-        `    用途: ${clean(variable.note)}`,
+        `  - 系统名: ${mvuSystemName(system, systemIndex)}`,
+        `    更新意图: ${clean(system.updateIntent)}`,
+        '    变量字段:',
+        ...system.variables.map((variable, variableIndex) =>
+          [
+            `      - 序号: ${variableIndex + 1}`,
+            `        名称: ${clean(variable.name)}`,
+            `        类型: ${variable.type}`,
+            `        开局值: ${clean(variable.defaultValue)}`,
+            `        固定选项: ${clean(variable.options)}`,
+            `        最小值: ${clean(variable.min)}`,
+            `        最大值: ${clean(variable.max)}`,
+            `        发给AI: ${variable.aiVisible ? '是' : '否，使用$前缀或等效隐藏策略'}`,
+            `        只读: ${variable.readonly ? '是，使用_前缀或等效只读策略' : '否'}`,
+            `        用途: ${clean(variable.note)}`,
+          ].join('\n'),
+        ),
       ].join('\n'),
     ),
     '',
@@ -1162,8 +1224,8 @@ function applyMvuDraft() {
     ],
   );
   mvuSchemaReady.value = true;
-  selectedStatusVariableKeys.value = mvuVariableOptions.value.map(item => item.key);
-  selectedEjsVariableKey.value = selectedEjsVariableKey.value || mvuVariableOptions.value[0]?.key || '';
+  selectedStatusVariableKeys.value = mvuVariableOptions.value.map(item => item.id);
+  selectedEjsVariableKey.value = selectedEjsVariableKey.value || mvuVariableOptions.value[0]?.id || '';
   toastr.success('MVU 成套产物已生成，先让前端过一遍硬约束');
 }
 
@@ -1178,13 +1240,13 @@ function applyEjsStageDraft() {
   const controllerName = cleanPathPart(ejsDraft.controllerName);
   const ejsArtifactId = artifactId('ejs-stage-palette');
   const content = buildEjsStagePaletteContent();
-  const selectedVariable = mvuVariableOptions.value.find(item => item.key === selectedEjsVariableKey.value);
+  const selectedVariable = mvuVariableOptions.value.find(item => item.id === selectedEjsVariableKey.value);
   workshopStore.draft.assistantNotes = [
     '【宝宝辅食结构化素材：多阶段人设】',
     '处理边界：阶段人设文字由用户手写，禁止 AI 改写创意；这里使用调色盘多阶段的一体化 EJS 写法，不拆成被 getwi 加载的禁用条目。',
     '',
     `条目名: ${clean(ejsDraft.controllerName)}`,
-    `用于判断阶段的变量: ${selectedVariable?.label ?? selectedEjsVariableKey.value}`,
+    `用于判断阶段的变量: ${selectedVariable ? `${selectedVariable.systemName}.${selectedVariable.label}` : selectedEjsVariableKey.value}`,
     `内部变量路径: ${selectedEjsVariablePath()}`,
     `兜底说明: ${clean(ejsDraft.fallbackEntry)}`,
     '',
@@ -1239,7 +1301,7 @@ function applyEjsStageDraft() {
 function mvuStatusVariablePaths(): string[] {
   if (mvuSchemaReady.value) {
     const selected = new Set(selectedStatusVariableKeys.value);
-    return mvuVariableOptions.value.filter(item => selected.has(item.key)).map(item => item.path);
+    return [...new Set(mvuVariableOptions.value.filter(item => selected.has(item.id)).map(item => item.path))];
   }
 
   return mvuStatusDraft.variables
@@ -1829,129 +1891,147 @@ function applyBeautifyDraft() {
     </div>
 
     <div v-else-if="selectedTaskId === 'mvu.schema'" class="wizard-body">
-      <div class="form-grid two">
-        <label>
-          <span>变量系统名</span>
-          <input
-            v-model="mvuDraft.systemName"
-            :placeholder="babyPlaceholder('mvu.system')"
-            @focus="setBabyField('mvu.system', mvuDraft.systemName)"
-            @input="updateBabyField('mvu.system', $event)"
-          >
-        </label>
-        <label>
-          <span>更新意图</span>
-          <input
-            v-model="mvuDraft.updateIntent"
-            :placeholder="babyPlaceholder('mvu.intent')"
-            @focus="setBabyField('mvu.intent', mvuDraft.updateIntent)"
-            @input="updateBabyField('mvu.intent', $event)"
-          >
-        </label>
-      </div>
-
       <div class="variable-list">
-        <div v-for="(variable, index) in mvuDraft.variables" :key="index" class="variable-row">
+        <div v-for="(system, systemIndex) in mvuDraft.systems" :key="systemIndex" class="variable-system-row">
           <div class="variable-head">
-            <strong>变量 {{ index + 1 }}</strong>
-            <button :disabled="mvuDraft.variables.length <= 1" @click="removeMvuVariable(index)">
+            <strong>变量系统 {{ systemIndex + 1 }}</strong>
+            <button :disabled="mvuDraft.systems.length <= 1" @click="removeMvuSystem(systemIndex)">
               <SvgIcons name="trash" :size="13" />
             </button>
           </div>
-          <div class="form-grid four">
+
+          <div class="form-grid two">
             <label>
-              <span>名称</span>
+              <span>变量系统名</span>
               <input
-                v-model="variable.name"
-                :placeholder="babyPlaceholder('mvu.variable.name')"
-                @focus="setBabyField('mvu.variable.name', variable.name)"
-                @input="updateBabyField('mvu.variable.name', $event)"
-              >
-            </label>
-            <label>
-              <span>类型</span>
-              <select
-                v-model="variable.type"
-                @focus="setBabyField('mvu.variable.type', variable.type)"
-                @change="updateBabyField('mvu.variable.type', $event)"
-              >
-                <option value="number">数字，比如好感度、金钱</option>
-                <option value="string">文字，比如心情、地点</option>
-                <option value="boolean">是/否，比如是否受伤</option>
-                <option value="enum">固定选项，比如阶段</option>
-              </select>
-            </label>
-            <label>
-              <span>开局值</span>
-              <input
-                v-model="variable.defaultValue"
-                :placeholder="babyPlaceholder('mvu.variable.default')"
-                @focus="setBabyField('mvu.variable.default', variable.defaultValue)"
-                @input="updateBabyField('mvu.variable.default', $event)"
-              >
-            </label>
-            <label v-if="variable.type === 'enum'">
-              <span>可选状态</span>
-              <input
-                v-model="variable.options"
-                :placeholder="babyPlaceholder('mvu.variable.options')"
-                @focus="setBabyField('mvu.variable.options', variable.options)"
-                @input="updateBabyField('mvu.variable.options', $event)"
+                v-model="system.systemName"
+                :placeholder="babyPlaceholder('mvu.system')"
+                @focus="setBabyField('mvu.system', system.systemName)"
+                @input="updateBabyField('mvu.system', $event)"
               >
             </label>
             <label>
-              <span>用途</span>
+              <span>更新意图</span>
               <input
-                v-model="variable.note"
-                :placeholder="babyPlaceholder('mvu.variable.note')"
-                @focus="setBabyField('mvu.variable.note', variable.note)"
-                @input="updateBabyField('mvu.variable.note', $event)"
+                v-model="system.updateIntent"
+                :placeholder="babyPlaceholder('mvu.intent')"
+                @focus="setBabyField('mvu.intent', system.updateIntent)"
+                @input="updateBabyField('mvu.intent', $event)"
               >
             </label>
-            <label>
-              <span>最小值</span>
-              <input
-                v-model="variable.min"
-                :placeholder="babyPlaceholder('mvu.variable.min')"
-                @focus="setBabyField('mvu.variable.min', variable.min)"
-                @input="updateBabyField('mvu.variable.min', $event)"
-              >
-            </label>
-            <label>
-              <span>最大值</span>
-              <input
-                v-model="variable.max"
-                :placeholder="babyPlaceholder('mvu.variable.max')"
-                @focus="setBabyField('mvu.variable.max', variable.max)"
-                @input="updateBabyField('mvu.variable.max', $event)"
-              >
-            </label>
-            <label class="check-label">
-              <input
-                v-model="variable.aiVisible"
-                type="checkbox"
-                @focus="setBabyField('mvu.variable.aiVisible', variable.aiVisible ? '勾选' : '未勾选')"
-                @change="setBabyField('mvu.variable.aiVisible', variable.aiVisible ? '勾选' : '未勾选')"
-              >
-              <span>发给AI</span>
-            </label>
-            <label class="check-label">
-              <input
-                v-model="variable.readonly"
-                type="checkbox"
-                @focus="setBabyField('mvu.variable.readonly', variable.readonly ? '勾选' : '未勾选')"
-                @change="setBabyField('mvu.variable.readonly', variable.readonly ? '勾选' : '未勾选')"
-              >
-              <span>只读</span>
-            </label>
+          </div>
+
+          <div class="variable-list">
+            <div v-for="(variable, index) in system.variables" :key="index" class="variable-row is-nested">
+              <div class="variable-head">
+                <strong>{{ mvuSystemName(system, systemIndex) }} / 变量 {{ index + 1 }}</strong>
+                <button :disabled="system.variables.length <= 1" @click="removeMvuVariable(system, index)">
+                  <SvgIcons name="trash" :size="13" />
+                </button>
+              </div>
+              <div class="form-grid four">
+                <label>
+                  <span>名称</span>
+                  <input
+                    v-model="variable.name"
+                    :placeholder="babyPlaceholder('mvu.variable.name')"
+                    @focus="setBabyField('mvu.variable.name', variable.name)"
+                    @input="updateBabyField('mvu.variable.name', $event)"
+                  >
+                </label>
+                <label>
+                  <span>类型</span>
+                  <select
+                    v-model="variable.type"
+                    @focus="setBabyField('mvu.variable.type', variable.type)"
+                    @change="updateBabyField('mvu.variable.type', $event)"
+                  >
+                    <option value="number">数字，比如好感度、金钱</option>
+                    <option value="string">文字，比如心情、地点</option>
+                    <option value="boolean">是/否，比如是否受伤</option>
+                    <option value="enum">固定选项，比如阶段</option>
+                  </select>
+                </label>
+                <label>
+                  <span>开局值</span>
+                  <input
+                    v-model="variable.defaultValue"
+                    :placeholder="babyPlaceholder('mvu.variable.default')"
+                    @focus="setBabyField('mvu.variable.default', variable.defaultValue)"
+                    @input="updateBabyField('mvu.variable.default', $event)"
+                  >
+                </label>
+                <label v-if="variable.type === 'enum'">
+                  <span>可选状态</span>
+                  <input
+                    v-model="variable.options"
+                    :placeholder="babyPlaceholder('mvu.variable.options')"
+                    @focus="setBabyField('mvu.variable.options', variable.options)"
+                    @input="updateBabyField('mvu.variable.options', $event)"
+                  >
+                </label>
+                <label>
+                  <span>用途</span>
+                  <input
+                    v-model="variable.note"
+                    :placeholder="babyPlaceholder('mvu.variable.note')"
+                    @focus="setBabyField('mvu.variable.note', variable.note)"
+                    @input="updateBabyField('mvu.variable.note', $event)"
+                  >
+                </label>
+                <label>
+                  <span>最小值</span>
+                  <input
+                    v-model="variable.min"
+                    :placeholder="babyPlaceholder('mvu.variable.min')"
+                    @focus="setBabyField('mvu.variable.min', variable.min)"
+                    @input="updateBabyField('mvu.variable.min', $event)"
+                  >
+                </label>
+                <label>
+                  <span>最大值</span>
+                  <input
+                    v-model="variable.max"
+                    :placeholder="babyPlaceholder('mvu.variable.max')"
+                    @focus="setBabyField('mvu.variable.max', variable.max)"
+                    @input="updateBabyField('mvu.variable.max', $event)"
+                  >
+                </label>
+                <label class="check-label">
+                  <input
+                    v-model="variable.aiVisible"
+                    type="checkbox"
+                    @focus="setBabyField('mvu.variable.aiVisible', variable.aiVisible ? '勾选' : '未勾选')"
+                    @change="setBabyField('mvu.variable.aiVisible', variable.aiVisible ? '勾选' : '未勾选')"
+                  >
+                  <span>发给AI</span>
+                </label>
+                <label class="check-label">
+                  <input
+                    v-model="variable.readonly"
+                    type="checkbox"
+                    @focus="setBabyField('mvu.variable.readonly', variable.readonly ? '勾选' : '未勾选')"
+                    @change="setBabyField('mvu.variable.readonly', variable.readonly ? '勾选' : '未勾选')"
+                  >
+                  <span>只读</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="variable-system-actions">
+            <button class="secondary-mini" @click="addMvuVariable(system)">
+              <SvgIcons name="plus" :size="14" />
+              给这个系统添加变量
+            </button>
           </div>
         </div>
       </div>
 
       <div class="wizard-actions">
-        <button class="secondary-mini" @click="addMvuVariable">
+        <button class="secondary-mini" @click="addMvuSystem">
           <SvgIcons name="plus" :size="14" />
-          添加变量
+          添加变量系统
         </button>
         <button class="wizard-action" @click="applyMvuDraft">
           <SvgIcons name="download" :size="14" />
@@ -1982,8 +2062,8 @@ function applyBeautifyDraft() {
         <label v-if="mvuSchemaReady">
           <span>用哪个变量判断阶段</span>
           <select v-model="selectedEjsVariableKey">
-            <option v-for="option in mvuVariableOptions" :key="option.key" :value="option.key">
-              {{ option.label }}（{{ option.typeLabel }}）
+            <option v-for="option in mvuVariableOptions" :key="option.id" :value="option.id">
+              {{ option.systemName }} / {{ option.label }}（{{ option.typeLabel }}）
             </option>
           </select>
         </label>
@@ -2081,10 +2161,10 @@ function applyBeautifyDraft() {
         </label>
         <div v-if="mvuSchemaReady" class="wide variable-picker">
           <span>状态栏显示哪些变量</span>
-          <label v-for="option in mvuVariableOptions" :key="option.key" class="pick-label">
-            <input v-model="selectedStatusVariableKeys" type="checkbox" :value="option.key">
-            <strong>{{ option.label }}</strong>
-            <small>{{ option.typeLabel }}{{ option.note ? ` · ${option.note}` : '' }}</small>
+          <label v-for="option in mvuVariableOptions" :key="option.id" class="pick-label">
+            <input v-model="selectedStatusVariableKeys" type="checkbox" :value="option.id">
+            <strong>{{ option.systemName }} / {{ option.label }}</strong>
+            <small>{{ option.typeLabel }} · {{ option.path }}{{ option.note ? ` · ${option.note}` : '' }}</small>
           </label>
         </div>
         <label class="wide">
@@ -2364,12 +2444,26 @@ select:focus {
   gap: 10px;
 }
 
+.variable-system-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--ide-success-border);
+  border-radius: 10px;
+  background: var(--ide-success-soft);
+}
+
 .variable-row,
 .stage-row {
   padding: 12px;
   border: 1px solid var(--ide-border);
   border-radius: 8px;
   background: var(--ide-bg2);
+}
+
+.variable-row.is-nested {
+  background: var(--ide-surface);
 }
 
 .variable-head {
@@ -2426,6 +2520,11 @@ select:focus {
   gap: 8px;
   justify-content: flex-end;
   flex-wrap: wrap;
+}
+
+.variable-system-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .secondary-mini,
