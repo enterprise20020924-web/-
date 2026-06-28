@@ -1,0 +1,592 @@
+@import '../百破威力加强版/styles/bp.tokens.css';
+@import '../百破威力加强版/styles/bp.base.css';
+@import '../百破威力加强版/modules/narrative/narrative-window.css';
+
+html,
+body {
+  min-block-size: 100%;
+  background: transparent;
+  overflow: hidden !important;
+}
+
+body {
+  color: var(--SmartThemeBodyColor, var(--bp-paper));
+}
+
+#bp-narrative-panel > .bp-stage-frame {
+  z-index: 40 !important;
+}
+
+.ContentChatRenderer {
+  --bp-frame-art-inline-scale: 1.01;
+  --bp-frame-art-block-scale: 1;
+  --bp-frame-safe-block-start: clamp(38px, 3.2vw, 56px);
+  --bp-frame-safe-block-end: clamp(42px, 3.4vw, 62px);
+  --bp-frame-safe-inline: clamp(16px, 1.45vw, 28px);
+  --bp-stage-info-blue: #63d7ff;
+  --bp-stage-info-glow: rgba(80, 200, 255, 0.42);
+
+  display: grid;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-block-size: 100%;
+  padding: clamp(18px, 1.6vw, 28px) clamp(6px, 0.5vw, 10px) clamp(24px, 2vw, 34px);
+  overflow: visible;
+}
+
+.ContentChatRenderer > .bp-narrative-panel {
+  inline-size: 100%;
+  max-inline-size: none;
+  block-size: clamp(880px, 57vw, 950px);
+  min-block-size: 880px;
+  margin-inline: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  overflow: hidden !important;
+}
+
+.ContentChatRenderer .bp-stage-frame {
+  inset: 0 !important;
+  z-index: 40 !important;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ContentChatRenderer .bp-stage-frame::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset-inline-start: 50%;
+  inset-block-end: clamp(24px, 2.15vw, 36px);
+  inline-size: clamp(380px, 36%, 560px);
+  block-size: clamp(16px, 1.25vw, 22px);
+  background: #23a8ff;
+  transform: translateX(-50%);
+}
+
+.ContentChatRenderer .bp-stage-frame-image {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: calc(100% * var(--bp-frame-art-inline-scale));
+  block-size: calc(100% * var(--bp-frame-art-block-scale));
+  max-inline-size: none;
+  max-block-size: none;
+  object-fit: fill;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 10px 22px rgba(34, 119, 224, 0.22));
+  user-select: none;
+}
+
+.ContentChatRenderer .bp-stage-frame > .bp-stage-frame-info.bp-stage-frame-info {
+  position: absolute;
+  z-index: 4;
+  inset-inline-start: 50%;
+  box-sizing: border-box;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: var(--bp-stage-info-blue);
+  font-family: var(--bp-title-font);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  padding-inline: clamp(18px, 1.7vw, 28px);
+  text-align: center;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 10px var(--bp-stage-info-glow);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.ContentChatRenderer .bp-stage-frame-info--time {
+  inset-block-start: clamp(2px, 0.65vw, 12px);
+  inline-size: clamp(420px, 38vw, 640px);
+  block-size: clamp(58px, 5vw, 78px);
+  font-size: clamp(1.38rem, 1.8vw, 2rem);
+}
+
+.ContentChatRenderer .bp-stage-frame-info--location {
+  inset-block-start: clamp(66px, 5.45vw, 86px);
+  inline-size: clamp(280px, 24vw, 430px);
+  block-size: clamp(38px, 3.25vw, 52px);
+  font-size: clamp(1.22rem, 1.55vw, 1.75rem);
+}
+
+.ContentChatRenderer .bp-stage-frame > :not(.bp-stage-frame-image):not(.bp-stage-frame-info) {
+  display: none !important;
+}
+
+.ContentChatRenderer .bp-galgame-screen {
+  --bp-galgame-screen-margin-block-start: clamp(14px, 1.2vw, 22px);
+  --bp-galgame-screen-margin-block-end: clamp(10px, 0.8vw, 16px);
+  --bp-galgame-screen-margin-inline: clamp(4px, 0.45vw, 8px);
+  --bp-portrait-container-inline: 325px;
+  --bp-portrait-container-block: 698.2421875px;
+  --bp-user-portrait-zone: var(--bp-portrait-container-inline);
+  --bp-npc-portrait-zone: var(--bp-portrait-container-inline);
+  --bp-dialogue-inline: min(70%, 994px);
+
+  block-size: calc(100% - var(--bp-frame-safe-block-start) - var(--bp-frame-safe-block-end));
+  min-block-size: 0;
+  margin: var(--bp-frame-safe-block-start) var(--bp-frame-safe-inline) var(--bp-frame-safe-block-end);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  z-index: 2;
+}
+
+.ContentChatRenderer .bp-galgame-screen::after,
+.ContentChatRenderer .bp-scene-overlay,
+.ContentChatRenderer .bp-galgame-scene-bg::after {
+  display: none;
+}
+
+.ContentChatRenderer .bp-galgame-scene-bg {
+  background: transparent;
+  background-image: none !important;
+}
+
+.ContentChatRenderer .bp-scene-background-image {
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.ContentChatRenderer .bp-actor-sprite {
+  inline-size: var(--bp-portrait-container-inline);
+  block-size: var(--bp-portrait-container-block);
+  inset-block-start: auto;
+  inset-block-end: 8px;
+  cursor: zoom-in;
+  outline: none;
+  pointer-events: auto;
+}
+
+.ContentChatRenderer .bp-actor-sprite.is-user {
+  inset-inline-start: clamp(12px, 1.1vw, 20px);
+}
+
+.ContentChatRenderer .bp-actor-sprite.is-npc {
+  inset-inline-end: clamp(12px, 1.1vw, 20px);
+}
+
+.ContentChatRenderer .bp-actor-sprite .bp-actor-portrait {
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: none;
+  max-block-size: none;
+  pointer-events: none;
+}
+
+.ContentChatRenderer .bp-actor-sprite .bp-actor-portrait.is-visible,
+.ContentChatRenderer .bp-actor-sprite.is-active .bp-actor-portrait.is-visible {
+  filter: none;
+}
+
+.ContentChatRenderer .bp-actor-sprite:focus-visible {
+  filter: drop-shadow(0 0 18px rgba(99, 215, 255, 0.65));
+}
+
+.ContentChatRenderer .bp-galgame-dialog-area {
+  inline-size: min(78%, 1040px);
+  width: min(78%, 1040px);
+  margin-block-end: 38px;
+}
+
+.ContentChatRenderer .bp-dialogue-panel {
+  min-block-size: clamp(132px, 12.2vh, 174px);
+  padding: clamp(76px, 5.1vw, 88px) clamp(36px, 3.6vw, 54px) clamp(16px, 1.8vw, 24px);
+  color: #f5fbff;
+  background: linear-gradient(180deg, rgba(22, 43, 70, 0.5), rgba(7, 20, 39, 0.42));
+  border: 1px solid rgba(169, 222, 255, 0.38);
+  border-block-start-color: rgba(232, 248, 255, 0.52);
+  border-block-end-color: rgba(100, 177, 235, 0.3);
+  border-radius: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -18px 34px rgba(0, 19, 42, 0.16),
+    0 14px 34px rgba(2, 10, 24, 0.14);
+  clip-path: none;
+  backdrop-filter: blur(0.5px) saturate(1.04);
+  -webkit-backdrop-filter: blur(0.5px) saturate(1.04);
+}
+
+.ContentChatRenderer .bp-dialogue-panel::before {
+  display: block;
+  opacity: 1;
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(218, 243, 255, 0.38) 5%, rgba(255, 255, 255, 0.86) 12%, rgba(255, 255, 255, 0.98) 50%, rgba(255, 255, 255, 0.86) 88%, rgba(218, 243, 255, 0.38) 95%, transparent 100%) 0 58px / 100% 3px no-repeat,
+    linear-gradient(90deg, transparent 0%, rgba(99, 215, 255, 0.16) 8%, rgba(255, 255, 255, 0.34) 50%, rgba(99, 215, 255, 0.16) 92%, transparent 100%) 0 55px / 100% 9px no-repeat,
+    linear-gradient(180deg, rgba(255, 255, 255, 0.065), transparent 46%);
+  pointer-events: none;
+}
+
+.ContentChatRenderer .bp-dialogue-panel::after {
+  display: none;
+}
+
+.ContentChatRenderer .bp-speaker-tag {
+  top: clamp(10px, 1.1vw, 18px);
+  left: clamp(18px, 2.2vw, 34px);
+  align-items: baseline;
+  gap: 14px;
+  filter: none;
+}
+
+.ContentChatRenderer .bp-speaker-name {
+  padding: 0;
+  color: rgba(245, 252, 255, 0.98);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  transform: none;
+  clip-path: none;
+  font-size: clamp(1.55rem, 2.05vw, 2.05rem);
+  font-style: normal;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 10px rgba(0, 20, 40, 0.55);
+}
+
+.ContentChatRenderer .bp-speaker-name::before,
+.ContentChatRenderer .bp-speaker-name::after {
+  display: none;
+  content: none;
+}
+
+.ContentChatRenderer .bp-speaker-affiliation {
+  color: #63d7ff;
+  font-family: var(--bp-title-font);
+  font-size: clamp(1.05rem, 1.35vw, 1.42rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(80, 200, 255, 0.42);
+}
+
+.ContentChatRenderer .bp-dialogue-copy {
+  gap: 18px;
+}
+
+.ContentChatRenderer .bp-dialogue-text {
+  color: rgba(250, 254, 255, 0.98);
+  font-size: clamp(1.22rem, 1.58vw, 1.68rem);
+  font-weight: 800;
+  line-height: 1.55;
+  text-shadow: 0 2px 8px rgba(0, 13, 31, 0.68);
+  white-space: pre-line;
+}
+
+.ContentChatRenderer .bp-dialogue-rail {
+  position: relative;
+  display: block;
+  min-block-size: 48px;
+  margin-block-start: 18px;
+}
+
+.ContentChatRenderer .bp-dialogue-meta-strip {
+  display: block;
+}
+
+.ContentChatRenderer .bp-dialogue-preview-row {
+  display: none;
+}
+
+/* ── Blue Archive (碧蓝档案) 清新UI风格 ── */
+
+/* 基础 .bp-button 在正文前端中的完全重置 */
+.ContentChatRenderer .bp-button {
+  clip-path: none !important;
+  font-style: normal !important;
+  font-family: 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif !important;
+  text-transform: none !important;
+}
+
+.ContentChatRenderer .bp-button::after {
+  display: none !important;
+}
+
+.ContentChatRenderer .bp-button:hover:not(:disabled) {
+  clip-path: none !important;
+  transform: none !important;
+}
+
+.ContentChatRenderer .bp-button:active:not(:disabled) {
+  transform: none !important;
+}
+
+/* 页码计数器 - BA 胶囊按钮 */
+.ContentChatRenderer .bp-dialogue-counter {
+  position: absolute !important;
+  inset-block-end: 0 !important;
+  inset-inline-start: 50% !important;
+  min-inline-size: 116px !important;
+  min-block-size: 42px !important;
+  padding: 8px 24px !important;
+  color: #fff !important;
+  background: linear-gradient(180deg, #a0e1ff 0%, #5ec5f5 40%, #3aabeb 100%) !important;
+  border: 2.5px solid rgba(255, 255, 255, 0.82) !important;
+  border-radius: 999px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 2px 10px rgba(60, 170, 235, 0.35),
+    0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  clip-path: none !important;
+  font-family: 'Segoe UI', 'Noto Sans SC', var(--bp-mono-font), sans-serif !important;
+  font-size: 0.94rem !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  line-height: 1.3 !important;
+  text-align: center !important;
+  text-shadow: 0 1px 3px rgba(0, 50, 120, 0.35) !important;
+  text-transform: none !important;
+  transform: translateX(-50%) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.ContentChatRenderer .bp-dialogue-counter:hover {
+  transform: translateX(-50%) scale(1.05) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 4px 16px rgba(60, 170, 235, 0.45),
+    0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Actions 容器 */
+.ContentChatRenderer .bp-dialogue-actions {
+  display: block !important;
+  position: static !important;
+}
+
+/* ── 导航按钮 - BA 风格圆角矩形 ── */
+.ContentChatRenderer .bp-dialogue-next-button {
+  position: absolute !important;
+  inset-block-end: 0 !important;
+  min-inline-size: clamp(130px, 12vw, 170px) !important;
+  min-block-size: 44px !important;
+  padding: 10px 30px !important;
+  color: #fff !important;
+  background: linear-gradient(180deg, #72ccf7 0%, #3eaaeb 42%, #2a92d9 100%) !important;
+  border: 2.5px solid rgba(255, 255, 255, 0.75) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 3px rgba(0, 60, 130, 0.1),
+    0 3px 10px rgba(42, 146, 217, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  clip-path: none !important;
+  font-family: 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif !important;
+  font-size: 1.02rem !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-shadow: 0 1px 3px rgba(0, 50, 110, 0.32) !important;
+  text-transform: none !important;
+  transform: none !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease !important;
+  overflow: hidden !important;
+}
+
+/* BA 标志性白色十字光装饰 */
+.ContentChatRenderer .bp-dialogue-next-button::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    linear-gradient(90deg, transparent 40%, rgba(255, 255, 255, 0.12) 47%, rgba(255, 255, 255, 0.12) 53%, transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 35%, transparent 65%, rgba(255, 255, 255, 0.06) 100%) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  border-radius: inherit !important;
+  clip-path: none !important;
+  border: none !important;
+  opacity: 1 !important;
+  inline-size: 100% !important;
+  block-size: 100% !important;
+  top: 0 !important;
+  right: 0 !important;
+}
+
+/* BA 按钮后的箭头装饰 - 完全隐藏 */
+.ContentChatRenderer .bp-dialogue-next-button::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Hover - 亮化上浮 */
+.ContentChatRenderer .bp-dialogue-next-button:hover,
+.ContentChatRenderer .bp-dialogue-next-button:hover:not(:disabled) {
+  background: linear-gradient(180deg, #88d6fa 0%, #52b8f0 42%, #3aa0e2 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 6px 18px rgba(42, 146, 217, 0.4),
+    0 2px 5px rgba(0, 0, 0, 0.1) !important;
+  clip-path: none !important;
+}
+
+/* Active - 按下 */
+.ContentChatRenderer .bp-dialogue-next-button:active,
+.ContentChatRenderer .bp-dialogue-next-button:active:not(:disabled) {
+  transform: translateY(1px) !important;
+  background: linear-gradient(180deg, #5abeed 0%, #2e96da 42%, #2282c8 100%) !important;
+  box-shadow:
+    inset 0 2px 5px rgba(0, 40, 80, 0.2),
+    0 1px 4px rgba(42, 146, 217, 0.22) !important;
+  clip-path: none !important;
+}
+
+/* Disabled */
+.ContentChatRenderer .bp-dialogue-next-button:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  background: linear-gradient(180deg, #b0d8ed 0%, #8abfda 42%, #6fa8c8 100%) !important;
+}
+
+/* ── 上一段按钮 - 同样 BA 风格 ── */
+.ContentChatRenderer .bp-dialogue-next-button.is-previous {
+  inset-inline-start: max(24px, calc(50% - 255px)) !important;
+  padding: 10px 30px !important;
+  background: linear-gradient(180deg, #72ccf7 0%, #3eaaeb 42%, #2a92d9 100%) !important;
+  clip-path: none !important;
+}
+
+.ContentChatRenderer .bp-dialogue-next-button.is-previous::after {
+  display: none !important;
+  content: none !important;
+}
+
+.ContentChatRenderer .bp-dialogue-next-button.is-previous:hover,
+.ContentChatRenderer .bp-dialogue-next-button.is-previous:hover:not(:disabled) {
+  background: linear-gradient(180deg, #88d6fa 0%, #52b8f0 42%, #3aa0e2 100%) !important;
+  clip-path: none !important;
+}
+
+/* ── 重开按钮 - BA 风格但用暖色调区分 ── */
+.ContentChatRenderer .bp-dialogue-next-button.is-restart {
+  background: linear-gradient(180deg, #ffb347 0%, #ff8c2a 42%, #e87520 100%) !important;
+  border-color: rgba(255, 255, 255, 0.75) !important;
+  color: #fff !important;
+  clip-path: none !important;
+}
+
+.ContentChatRenderer .bp-dialogue-next-button.is-restart:hover,
+.ContentChatRenderer .bp-dialogue-next-button.is-restart:hover:not(:disabled) {
+  background: linear-gradient(180deg, #ffc266 0%, #ffa040 42%, #ef8530 100%) !important;
+  clip-path: none !important;
+}
+
+/* 下一段按钮 - 定位 */
+.ContentChatRenderer .bp-dialogue-next-button:not(.is-previous) {
+  inset-inline-end: max(24px, calc(50% - 255px)) !important;
+}
+
+.ContentChatRenderer .bp-portrait-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: auto;
+  padding: clamp(12px, 2.4vw, 30px) 0;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(56, 176, 255, 0.18), transparent 44%),
+    rgba(3, 14, 31, 0.68);
+  backdrop-filter: blur(3px) saturate(1.08);
+  -webkit-backdrop-filter: blur(3px) saturate(1.08);
+  pointer-events: auto;
+}
+
+.ContentChatRenderer .bp-portrait-preview-card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: 512px;
+  max-inline-size: none;
+  max-block-size: none;
+  padding: 0;
+  background: linear-gradient(180deg, rgba(245, 252, 255, 0.22), rgba(30, 112, 178, 0.12));
+  border: 2px solid rgba(202, 239, 255, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.58),
+    0 18px 48px rgba(0, 22, 58, 0.42);
+}
+
+.ContentChatRenderer .bp-portrait-preview-image {
+  display: block;
+  inline-size: 512px;
+  max-inline-size: none;
+  max-block-size: none;
+  block-size: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  user-select: none;
+}
+
+.ContentChatRenderer .bp-portrait-preview-close {
+  position: absolute;
+  inset-block-start: clamp(8px, 1vw, 14px);
+  inset-inline-end: clamp(8px, 1vw, 14px);
+  z-index: 2;
+  min-block-size: 34px;
+  padding: 6px 14px;
+  color: #fff;
+  background: linear-gradient(180deg, #72ccf7 0%, #3eaaeb 42%, #2a92d9 100%);
+  border: 2px solid rgba(255, 255, 255, 0.78);
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(42, 146, 217, 0.32);
+  font-family: 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 1px 3px rgba(0, 50, 110, 0.32);
+}
+
+.ContentChatRenderer .bp-actor-sprite.is-muted {
+  z-index: 5;
+}
+
+.ContentChatRenderer .bp-actor-sprite.is-muted .bp-actor-portrait.is-visible {
+  opacity: 0.72;
+  filter: brightness(0.42) saturate(0.8) contrast(1.04);
+}
+
+@media (max-width: 840px) {
+  .ContentChatRenderer {
+    --bp-frame-art-inline-scale: 1.01;
+    --bp-frame-art-block-scale: 1;
+    --bp-frame-safe-block-start: 34px;
+    --bp-frame-safe-block-end: 40px;
+    --bp-frame-safe-inline: 18px;
+
+    padding: 20px 14px 28px;
+  }
+
+  .ContentChatRenderer > .bp-narrative-panel {
+    block-size: clamp(720px, 118vw, 860px);
+    min-block-size: 720px;
+  }
+
+  .ContentChatRenderer .bp-galgame-screen {
+    --bp-galgame-screen-margin-block-start: 14px;
+    --bp-galgame-screen-margin-block-end: 10px;
+    --bp-galgame-screen-margin-inline: 4px;
+    --bp-portrait-container-inline: min(325px, 41vw);
+    --bp-portrait-container-block: calc(var(--bp-portrait-container-inline) * 2.1484375);
+    --bp-dialogue-inline: min(86%, 662px);
+
+    block-size: calc(100% - var(--bp-frame-safe-block-start) - var(--bp-frame-safe-block-end));
+  }
+}
