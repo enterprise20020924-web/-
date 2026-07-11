@@ -1,0 +1,45 @@
+:root {
+  color-scheme: light;
+
+  --bp-white: #ffffff;
+  --bp-paper: #f7fcff;
+  --bp-ice-50: #f2faff;
+  --bp-ice-100: #e5f6ff;
+  --bp-ice-200: #ccecff;
+  --bp-cyan-300: #79dcff;
+  --bp-cyan-400: #48c9ff;
+  --bp-blue-400: #35acef;
+  --bp-blue-500: #168fd6;
+  --bp-blue-600: #0b77bc;
+  --bp-blue-700: #145f93;
+  --bp-navy-700: #214d6b;
+  --bp-navy-800: #173c58;
+  --bp-navy-900: #102f49;
+  --bp-ink: #17324a;
+  --bp-muted: #5c768b;
+  --bp-line: rgba(53, 172, 239, 0.28);
+  --bp-line-strong: rgba(22, 143, 214, 0.52);
+  --bp-glass: rgba(247, 252, 255, 0.9);
+  --bp-glass-strong: rgba(255, 255, 255, 0.96);
+  --bp-yellow: #ffd45c;
+  --bp-danger: #e95f6b;
+  --bp-success: #2ba889;
+
+  --bp-body-font: 'MiSans', 'HarmonyOS Sans SC', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  --bp-title-font: 'Bahnschrift SemiCondensed', 'DIN Alternate', 'HarmonyOS Sans SC', sans-serif;
+  --bp-mono-font: 'Cascadia Code', 'JetBrains Mono', 'SFMono-Regular', monospace;
+  --bp-fast: 170ms;
+  --bp-normal: 210ms;
+  --bp-ease: cubic-bezier(0.2, 0.72, 0.24, 1);
+  --bp-focus-ring: 0 0 0 3px rgba(72, 201, 255, 0.35);
+  --bp-shadow-soft: 0 14px 34px rgba(21, 91, 137, 0.13);
+  --bp-shadow-float: 0 20px 48px rgba(16, 66, 103, 0.18);
+  --bp-shadow-hard: 0 8px 20px rgba(16, 66, 103, 0.15);
+  --bp-outline: 1px solid rgba(53, 172, 239, 0.38);
+  --bp-panel-shape: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  --bp-action-shape: polygon(0 7px, 7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%);
+  --bp-tag-shape: polygon(0 6px, 6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%);
+  --bp-slice-a: 10px;
+  --bp-slice-b: 16px;
+  --bp-pop: translateY(-2px);
+}
