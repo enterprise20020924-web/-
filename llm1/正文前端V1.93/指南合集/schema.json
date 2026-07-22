@@ -1,0 +1,936 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "角色基础": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "_等级": {
+          "default": 1,
+          "type": "number"
+        },
+        "_姓名": {
+          "default": "",
+          "type": "string"
+        },
+        "经验值": {
+          "default": 0,
+          "type": "number",
+          "minimum": 0
+        },
+        "声望": {
+          "default": 0,
+          "type": "number"
+        },
+        "_段位": {
+          "default": "无段位",
+          "type": "string",
+          "enum": [
+            "无段位",
+            "D",
+            "C",
+            "B",
+            "A",
+            "S",
+            "SS",
+            "SSS"
+          ]
+        },
+        "难度": {
+          "default": "普通",
+          "type": "string",
+          "enum": [
+            "简单",
+            "普通",
+            "困难",
+            "抖M",
+            "作弊"
+          ]
+        },
+        "性别": {
+          "default": "女",
+          "type": "string",
+          "enum": [
+            "男",
+            "女",
+            "非二元"
+          ]
+        }
+      }
+    },
+    "核心状态": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "$属性点": {
+          "default": 0,
+          "type": "number",
+          "minimum": 0
+        },
+        "$技能点": {
+          "default": 0,
+          "type": "number",
+          "minimum": 0
+        },
+        "$最大耐力": {
+          "default": 100,
+          "type": "number",
+          "minimum": 1
+        },
+        "$耐力": {
+          "default": 100,
+          "type": "number",
+          "minimum": 0
+        },
+        "$最大快感": {
+          "default": 100,
+          "type": "number",
+          "minimum": 1
+        },
+        "$快感": {
+          "default": 0,
+          "type": "number",
+          "minimum": 0
+        },
+        "堕落度": {
+          "default": 0,
+          "type": "number"
+        },
+        "_潜力": {
+          "default": 5,
+          "type": "number"
+        }
+      }
+    },
+    "基础属性": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "_魅力": {
+          "default": 10,
+          "type": "number",
+          "minimum": 0
+        },
+        "_幸运": {
+          "default": 10,
+          "type": "number",
+          "minimum": 0
+        },
+        "_闪避率": {
+          "default": 0,
+          "type": "number",
+          "minimum": 0
+        },
+        "_暴击率": {
+          "default": 0,
+          "type": "number"
+        }
+      }
+    },
+    "临时状态": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "状态列表": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "default": {},
+            "type": "object",
+            "properties": {
+              "加成": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "剩余回合": {
+                "default": 0,
+                "type": "number",
+                "minimum": 0
+              },
+              "描述": {
+                "default": "",
+                "type": "string"
+              },
+              "资源变化": {
+                "type": "object",
+                "properties": {
+                  "快感": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "耐力": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "是否为百分比": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                }
+              },
+              "特殊效果": {
+                "type": "object",
+                "properties": {
+                  "类型": {
+                    "$ref": "#/$defs/__schema1"
+                  },
+                  "效果值": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "是否为百分比": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "永久状态": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "状态列表": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "default": {},
+            "type": "object",
+            "properties": {
+              "加成": {
+                "$ref": "#/$defs/__schema0"
+              },
+              "描述": {
+                "default": "",
+                "type": "string"
+              },
+              "资源变化": {
+                "type": "object",
+                "properties": {
+                  "快感": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "耐力": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "是否为百分比": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                }
+              },
+              "特殊效果": {
+                "type": "object",
+                "properties": {
+                  "类型": {
+                    "$ref": "#/$defs/__schema1"
+                  },
+                  "效果值": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "是否为百分比": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "性斗系统": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "对手名称": {
+          "default": "",
+          "type": "string"
+        },
+        "性斗类型": {
+          "default": "无",
+          "type": "string",
+          "enum": [
+            "日常切磋",
+            "升段赛",
+            "决斗",
+            "擂台赛",
+            "校内赛",
+            "多校联赛",
+            "黑暗决赛",
+            "无"
+          ]
+        },
+        "胜负规则": {
+          "default": {},
+          "type": "object",
+          "properties": {
+            "高潮次数上限": {
+              "default": 1,
+              "type": "number",
+              "minimum": 1
+            },
+            "允许认输": {
+              "default": true,
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "关系系统": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "在场人物": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": {
+        "default": {},
+        "type": "object",
+        "properties": {
+          "好感度": {
+            "default": 0,
+            "type": "number"
+          },
+          "关系类型": {
+            "default": "陌生人",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "任务系统": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "主线任务": {
+          "default": {},
+          "type": "object",
+          "properties": {
+            "名称": {
+              "default": "",
+              "type": "string"
+            },
+            "描述": {
+              "default": "",
+              "type": "string"
+            },
+            "状态": {
+              "default": "进行中",
+              "type": "string",
+              "enum": [
+                "进行中",
+                "已完成",
+                "已失败",
+                "已放弃"
+              ]
+            },
+            "目标": {
+              "default": {},
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            },
+            "奖励": {
+              "default": "",
+              "type": "string"
+            },
+            "期限": {
+              "default": "无",
+              "type": "string"
+            }
+          }
+        },
+        "支线任务": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "default": {},
+            "type": "object",
+            "properties": {
+              "描述": {
+                "default": "",
+                "type": "string"
+              },
+              "类型": {
+                "default": "日常",
+                "type": "string",
+                "enum": [
+                  "日常",
+                  "特殊",
+                  "限时",
+                  "隐藏"
+                ]
+              },
+              "状态": {
+                "default": "进行中",
+                "type": "string",
+                "enum": [
+                  "进行中",
+                  "已完成",
+                  "已失败",
+                  "已放弃"
+                ]
+              },
+              "目标": {
+                "default": {},
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {}
+              },
+              "奖励": {
+                "default": "",
+                "type": "string"
+              },
+              "期限": {
+                "default": "无",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "已完成记录": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "物品系统": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "学园金币": {
+          "default": 0,
+          "type": "number",
+          "minimum": 0
+        },
+        "背包": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "等级": {
+                    "$ref": "#/$defs/__schema2"
+                  },
+                  "描述": {
+                    "$ref": "#/$defs/__schema3"
+                  },
+                  "类型": {
+                    "type": "string",
+                    "const": "装备"
+                  },
+                  "加成属性": {
+                    "$ref": "#/$defs/__schema0"
+                  },
+                  "部位": {
+                    "type": "string",
+                    "enum": [
+                      "主装备",
+                      "副装备",
+                      "饰品",
+                      "特殊装备"
+                    ]
+                  },
+                  "数量": {
+                    "default": 1,
+                    "type": "number",
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "类型",
+                  "部位"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "等级": {
+                    "$ref": "#/$defs/__schema2"
+                  },
+                  "描述": {
+                    "$ref": "#/$defs/__schema3"
+                  },
+                  "类型": {
+                    "type": "string",
+                    "const": "消耗品"
+                  },
+                  "加成属性": {
+                    "$ref": "#/$defs/__schema0"
+                  },
+                  "耐力增加": {
+                    "type": "number"
+                  },
+                  "快感降低": {
+                    "type": "number"
+                  },
+                  "快感增加": {
+                    "type": "number"
+                  },
+                  "潜力提升": {
+                    "type": "number"
+                  },
+                  "战斗用品": {
+                    "default": false,
+                    "type": "boolean"
+                  },
+                  "数量": {
+                    "default": 1,
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "类型"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "等级": {
+                    "$ref": "#/$defs/__schema2"
+                  },
+                  "描述": {
+                    "$ref": "#/$defs/__schema3"
+                  },
+                  "类型": {
+                    "type": "string",
+                    "const": "其他"
+                  },
+                  "数量": {
+                    "default": 1,
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "类型"
+                ]
+              }
+            ]
+          }
+        },
+        "_装备栏": {
+          "default": {},
+          "type": "object",
+          "properties": {
+            "主装备": {
+              "$ref": "#/$defs/__schema4"
+            },
+            "副装备": {
+              "$ref": "#/$defs/__schema4"
+            },
+            "饰品1": {
+              "$ref": "#/$defs/__schema4"
+            },
+            "饰品2": {
+              "$ref": "#/$defs/__schema4"
+            },
+            "特殊装备": {
+              "$ref": "#/$defs/__schema4"
+            }
+          }
+        }
+      }
+    },
+    "位置系统": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "坐标": {
+          "default": "[1-1]",
+          "type": "string"
+        },
+        "楼层": {
+          "default": 1,
+          "type": "number"
+        },
+        "地点名称": {
+          "default": "初始点",
+          "type": "string"
+        }
+      }
+    },
+    "时间系统": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "日期": {
+          "default": "2025-3-17",
+          "type": "string"
+        },
+        "星期": {
+          "default": 1,
+          "type": "number"
+        },
+        "时间": {
+          "default": "08:00",
+          "type": "string"
+        }
+      }
+    },
+    "势力声望": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "学生会": {
+          "default": 0,
+          "type": "number"
+        },
+        "女权协会": {
+          "default": 0,
+          "type": "number"
+        },
+        "BF社": {
+          "default": 0,
+          "type": "number"
+        },
+        "体育联盟": {
+          "default": 0,
+          "type": "number"
+        },
+        "研究会": {
+          "default": 0,
+          "type": "number"
+        },
+        "地下联盟": {
+          "default": 0,
+          "type": "number"
+        },
+        "男性自保联盟": {
+          "default": 0,
+          "type": "number"
+        },
+        "雌堕会": {
+          "default": 0,
+          "type": "number"
+        }
+      }
+    },
+    "技能系统": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "主动技能": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "基本信息": {
+                "default": {},
+                "type": "object",
+                "properties": {
+                  "技能名称": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "技能描述": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "基础描述": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "技能等级": {
+                    "default": 1,
+                    "type": "number"
+                  },
+                  "稀有度": {
+                    "default": "C",
+                    "type": "string",
+                    "enum": [
+                      "C",
+                      "B",
+                      "A",
+                      "S",
+                      "SS"
+                    ]
+                  }
+                }
+              },
+              "冷却与消耗": {
+                "default": {},
+                "type": "object",
+                "properties": {
+                  "耐力消耗": {
+                    "default": 0,
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "冷却回合数": {
+                    "default": 0,
+                    "type": "number",
+                    "minimum": 0
+                  }
+                }
+              },
+              "伤害与效果": {
+                "default": {},
+                "type": "object",
+                "properties": {
+                  "伤害来源": {
+                    "default": "性斗力",
+                    "type": "string",
+                    "enum": [
+                      "性斗力",
+                      "魅力",
+                      "幸运",
+                      "固定值",
+                      "目标快感"
+                    ]
+                  },
+                  "系数": {
+                    "default": 100,
+                    "type": "number"
+                  },
+                  "基础命中率": {
+                    "default": 100,
+                    "type": "number"
+                  },
+                  "连击数": {
+                    "default": 1,
+                    "type": "number",
+                    "minimum": 1
+                  },
+                  "准确率": {
+                    "default": 100,
+                    "type": "number"
+                  },
+                  "暴击修正": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "效果列表": {
+                    "default": {},
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {
+                      "default": {},
+                      "type": "object",
+                      "properties": {
+                        "效果类型": {
+                          "default": "性斗力",
+                          "type": "string",
+                          "enum": [
+                            "性斗力",
+                            "忍耐力",
+                            "魅力",
+                            "幸运",
+                            "闪避率",
+                            "暴击率",
+                            "束缚",
+                            "快感变化",
+                            "持续快感",
+                            "耐力变化",
+                            "持续耐力",
+                            "敏感",
+                            "乏力",
+                            "迷离",
+                            "集中",
+                            "反弹",
+                            "吸取快感"
+                          ]
+                        },
+                        "效果值": {
+                          "default": 0,
+                          "type": "number"
+                        },
+                        "是否为百分比": {
+                          "default": false,
+                          "type": "boolean"
+                        },
+                        "持续回合数": {
+                          "default": 0,
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "是否作用敌人": {
+                          "default": true,
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "特殊机制": {
+                "default": {},
+                "type": "object",
+                "properties": {
+                  "是否忽视防御": {
+                    "default": false,
+                    "type": "boolean"
+                  },
+                  "是否可被闪避": {
+                    "default": true,
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "$天赋": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "default": {},
+            "type": "object",
+            "properties": {
+              "天赋名称": {
+                "default": "",
+                "type": "string"
+              },
+              "天赋描述": {
+                "default": "",
+                "type": "string"
+              },
+              "天赋效果": {
+                "$ref": "#/$defs/__schema0"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "__schema0": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "魅力加成": {
+          "default": 0,
+          "type": "number"
+        },
+        "幸运加成": {
+          "default": 0,
+          "type": "number"
+        },
+        "基础性斗力加成": {
+          "default": 0,
+          "type": "number"
+        },
+        "基础性斗力成算": {
+          "default": 0,
+          "type": "number"
+        },
+        "基础忍耐力加成": {
+          "default": 0,
+          "type": "number"
+        },
+        "基础忍耐力成算": {
+          "default": 0,
+          "type": "number"
+        },
+        "闪避率加成": {
+          "default": 0,
+          "type": "number"
+        },
+        "暴击率加成": {
+          "default": 0,
+          "type": "number"
+        }
+      }
+    },
+    "__schema1": {
+      "default": "敏感",
+      "type": "string",
+      "enum": [
+        "敏感",
+        "乏力",
+        "迷离",
+        "集中",
+        "反弹",
+        "吸取快感"
+      ]
+    },
+    "__schema2": {
+      "default": "C",
+      "type": "string",
+      "enum": [
+        "C",
+        "B",
+        "A",
+        "S",
+        "SS"
+      ]
+    },
+    "__schema3": {
+      "default": "",
+      "type": "string"
+    },
+    "__schema4": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "名称": {
+          "default": "",
+          "type": "string"
+        },
+        "等级": {
+          "default": "C",
+          "type": "string",
+          "enum": [
+            "C",
+            "B",
+            "A",
+            "S",
+            "SS"
+          ]
+        },
+        "加成属性": {
+          "$ref": "#/$defs/__schema0"
+        },
+        "描述": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

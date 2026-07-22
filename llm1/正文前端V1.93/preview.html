@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>正文前端 V1.9 · Mobile Preview</title>
+    <link rel="stylesheet" href="./mobile/mobile.css" />
+    <style>
+      :root {
+        color-scheme: light;
+        background: transparent;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        inline-size: min(100vw, 412px);
+        min-width: 320px;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        color: #173754;
+        background: transparent;
+        font-family: Bahnschrift, 'Microsoft YaHei UI', sans-serif;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .bpm-mobile-stack,
+      .bpm-app-root {
+        inline-size: 100%;
+      }
+
+      .preview-portrait-placeholder {
+        display: none;
+      }
+
+      .preview-contact-list-view {
+        display: contents;
+      }
+
+      .is-image-unavailable .preview-portrait-figure {
+        display: none;
+      }
+
+      .is-image-unavailable .preview-portrait-placeholder {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bpm-mobile-stack">
+      <main id="preview-app" class="bpm-app-root is-npc is-mood-neutral has-portrait">
+        <div class="bpm-atmosphere" aria-hidden="true">
+          <span class="bpm-atmosphere-orbit bpm-atmosphere-orbit--one"></span>
+          <span class="bpm-atmosphere-orbit bpm-atmosphere-orbit--two"></span>
+          <span class="bpm-atmosphere-cross bpm-atmosphere-cross--one"></span>
+          <span class="bpm-atmosphere-cross bpm-atmosphere-cross--two"></span>
+        </div>
+
+        <header class="bpm-topbar">
+          <div class="bpm-brand-lockup">
+            <span class="bpm-brand-mark" aria-hidden="true"></span>
+            <span class="bpm-brand-copy">
+              <strong>AMAMI</strong>
+              <small>MOBILE STORY ARCHIVE</small>
+            </span>
+          </div>
+          <div class="bpm-topbar-actions">
+            <div class="bpm-live-status">
+              <span class="bpm-live-dot" aria-hidden="true"></span>
+              <span>LIVE</span>
+            </div>
+            <button
+              id="shittim-trigger"
+              class="bpm-shittim-trigger"
+              type="button"
+              aria-controls="preview-shittim-drawer"
+              aria-expanded="false"
+              aria-label="打开什亭之匣"
+            >
+              <span class="bpm-shittim-trigger-mark" aria-hidden="true"><i></i></span>
+              <span class="bpm-shittim-trigger-copy">
+                <small>SHITTIM</small>
+                <strong>什亭之匣</strong>
+              </span>
+              <b>3</b>
+            </button>
+          </div>
+        </header>
+
+        <section class="bpm-stage" aria-label="响木天音的剧情立绘">
+          <div class="bpm-stage-background" aria-hidden="true">
+            <img
+              class="bpm-stage-background-image"
+              src="https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/%E5%85%A8%E8%BA%AB%E7%AB%8B%E7%BB%98/%E7%BB%BC%E5%90%88%E5%95%86%E4%B8%9A%E8%A1%97.png"
+              alt=""
+            />
+            <span class="bpm-stage-background-shade"></span>
+          </div>
+
+          <div class="bpm-stage-index" aria-hidden="true">
+            <span>SCENE</span>
+            <strong id="stage-index">01</strong>
+          </div>
+          <button id="cot-trigger" type="button" class="bpm-cot-trigger" aria-label="打开思维链">
+            <span class="bpm-cot-trigger-mark">COT</span>
+            <span class="bpm-cot-trigger-copy"><small>TRACE</small><strong>已捕获</strong></span>
+            <i aria-hidden="true"></i>
+          </button>
+          <div class="bpm-halo" aria-hidden="true"><span></span></div>
+
+          <figure class="bpm-portrait-figure preview-portrait-figure">
+            <img
+              id="portrait-image"
+              class="bpm-portrait-image"
+              src="https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/%E5%85%A8%E8%BA%AB%E7%AB%8B%E7%BB%98/%E5%93%8D%E6%9C%A8%E5%A4%A9%E9%9F%B3%E6%A0%A1%E6%9C%8D.png"
+              alt="响木天音"
+            />
+          </figure>
+
+          <div class="bpm-portrait-placeholder preview-portrait-placeholder" aria-hidden="true">
+            <span class="bpm-placeholder-halo"></span>
+            <span class="bpm-placeholder-head"></span>
+            <span class="bpm-placeholder-body"></span>
+            <small>PORTRAIT SIGNAL</small>
+          </div>
+
+          <div class="bpm-character-chip">
+            <span class="bpm-character-chip-kicker">FOCUS</span>
+            <strong>响木天音</strong>
+            <small>学生会</small>
+          </div>
+          <div class="bpm-stage-context" aria-label="综合商业街，2026年7月11日 星期五 07:20">
+            <span class="bpm-stage-context-item is-location">
+              <small>LOCATION</small>
+              <strong>综合商业街</strong>
+            </span>
+            <i aria-hidden="true"></i>
+            <span class="bpm-stage-context-item is-time">
+              <small>TIME</small>
+              <strong>2026年7月11日 星期五 07:20</strong>
+            </span>
+          </div>
+          <div class="bpm-stage-scanline" aria-hidden="true"></div>
+        </section>
+
+        <section class="bpm-dialogue-shell" aria-live="polite">
+          <div class="bpm-dialogue-accent" aria-hidden="true"></div>
+          <div class="bpm-speaker-row">
+            <div class="bpm-speaker-badge"><span id="speaker-name">响木天音</span></div>
+            <div class="bpm-speaker-meta">
+              <span id="speaker-affiliation">学生会</span>
+              <small id="mood-label">CALM</small>
+            </div>
+          </div>
+
+          <div id="dialogue-copy" class="bpm-dialogue-copy">
+            <p id="dialogue-text">老师，早安。今天的行程已经整理好了，不过在出发之前，可以先听我说一句吗？</p>
+          </div>
+
+          <footer class="bpm-dialogue-footer">
+            <div class="bpm-progress-copy">
+              <span id="current-index">01</span>
+              <i></i>
+              <span id="segment-count">04</span>
+            </div>
+            <div class="bpm-dialogue-actions">
+              <button id="previous-button" type="button" aria-label="上一段剧情" disabled>
+                <span aria-hidden="true">‹</span>
+              </button>
+              <button id="next-button" class="bpm-next-button" type="button" aria-label="下一段剧情">
+                <span id="next-label">NEXT</span>
+                <b aria-hidden="true">›</b>
+              </button>
+            </div>
+          </footer>
+          <div class="bpm-progress-rail" aria-hidden="true"><span id="progress-bar"></span></div>
+        </section>
+
+        <div class="bpm-safe-footer" aria-hidden="true">
+          <span>BLUE ARCHIVE MOBILE FRAME</span>
+          <i></i>
+          <span>EMBED</span>
+        </div>
+
+        <div id="shittim-layer" class="bpm-shittim-layer" role="presentation" hidden>
+          <section
+            id="preview-shittim-drawer"
+            class="bpm-shittim-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="preview-shittim-title"
+          >
+            <div class="bpm-shittim-handle" aria-hidden="true"></div>
+            <header class="bpm-shittim-header">
+              <button id="contact-back" class="bpm-shittim-back" type="button" aria-label="返回联系人列表" hidden>
+                <span aria-hidden="true">‹</span>
+                联系人
+              </button>
+              <div id="shittim-title-lockup" class="bpm-shittim-title-lockup">
+                <span class="bpm-shittim-title-mark" aria-hidden="true"></span>
+                <span>
+                  <small>SHITTIM CHEST</small>
+                  <strong id="preview-shittim-title">什亭之匣</strong>
+                </span>
+              </div>
+              <button id="shittim-close" class="bpm-shittim-close" type="button" aria-label="关闭什亭之匣">
+                <span aria-hidden="true">×</span>
+              </button>
+            </header>
+
+            <div id="contact-list-view" class="preview-contact-list-view">
+              <nav class="bpm-shittim-tabs" aria-label="什亭之匣功能">
+                <button type="button" class="bpm-shittim-tab is-active" aria-current="page">
+                  <span><i aria-hidden="true"></i>手动性斗</span>
+                  <b>3</b>
+                </button>
+                <span class="bpm-shittim-pending">MORE MODULES · LOCKED</span>
+              </nav>
+
+              <div class="bpm-shittim-content">
+                <section class="bpm-contact-section">
+                  <header class="bpm-contact-section-head">
+                    <span><small>CURRENT SCENE</small><strong>当前在场</strong></span>
+                    <b>1</b>
+                  </header>
+                  <div class="bpm-contact-grid is-present">
+                    <button class="bpm-contact-card is-present" type="button" data-preview-contact="amane">
+                      <span class="bpm-contact-avatar has-image">
+                        <img
+                          src="https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/Q版/响木天音.png"
+                          alt="响木天音 Q版头像"
+                        />
+                        <span>响</span>
+                      </span>
+                      <span class="bpm-contact-copy"><strong>响木天音</strong><small>信赖 · 86%</small></span>
+                      <b aria-hidden="true">›</b>
+                    </button>
+                  </div>
+                </section>
+
+                <section class="bpm-contact-section is-archive">
+                  <header class="bpm-contact-section-head">
+                    <span><small>CONTACT ARCHIVE</small><strong>已知联系人</strong></span>
+                    <b>2</b>
+                  </header>
+                  <div class="bpm-contact-factions" aria-label="联系人阵营">
+                    <button class="is-active" type="button" data-preview-faction="学生会">
+                      <span>学生会</span><b>2</b>
+                    </button>
+                    <button type="button" data-preview-faction="研究会"><span>研究会</span><b>1</b></button>
+                  </div>
+                  <div id="known-contact-grid" class="bpm-contact-grid">
+                    <button class="bpm-contact-card" type="button" data-preview-contact="rin" data-faction="学生会">
+                      <span class="bpm-contact-avatar has-image">
+                        <img
+                          src="https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/Q版/神崎凛1.png"
+                          alt="神崎凛 Q版头像"
+                        />
+                        <span>凛</span>
+                      </span>
+                      <span class="bpm-contact-copy"><strong>神崎凛</strong><small>同僚 · 54%</small></span>
+                      <b aria-hidden="true">›</b>
+                    </button>
+                    <button class="bpm-contact-card" type="button" data-preview-contact="alice" data-faction="学生会">
+                      <span class="bpm-contact-avatar has-image">
+                        <img
+                          src="https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/Q版/爱丽丝.png"
+                          alt="爱丽丝温特 Q版头像"
+                        />
+                        <span>爱</span>
+                      </span>
+                      <span class="bpm-contact-copy"><strong>爱丽丝温特</strong><small>顾问 · 71%</small></span>
+                      <b aria-hidden="true">›</b>
+                    </button>
+                    <button
+                      class="bpm-contact-card"
+                      type="button"
+                      data-preview-contact="shiori"
+                      data-faction="研究会"
+                      hidden
+                    >
+                      <span class="bpm-contact-avatar"><span>诗</span></span>
+                      <span class="bpm-contact-copy"><strong>中岛诗织</strong><small>熟人 · 42%</small></span>
+                      <b aria-hidden="true">›</b>
+                    </button>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <section id="contact-detail-view" class="bpm-contact-detail" aria-live="polite" hidden>
+              <div class="bpm-contact-detail-hero">
+                <div class="bpm-contact-detail-visual">
+                  <span class="bpm-contact-detail-halo" aria-hidden="true"></span>
+                  <img id="detail-portrait" src="" alt="" />
+                  <span id="detail-fallback" class="bpm-contact-detail-fallback" hidden>响</span>
+                </div>
+                <div class="bpm-contact-detail-identity">
+                  <small>CONTACT LINK · ACTIVE</small>
+                  <h4 id="detail-name">响木天音</h4>
+                  <p id="detail-faction">学生会</p>
+                  <div><span id="detail-relation">信赖</span><span id="detail-affection-chip">好感 86</span></div>
+                </div>
+              </div>
+              <div class="bpm-contact-affection">
+                <span><small>AFFECTION SYNC</small><strong id="detail-affection-value">86%</strong></span>
+                <i><b id="detail-affection-bar" style="inline-size: 86%"></b></i>
+              </div>
+              <div class="bpm-contact-stat-grid" aria-label="角色性斗属性">
+                <span><small>等级</small><strong id="detail-level">90</strong></span>
+                <span><small>性斗力</small><strong id="detail-power">900</strong></span>
+                <span><small>耐力</small><strong id="detail-endurance">480</strong></span>
+                <span><small>忍耐力</small><strong id="detail-resilience">900</strong></span>
+              </div>
+              <p id="detail-note" class="bpm-contact-note">学生会干事，享乐至上的堕落魔法少女。</p>
+              <p id="battle-notice" class="bpm-battle-notice is-success" hidden></p>
+              <button id="start-battle" class="bpm-start-battle" type="button">
+                <span><small>MANUAL BATTLE</small><strong>发起性斗</strong></span>
+                <b aria-hidden="true">›</b>
+              </button>
+            </section>
+          </section>
+        </div>
+
+        <div id="cot-layer" class="bpm-cot-layer" role="presentation" hidden>
+          <section class="bpm-cot-page" role="dialog" aria-modal="true" aria-labelledby="preview-cot-title">
+            <header class="bpm-cot-page-header">
+              <button id="cot-close" type="button" class="bpm-cot-back" aria-label="关闭思维链">
+                <span aria-hidden="true">‹</span>返回正文
+              </button>
+              <div class="bpm-cot-title-lockup">
+                <span class="bpm-cot-title-mark" aria-hidden="true">COT</span>
+                <span><small>THINKING TRACE</small><strong id="preview-cot-title">思维链档案</strong></span>
+              </div>
+              <span class="bpm-cot-status">CAPTURED</span>
+            </header>
+            <div class="bpm-cot-page-body">
+              <div class="bpm-cot-trace-head"><span>RAW THINK BLOCK</span><i></i><b>182 CHARS</b></div>
+              <pre class="bpm-cot-text">
+先确认老师此刻更关注天音的状态，而不是日程本身。回应需要保持克制，不直接暴露疲惫，但允许细微停顿表现她被关心后的动摇。
+
+下一段应把“工作汇报”转为更私人的交流，让角色关系自然推进，同时保留学生会干事一贯的严谨表达。</pre
+              >
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <section id="choice-panel" class="bpm-support-panel bpm-choice-panel" aria-labelledby="preview-choice-title">
+        <span class="bpm-support-corner is-top-left" aria-hidden="true"></span>
+        <span class="bpm-support-corner is-bottom-right" aria-hidden="true"></span>
+        <header class="bpm-support-panel-header bpm-choice-panel-header">
+          <span class="bpm-support-panel-index" aria-hidden="true">01</span>
+          <span class="bpm-support-panel-heading"
+            ><small>SELECT ROUTE</small><strong id="preview-choice-title">行动选项</strong></span
+          >
+          <span class="bpm-support-panel-actions">
+            <span class="bpm-support-panel-count">3 ROUTES</span>
+            <button
+              id="choice-toggle"
+              type="button"
+              class="bpm-panel-toggle"
+              aria-expanded="true"
+              aria-controls="choice-body"
+            >
+              收起<span aria-hidden="true">⌄</span>
+            </button>
+          </span>
+        </header>
+        <div id="choice-body" class="bpm-choice-panel-body">
+          <div class="bpm-choice-route-track" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="bpm-choice-grid">
+            <button class="bpm-choice-card is-cyan" type="button" data-preview-choice="A">
+              <span class="bpm-choice-label">A</span>
+              <span class="bpm-choice-copy"
+                ><small>ROUTE 01</small><strong>先让她放下终端，一起去吃早餐。</strong></span
+              >
+              <span class="bpm-choice-state" aria-hidden="true">›</span>
+            </button>
+            <button class="bpm-choice-card is-navy" type="button" data-preview-choice="B">
+              <span class="bpm-choice-label">B</span>
+              <span class="bpm-choice-copy"
+                ><small>ROUTE 02</small><strong>接过行程表，认真听她说明今天的安排。</strong></span
+              >
+              <span class="bpm-choice-state" aria-hidden="true">›</span>
+            </button>
+            <button class="bpm-choice-card is-battle" type="button" data-preview-choice="E">
+              <span class="bpm-choice-label">E</span>
+              <span class="bpm-choice-copy"><small>SPECIAL ROUTE</small><strong>向响木天音发起性斗。</strong></span>
+              <span class="bpm-choice-state" aria-hidden="true">⚔</span>
+            </button>
+          </div>
+          <p id="choice-notice" class="bpm-choice-notice is-success" hidden></p>
+        </div>
+        <button id="choice-summary" type="button" class="bpm-panel-collapsed-summary is-choice" hidden>
+          <span class="bpm-collapsed-signal" aria-hidden="true"><i></i></span>
+          <span><small>CURRENT ROUTE SIGNAL</small><strong id="choice-summary-copy">3 条路线等待选择</strong></span>
+          <b>展开路线 ›</b>
+        </button>
+      </section>
+
+      <section
+        id="variable-panel"
+        class="bpm-support-panel bpm-variable-panel"
+        aria-labelledby="preview-variable-title"
+      >
+        <span class="bpm-support-corner is-top-left" aria-hidden="true"></span>
+        <span class="bpm-support-corner is-bottom-right" aria-hidden="true"></span>
+        <header class="bpm-support-panel-header bpm-variable-panel-header">
+          <span class="bpm-support-panel-index" aria-hidden="true">02</span>
+          <span class="bpm-support-panel-heading"
+            ><small>VARIABLE MIRROR</small><strong id="preview-variable-title">变量更新</strong></span
+          >
+          <span class="bpm-support-panel-actions">
+            <span class="bpm-support-panel-count">3 OPS</span>
+            <button
+              id="variable-toggle"
+              type="button"
+              class="bpm-panel-toggle"
+              aria-expanded="true"
+              aria-controls="variable-body"
+            >
+              收起<span aria-hidden="true">⌄</span>
+            </button>
+          </span>
+        </header>
+        <div id="variable-body" class="bpm-variable-panel-body">
+          <div class="bpm-variable-timeline" aria-hidden="true"><i></i></div>
+          <div class="bpm-variable-operation-list">
+            <article class="bpm-variable-operation is-replace">
+              <span class="bpm-variable-operation-op">更新</span>
+              <span class="bpm-variable-operation-copy"
+                ><small>时间系统</small><strong>时间 更新</strong><span><b>调整为</b>07:20</span></span
+              >
+            </article>
+            <article class="bpm-variable-operation is-insert">
+              <span class="bpm-variable-operation-op">新增</span>
+              <span class="bpm-variable-operation-copy"
+                ><small>关系系统</small><strong>在场人物 新增</strong><span><b>登记为</b>响木天音</span></span
+              >
+            </article>
+            <article class="bpm-variable-operation is-update">
+              <span class="bpm-variable-operation-op">增减</span>
+              <span class="bpm-variable-operation-copy"
+                ><small>关系系统 / 响木天音</small><strong>好感度 变更</strong><span><b>变化量</b>+2</span></span
+              >
+            </article>
+          </div>
+          <footer class="bpm-variable-panel-foot">
+            <span>CAPTURED FROM &lt;JSONPatch&gt;</span><i></i><b>READ ONLY MIRROR</b>
+          </footer>
+        </div>
+        <button id="variable-summary" type="button" class="bpm-panel-collapsed-summary is-variable" hidden>
+          <span class="bpm-collapsed-signal is-variable" aria-hidden="true"><i></i></span>
+          <span><small>LATEST PATCH</small><strong>增减 · 好感度 变更 · +2</strong></span>
+          <b>展开记录 ›</b>
+        </button>
+      </section>
+    </div>
+
+    <script>
+      const segments = [
+        {
+          kind: 'npc',
+          speaker: '响木天音',
+          affiliation: '学生会',
+          mood: 'neutral',
+          moodLabel: 'CALM',
+          text: '老师，早安。今天的行程已经整理好了，不过在出发之前，可以先听我说一句吗？',
+        },
+        {
+          kind: 'narration',
+          speaker: '旁白',
+          affiliation: 'STORY LOG',
+          mood: 'neutral',
+          moodLabel: 'CALM',
+          text: '清晨的光从高窗落下，映在她浅色的发梢上。终端仍在闪烁，而她安静地等着你的回答。',
+        },
+        {
+          kind: 'user',
+          speaker: '老师',
+          affiliation: 'PLAYER CHANNEL',
+          mood: 'neutral',
+          moodLabel: 'REPLY',
+          text: '当然。比起行程，我更想先知道，你是不是又一个人忙到了很晚？',
+        },
+        {
+          kind: 'npc',
+          speaker: '响木天音',
+          affiliation: '学生会',
+          mood: 'happy',
+          moodLabel: 'SMILE',
+          text: '被发现了吗……那么，作为交换，今天请让我一直陪在老师身边吧。',
+        },
+      ];
+
+      const contactProfiles = {
+        amane: {
+          name: '响木天音',
+          faction: '学生会',
+          relation: '信赖',
+          affection: 86,
+          level: 90,
+          power: 900,
+          endurance: 480,
+          resilience: 900,
+          note: '学生会干事，享乐至上的堕落魔法少女。',
+          portrait: 'https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/全身立绘/响木天音校服.png',
+        },
+        rin: {
+          name: '神崎凛',
+          faction: '学生会',
+          relation: '同僚',
+          affection: 54,
+          level: 72,
+          power: 648,
+          endurance: 378,
+          resilience: 720,
+          note: '冷酷无情的纪律委员，什亭之匣已同步完整战斗档案。',
+          portrait: 'https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/全身立绘/神崎凛1.png',
+        },
+        alice: {
+          name: '爱丽丝温特',
+          faction: '学生会',
+          relation: '顾问',
+          affection: 71,
+          level: 99,
+          power: 990,
+          endurance: 544,
+          resilience: 990,
+          note: '身份神秘的学生会顾问，拥有极高的综合性斗能力。',
+          portrait: 'https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/全身立绘/爱丽丝.png',
+        },
+        shiori: {
+          name: '中岛诗织',
+          faction: '研究会',
+          relation: '熟人',
+          affection: 42,
+          level: 70,
+          power: 609,
+          endurance: 332,
+          resilience: 700,
+          note: '痴迷于气味研究的实验助手。',
+          portrait: '',
+        },
+      };
+
+      const app = document.querySelector('#preview-app');
+      const portraitImage = document.querySelector('#portrait-image');
+      const speakerName = document.querySelector('#speaker-name');
+      const speakerAffiliation = document.querySelector('#speaker-affiliation');
+      const moodLabel = document.querySelector('#mood-label');
+      const dialogueCopy = document.querySelector('#dialogue-copy');
+      const dialogueText = document.querySelector('#dialogue-text');
+      const currentIndexLabel = document.querySelector('#current-index');
+      const stageIndex = document.querySelector('#stage-index');
+      const segmentCount = document.querySelector('#segment-count');
+      const previousButton = document.querySelector('#previous-button');
+      const nextButton = document.querySelector('#next-button');
+      const nextLabel = document.querySelector('#next-label');
+      const progressBar = document.querySelector('#progress-bar');
+      const shittimTrigger = document.querySelector('#shittim-trigger');
+      const shittimLayer = document.querySelector('#shittim-layer');
+      const shittimClose = document.querySelector('#shittim-close');
+      const cotTrigger = document.querySelector('#cot-trigger');
+      const cotLayer = document.querySelector('#cot-layer');
+      const cotClose = document.querySelector('#cot-close');
+      const choicePanel = document.querySelector('#choice-panel');
+      const choiceToggle = document.querySelector('#choice-toggle');
+      const choiceBody = document.querySelector('#choice-body');
+      const choiceSummary = document.querySelector('#choice-summary');
+      const choiceSummaryCopy = document.querySelector('#choice-summary-copy');
+      const choiceNotice = document.querySelector('#choice-notice');
+      const variablePanel = document.querySelector('#variable-panel');
+      const variableToggle = document.querySelector('#variable-toggle');
+      const variableBody = document.querySelector('#variable-body');
+      const variableSummary = document.querySelector('#variable-summary');
+      const contactBack = document.querySelector('#contact-back');
+      const titleLockup = document.querySelector('#shittim-title-lockup');
+      const contactListView = document.querySelector('#contact-list-view');
+      const contactDetailView = document.querySelector('#contact-detail-view');
+      const detailPortrait = document.querySelector('#detail-portrait');
+      const detailFallback = document.querySelector('#detail-fallback');
+      const detailName = document.querySelector('#detail-name');
+      const detailFaction = document.querySelector('#detail-faction');
+      const detailRelation = document.querySelector('#detail-relation');
+      const detailAffectionChip = document.querySelector('#detail-affection-chip');
+      const detailAffectionValue = document.querySelector('#detail-affection-value');
+      const detailAffectionBar = document.querySelector('#detail-affection-bar');
+      const detailLevel = document.querySelector('#detail-level');
+      const detailPower = document.querySelector('#detail-power');
+      const detailEndurance = document.querySelector('#detail-endurance');
+      const detailResilience = document.querySelector('#detail-resilience');
+      const detailNote = document.querySelector('#detail-note');
+      const battleNotice = document.querySelector('#battle-notice');
+      const startBattleButton = document.querySelector('#start-battle');
+      let currentIndex = 0;
+      let touchStartX = null;
+      let activeContact = contactProfiles.amane;
+
+      function padded(value) {
+        return String(value).padStart(2, '0');
+      }
+
+      function setPanelCollapsed(panel, toggle, body, summary, collapsed) {
+        body.hidden = collapsed;
+        summary.hidden = !collapsed;
+        panel.classList.toggle('is-collapsed', collapsed);
+        toggle.setAttribute('aria-expanded', String(!collapsed));
+        toggle.firstChild.textContent = collapsed ? '展开' : '收起';
+      }
+
+      function renderSegment() {
+        const segment = segments[currentIndex];
+        ['npc', 'user', 'narration', 'idle'].forEach(kind => app.classList.remove(`is-${kind}`));
+        ['neutral', 'happy', 'angry', 'surprised'].forEach(mood => app.classList.remove(`is-mood-${mood}`));
+        app.classList.add(`is-${segment.kind}`, `is-mood-${segment.mood}`, 'has-portrait');
+        portraitImage.classList.toggle('is-passive', segment.kind !== 'npc');
+        speakerName.textContent = segment.speaker;
+        speakerAffiliation.textContent = segment.affiliation;
+        moodLabel.textContent = segment.moodLabel;
+        dialogueText.textContent = segment.text;
+        currentIndexLabel.textContent = padded(currentIndex + 1);
+        stageIndex.textContent = padded(currentIndex + 1);
+        segmentCount.textContent = padded(segments.length);
+        previousButton.disabled = currentIndex === 0;
+        nextLabel.textContent = currentIndex === segments.length - 1 ? 'REPLAY' : 'NEXT';
+        progressBar.style.inlineSize = `${(currentIndex / (segments.length - 1)) * 100}%`;
+        dialogueCopy.animate(
+          [
+            { opacity: 0, transform: 'translateY(7px)' },
+            { opacity: 1, transform: 'translateY(0)' },
+          ],
+          { duration: 260, easing: 'ease-out' },
+        );
+      }
+
+      function setDrawerOpen(open) {
+        if (open) setCotOpen(false);
+        shittimLayer.hidden = !open;
+        shittimTrigger.classList.toggle('is-active', open);
+        shittimTrigger.setAttribute('aria-expanded', String(open));
+        app.classList.toggle('is-shittim-open', open);
+        setSupportPanelsVisible(!open && cotLayer.hidden);
+        if (!open) showContactList();
+      }
+
+      function setCotOpen(open) {
+        if (open) setDrawerOpen(false);
+        cotLayer.hidden = !open;
+        app.classList.toggle('is-thinking-open', open);
+        setSupportPanelsVisible(!open && shittimLayer.hidden);
+      }
+
+      function setSupportPanelsVisible(visible) {
+        choicePanel.hidden = !visible;
+        variablePanel.hidden = !visible;
+      }
+
+      function showContactList() {
+        contactListView.hidden = false;
+        contactDetailView.hidden = true;
+        contactBack.hidden = true;
+        titleLockup.hidden = false;
+        battleNotice.hidden = true;
+        startBattleButton.disabled = false;
+        startBattleButton.querySelector('strong').textContent = '发起性斗';
+      }
+
+      function showContactDetail(contactKey) {
+        const contact = contactProfiles[contactKey];
+        if (!contact) return;
+        activeContact = contact;
+        contactListView.hidden = true;
+        contactDetailView.hidden = false;
+        contactBack.hidden = false;
+        titleLockup.hidden = true;
+        detailName.textContent = contact.name;
+        detailFaction.textContent = contact.faction;
+        detailRelation.textContent = contact.relation;
+        detailAffectionChip.textContent = `好感 ${contact.affection}`;
+        detailAffectionValue.textContent = `${contact.affection}%`;
+        detailAffectionBar.style.inlineSize = `${contact.affection}%`;
+        detailLevel.textContent = String(contact.level);
+        detailPower.textContent = String(contact.power);
+        detailEndurance.textContent = String(contact.endurance);
+        detailResilience.textContent = String(contact.resilience);
+        detailNote.textContent = contact.note;
+        detailFallback.textContent = contact.name.slice(0, 1);
+        detailPortrait.hidden = contact.portrait.length === 0;
+        detailFallback.hidden = contact.portrait.length > 0;
+        if (contact.portrait.length > 0) {
+          detailPortrait.src = contact.portrait;
+          detailPortrait.alt = `${contact.name} 全身立绘`;
+        }
+        battleNotice.hidden = true;
+        startBattleButton.disabled = false;
+        startBattleButton.querySelector('strong').textContent = '发起性斗';
+      }
+
+      function next() {
+        currentIndex = currentIndex === segments.length - 1 ? 0 : currentIndex + 1;
+        renderSegment();
+      }
+
+      function previous() {
+        currentIndex = Math.max(0, currentIndex - 1);
+        renderSegment();
+      }
+
+      previousButton.addEventListener('click', previous);
+      nextButton.addEventListener('click', next);
+      shittimTrigger.addEventListener('click', () => setDrawerOpen(shittimLayer.hidden));
+      shittimClose.addEventListener('click', () => setDrawerOpen(false));
+      cotTrigger.addEventListener('click', () => setCotOpen(true));
+      cotClose.addEventListener('click', () => setCotOpen(false));
+      cotLayer.addEventListener('click', event => {
+        if (event.target === cotLayer) setCotOpen(false);
+      });
+      contactBack.addEventListener('click', showContactList);
+      shittimLayer.addEventListener('click', event => {
+        if (event.target === shittimLayer) setDrawerOpen(false);
+      });
+
+      document.querySelectorAll('[data-preview-contact]').forEach(button => {
+        button.addEventListener('click', () => showContactDetail(button.dataset.previewContact));
+      });
+
+      document.querySelectorAll('[data-preview-choice]').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('[data-preview-choice]').forEach(item => {
+            item.classList.remove('is-selected');
+            item.querySelector('.bpm-choice-state').textContent = item.dataset.previewChoice === 'E' ? '⚔' : '›';
+          });
+          button.classList.add('is-selected');
+          button.querySelector('.bpm-choice-state').textContent = '✓';
+          choiceNotice.textContent =
+            button.dataset.previewChoice === 'E'
+              ? '预览：正式组件会写入性斗对手并发送 <fight>。'
+              : `已将选项 ${button.dataset.previewChoice} 填入酒馆输入框（预览）。`;
+          choiceNotice.hidden = false;
+          choiceSummaryCopy.textContent = `${button.dataset.previewChoice} · ${button.querySelector('.bpm-choice-copy strong').textContent}`;
+        });
+      });
+
+      choiceToggle.addEventListener('click', () => {
+        setPanelCollapsed(choicePanel, choiceToggle, choiceBody, choiceSummary, !choiceBody.hidden);
+      });
+      choiceSummary.addEventListener('click', () => {
+        setPanelCollapsed(choicePanel, choiceToggle, choiceBody, choiceSummary, false);
+      });
+
+      variableToggle.addEventListener('click', () => {
+        setPanelCollapsed(variablePanel, variableToggle, variableBody, variableSummary, !variableBody.hidden);
+      });
+      variableSummary.addEventListener('click', () => {
+        setPanelCollapsed(variablePanel, variableToggle, variableBody, variableSummary, false);
+      });
+
+      document.querySelectorAll('[data-preview-faction]').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('[data-preview-faction]').forEach(item => item.classList.remove('is-active'));
+          button.classList.add('is-active');
+          document.querySelectorAll('#known-contact-grid [data-faction]').forEach(card => {
+            card.hidden = card.dataset.faction !== button.dataset.previewFaction;
+          });
+        });
+      });
+
+      detailPortrait.addEventListener('error', () => {
+        detailPortrait.hidden = true;
+        detailFallback.hidden = false;
+      });
+
+      startBattleButton.addEventListener('click', () => {
+        startBattleButton.disabled = true;
+        startBattleButton.querySelector('strong').textContent = '已写入（预览）';
+        battleNotice.textContent = `预览完成：正式组件会将对手设为 ${activeContact.name} 并发送 <fight>。`;
+        battleNotice.hidden = false;
+      });
+
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !cotLayer.hidden) {
+          setCotOpen(false);
+          return;
+        }
+        if (event.key === 'Escape' && !shittimLayer.hidden) {
+          if (!contactDetailView.hidden) showContactList();
+          else setDrawerOpen(false);
+          return;
+        }
+        if (!shittimLayer.hidden || !cotLayer.hidden) return;
+        if (event.key === 'ArrowRight') next();
+        if (event.key === 'ArrowLeft') previous();
+      });
+
+      app.addEventListener(
+        'touchstart',
+        event => {
+          if (event.target.closest('.bpm-shittim-layer, .bpm-cot-layer')) {
+            touchStartX = null;
+            return;
+          }
+          touchStartX = event.changedTouches[0]?.clientX ?? null;
+        },
+        { passive: true },
+      );
+
+      app.addEventListener(
+        'touchend',
+        event => {
+          const endX = event.changedTouches[0]?.clientX;
+          if (touchStartX === null || endX === undefined) return;
+          const distance = endX - touchStartX;
+          touchStartX = null;
+          if (Math.abs(distance) < 44) return;
+          distance < 0 ? next() : previous();
+        },
+        { passive: true },
+      );
+
+      portraitImage.addEventListener('error', () => app.classList.add('is-image-unavailable'));
+      document.querySelectorAll('.bpm-contact-avatar img').forEach(image => {
+        image.addEventListener('error', () => {
+          image.hidden = true;
+          image.parentElement.classList.remove('has-image');
+        });
+      });
+
+      renderSegment();
+    </script>
+  </body>
+</html>
