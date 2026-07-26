@@ -1,0 +1,17 @@
+{
+    "id": "d668c8a6-fa6a-444d-a5d6-8f68b73a3c36",
+    "scriptName": "仅格式思维链",
+    "findRegex": "/<Analysis>[\\s\\S]+?<\\/Analysis>/gm",
+    "replaceString": "",
+    "trimStrings": [],
+    "placement": [
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": false,
+    "promptOnly": true,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": null
+}
