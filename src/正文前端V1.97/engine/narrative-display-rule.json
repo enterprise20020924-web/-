@@ -1,0 +1,15 @@
+{
+  "id": "c73838b8-8630-4f4a-a1a1-1940c0181e27",
+  "scriptName": "正文前端 V1.97 · 正文占位",
+  "findRegex": "/(<(content|maintext)\\b[^>]*>[\\s\\S]*?<\\/\\2\\s*>)/gi",
+  "replaceString": "\n<div class=\"bp-narrative-slot-v194\"></div>\n\n$1\n\n<div class=\"bp-narrative-end-v194\"></div>\n",
+  "trimStrings": [],
+  "placement": [2],
+  "disabled": false,
+  "markdownOnly": true,
+  "promptOnly": false,
+  "runOnEdit": true,
+  "substituteRegex": 0,
+  "minDepth": null,
+  "maxDepth": null
+}
