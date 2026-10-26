@@ -1,0 +1,101 @@
+.bpm-app-root {
+  isolation: isolate;
+  border-radius: 6px 23px 6px 20px;
+  background: linear-gradient(135deg, #f8fdff, #e2f1fc);
+}
+.bpm-app-root > .bpv-mobile-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.75;
+  pointer-events: none;
+}
+.bpm-topbar {
+  position: relative;
+  background: #ffffffde;
+  border-bottom-color: #c3e1f1;
+}
+.bpm-brand-mark {
+  filter: drop-shadow(0 0 6px #51c9fb33);
+}
+.bpm-brand-copy strong {
+  color: #1c6088;
+  letter-spacing: 0.09em;
+}
+.bpm-brand-copy small {
+  font-family: 'Cascadia Code', Consolas, monospace;
+  letter-spacing: 0.05em;
+}
+.bpm-shittim-trigger {
+  border-radius: 3px 12px 3px 3px;
+  box-shadow: 0 3px 10px #218ac322;
+}
+.bpm-stage {
+  border-radius: 4px 15px 4px 4px;
+  border-color: #b7dced;
+}
+.bpm-stage-background-shade {
+  background: linear-gradient(180deg, #c6eaff0a, transparent 50%, #21497665);
+}
+.bpm-dialogue-shell {
+  border: 1px solid #bddbea;
+  border-radius: 4px 17px 4px 17px;
+  background: linear-gradient(135deg, #ffffffed, #f0f9ffed);
+  box-shadow: 0 10px 25px #376d9a10;
+}
+.bpm-dialogue-copy p {
+  color: #294e68;
+  font-weight: 500;
+  line-height: 1.85;
+}
+.bpm-shittim-drawer {
+  isolation: isolate;
+  border-radius: 5px 24px 5px 20px;
+  background: #f5fbff;
+  border-color: #a3cce8;
+}
+.bpm-shittim-drawer > .bpv-mobile-drawer-frame {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.bpm-shittim-drawer > .bpv-mobile-assistant {
+  position: absolute;
+  z-index: 3;
+  right: 15px;
+  top: 48px;
+  width: 82px;
+  height: 110px;
+  pointer-events: none;
+}
+.bpm-shittim-header {
+  position: relative;
+  background: #ffffffb5;
+}
+.bpm-shittim-tabs {
+  padding-right: 95px;
+}
+.bpm-shittim-pending {
+  display: none;
+}
+.bpm-contact-card {
+  border-radius: 4px 13px 4px 4px;
+  box-shadow: none;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+.bpm-contact-card:active {
+  transform: scale(0.97);
+}
+.bpm-contact-avatar {
+  background: #e6f5ff;
+}
+.bpm-safe-footer {
+  position: relative;
+}

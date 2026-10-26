@@ -1,0 +1,424 @@
+.amami-map-shortcuts {
+  --map-shortcut-top: 14px;
+  --map-shortcut-height: 180px;
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  pointer-events: none;
+}
+.amami-map-shortcuts .amami-map-quick {
+  --map-quick-top: var(--map-shortcut-top);
+}
+.amami-map-shortcuts .amami-map-quick-tab {
+  height: var(--map-shortcut-height);
+  min-height: 0;
+}
+.amami-map-shortcuts .amami-map-quick-tab > span {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.amami-map-followed {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.amami-map-shortcuts .amami-map-follow-tab {
+  top: calc(var(--map-shortcut-top) + var(--map-shortcut-height) + 10px);
+}
+.amami-map-follow-tab > .amami-map-icon:first-child {
+  color: #009dc5;
+}
+.amami-map-followed.is-open .amami-map-follow-tab,
+.amami-map-shortcuts.is-places-open .amami-map-followed,
+.amami-map-shortcuts.is-following-open .amami-map-quick {
+  visibility: hidden;
+  pointer-events: none;
+}
+.amami-map-follow-panel {
+  top: var(--map-shortcut-top);
+  max-height: min(500px, calc(100% - var(--map-shortcut-top) - 18px));
+}
+.amami-map-follow-panel .amami-map-quick-header {
+  padding-block: 12px;
+}
+.amami-map-follow-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 10px 13px;
+  border-bottom: 1px solid #daeaf3;
+  background: #eaf7fe;
+  color: #397595;
+  font-size: 11px;
+}
+.amami-map-follow-filter > button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 3px;
+  color: #0189b9;
+  background: #fff;
+  font: inherit;
+}
+.amami-map-follow-filter .amami-map-icon {
+  width: 11px;
+  height: 11px;
+}
+.amami-map-person-face {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #e6f5fd;
+  color: #6b9bb6;
+  font-size: 15px;
+  font-weight: 750;
+  overflow: hidden;
+}
+.amami-map-person-face > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.45);
+  transform-origin: 50% 10%;
+}
+.amami-map-follow-list .amami-map-quick-item {
+  min-height: 74px;
+  padding: 9px 0 9px 10px;
+  gap: 11px;
+}
+.amami-map-follow-list .amami-map-person-face {
+  width: 49px;
+  height: 49px;
+  border-radius: 13px;
+  border: 1px solid #d3eaf5;
+  background: linear-gradient(145deg, #f0faff, #e3f3fc);
+}
+.amami-map-follow-list .amami-map-quick-copy > small {
+  white-space: normal;
+}
+.amami-map-follow-remove {
+  color: #00a3ce !important;
+}
+.amami-map-follow-remove .amami-map-icon {
+  fill: #b0eaf6;
+  width: 17px;
+  height: 17px;
+}
+.amami-map-follow-remove:hover .amami-map-icon {
+  fill: transparent;
+}
+.amami-map-people-grid > li:not(.amami-map-person-expanded) {
+  position: relative;
+}
+.amami-map-person-follow {
+  position: absolute;
+  z-index: 1;
+  top: 5px;
+  right: 5px;
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  padding: 6px;
+  border: 1px solid #dbeaf3;
+  border-radius: 50%;
+  background: #ffffffed;
+  color: #8aaabd;
+  transition:
+    color 160ms,
+    background 160ms,
+    transform 160ms;
+}
+.amami-map-person-follow .amami-map-icon {
+  width: 14px;
+  height: 14px;
+}
+.amami-map-person-follow:hover {
+  color: #039ec5;
+  transform: scale(1.08);
+}
+.amami-map-person-follow[aria-pressed='true'] {
+  color: #039fc8;
+  border-color: #9bddec;
+  background: #eafbff;
+}
+.amami-map-person-follow[aria-pressed='true'] .amami-map-icon,
+.amami-map-person-follow-action[aria-pressed='true'] .amami-map-icon {
+  fill: #7fd8ed;
+}
+.amami-map-person-follow-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 33px;
+  margin: 0 0 11px;
+  padding: 6px 11px;
+  border: 1px solid #c9e2ef;
+  border-radius: 4px;
+  background: #f2faff;
+  color: #1287b0;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 650;
+}
+.amami-map-person-follow-action .amami-map-icon {
+  width: 14px;
+  height: 14px;
+}
+.amami-map-person-follow-action[aria-pressed='true'] {
+  border-color: #86d3e6;
+  background: #e9faff;
+}
+.amami-map-follow-markers {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+.amami-map-follow-marker {
+  position: absolute;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #0a729e;
+  transform: translate(calc(-50% + var(--follow-shift-x)), var(--follow-offset-y));
+  pointer-events: auto;
+}
+.amami-map-follow-marker.is-below .amami-map-follow-pin-body::after {
+  top: -6px;
+  bottom: auto;
+  transform: rotate(225deg);
+}
+.amami-map-follow-pin-body {
+  --follow-face-size: 56px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  box-sizing: border-box;
+  width: calc(var(--follow-columns) * (var(--follow-face-size) + 4px) + 10px);
+  padding: 6px;
+  border: 1px solid #99e0f2;
+  border-radius: 22px 22px 8px 22px;
+  background: #fcfeff;
+  box-shadow:
+    0 5px 14px #004f7960,
+    0 0 0 3px #ffffff26;
+  transition: box-shadow 200ms;
+  animation: amami-follow-arrive 280ms var(--map-ease) backwards;
+}
+.amami-map-follow-pin-body::after {
+  content: '';
+  position: absolute;
+  left: clamp(8px, calc(50% - 5px - var(--follow-shift-x)), calc(100% - 18px));
+  bottom: -6px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  border-right: 1px solid #99e0f2;
+  border-bottom: 1px solid #99e0f2;
+  background: #fcfeff;
+}
+.amami-map-follow-pin-body .amami-map-follow-pin-person {
+  display: grid;
+  flex: 0 0 var(--follow-face-size);
+  place-items: center;
+  width: var(--follow-face-size);
+  height: var(--follow-face-size);
+  padding: 0;
+  border: 1px solid #d4edf6;
+  border-radius: 50%;
+  background: #f0faff;
+  cursor: pointer;
+  transition:
+    transform 180ms,
+    border-color 180ms,
+    box-shadow 180ms;
+}
+.amami-map-follow-pin-person .amami-map-person-face {
+  position: relative;
+  width: calc(var(--follow-face-size) - 2px);
+  height: calc(var(--follow-face-size) - 2px);
+  font-size: calc(var(--follow-face-size) * 0.34);
+  border: 1px solid #fff;
+  pointer-events: none;
+}
+.amami-map-follow-pin-person:hover {
+  z-index: 1;
+  border-color: #20b4df;
+  box-shadow:
+    0 2px 6px #007fa82e,
+    0 0 0 2px #a6edff80;
+  transform: translateY(-2px);
+}
+.amami-map-follow-pin-person:active {
+  transform: scale(0.94);
+}
+.amami-map-follow-pin-body .amami-map-follow-pin-count,
+.amami-map-follow-pin-heart {
+  position: absolute;
+  z-index: 1;
+  right: -6px;
+  top: -7px;
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 3px 5px;
+  border: 2px solid white;
+  border-radius: 13px;
+  background: #038fbc;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 2px 4px #00507c30;
+}
+.amami-map-follow-pin-count {
+  cursor: pointer;
+  transition:
+    background 180ms,
+    box-shadow 180ms;
+}
+.amami-map-follow-pin-count::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+}
+.amami-map-follow-pin-count:hover {
+  background: #08609e;
+  box-shadow: 0 0 0 3px #a6edff80;
+}
+.amami-map-follow-pin-heart {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  padding: 3px;
+  fill: #fff;
+}
+.amami-map-follow-pin-dot {
+  position: absolute;
+  left: calc(50% - 3px - var(--follow-shift-x));
+  top: calc(-1 * var(--follow-offset-y) - 3px);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #76e8ff;
+  box-shadow: 0 0 0 2px #fff8;
+  pointer-events: none;
+}
+.amami-map-follow-marker:hover .amami-map-follow-pin-body {
+  box-shadow:
+    0 8px 18px #004f796b,
+    0 0 0 3px #9dedff55;
+}
+.amami-map-follow-pin-person:focus-visible,
+.amami-map-follow-pin-count:focus-visible {
+  outline: 3px solid #71def9;
+  outline-offset: 2px;
+}
+.amami-map-label.has-followers {
+  transform: translate(-50%, 18px);
+}
+.amami-map-label.has-followers::after {
+  top: -5px;
+  bottom: auto;
+  transform: rotate(225deg);
+}
+.amami-follow-pin-enter-active,
+.amami-follow-pin-leave-active {
+  transition: opacity 180ms;
+}
+.amami-follow-pin-enter-from,
+.amami-follow-pin-leave-to {
+  opacity: 0;
+}
+@keyframes amami-follow-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@container amami-map (max-width: 700px) {
+  .amami-map-shortcuts {
+    --map-shortcut-top: 58px;
+    --map-shortcut-height: 122px;
+  }
+  .amami-map-follow-panel {
+    left: 10px;
+    width: min(320px, calc(100% - 20px));
+    max-height: min(440px, calc(100% - var(--map-shortcut-top) - 14px));
+  }
+  .amami-map-body.has-directory .amami-map-shortcuts {
+    --map-shortcut-height: 40px;
+  }
+  .amami-map-body.has-directory .amami-map-shortcuts .amami-map-quick-tab {
+    flex-direction: row;
+    justify-content: center;
+    width: 98px;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 4px 4px 9px 4px;
+  }
+  .amami-map-body.has-directory .amami-map-shortcuts .amami-map-quick-tab > span {
+    writing-mode: horizontal-tb;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+  .amami-map-body.has-directory .amami-map-shortcuts .amami-map-quick-tab > .amami-map-icon:first-child {
+    width: 15px;
+    height: 15px;
+  }
+  .amami-map-body.has-directory .amami-map-shortcuts .amami-map-quick-tab > b {
+    position: absolute;
+    display: grid;
+    top: -4px;
+    right: -4px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 3px;
+    border: 1px solid white;
+    border-radius: 6px;
+    font-size: 9px;
+  }
+  .amami-map-follow-filter > button {
+    min-height: 36px;
+  }
+  .amami-map-person-follow {
+    width: 32px;
+    height: 32px;
+    right: 3px;
+    top: 3px;
+  }
+  .amami-map-person-follow-action {
+    min-height: 40px;
+  }
+  .amami-map-follow-pin-body {
+    --follow-face-size: 48px;
+    border-radius: 18px 18px 6px 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .amami-map-follow-marker *,
+  .amami-map-follow-marker,
+  .amami-map-person-follow {
+    animation: none !important;
+    transition: none !important;
+  }
+}
