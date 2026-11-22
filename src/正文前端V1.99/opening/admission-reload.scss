@@ -1,0 +1,1235 @@
+// P3R reference: underwater cyan/cobalt, white command wedges, red selection edge.
+// Typography passes through the existing 1.2× opening build transform.
+.academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+  --sk-blue: #1634eb;
+  --sk-cyan: #21dff3;
+  --sk-ink: #08164e;
+  --sk-muted: #53638d;
+  --sk-line: #bbd5ed;
+  --archive-navy: #08134e;
+  --reload-red: #f43252;
+  padding: 8px clamp(10px, 2.2vw, 32px) 32px;
+  background: #111bc7;
+  color: var(--sk-ink);
+
+  .reload-scenery {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 1100px;
+    max-height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .reload-drifting-shards {
+    animation: reload-drift 14s ease-in-out infinite alternate;
+  }
+  .sk-opening-masthead,
+  .sk-admission-tablet {
+    position: relative;
+  }
+  .sk-opening-masthead {
+    display: none;
+  }
+  .sk-opening-logo strong,
+  .sk-admission-service {
+    color: #fff;
+  }
+  .sk-opening-logo strong small {
+    color: #b8ffff;
+  }
+  .archive-school-mark {
+    color: #fff;
+  }
+  .sk-motion-toggle {
+    color: #fff;
+    border-color: #c0ffff80;
+    background: #0732a280;
+    border-radius: 0;
+  }
+  .opening-terminal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    grid-template-columns: 190px minmax(0, 1fr);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+  }
+  .sk-admission-hero {
+    display: grid;
+    grid-template-columns: 120px max-content minmax(0, 1fr) 128px;
+    grid-template-areas:
+      '. . kicker dial'
+      'emblem school title dial'
+      'emblem english caption dial';
+    column-gap: 20px;
+    row-gap: 0;
+    position: relative;
+    isolation: isolate;
+    padding: 26px 36px 32px;
+    min-height: 156px;
+    margin-bottom: 16px;
+    background: none;
+    border: 0;
+    color: #07123d;
+  }
+  .sk-admission-hero::before {
+    display: block;
+    inset: 0;
+    width: auto;
+    z-index: -1;
+    background: linear-gradient(105deg, #fff 0 64%, #c5faff 82%, #30d9f8);
+    clip-path: polygon(0 9%, 100% 0, 100% 88%, 0 100%);
+  }
+  .sk-admission-hero::after {
+    display: block;
+    inset: 8% 0 auto;
+    height: 3px;
+    background: #f43252;
+    transform: rotate(-0.65deg);
+    transform-origin: left;
+  }
+  .sk-admission-copy {
+    display: contents;
+  }
+  .sk-admission-copy .sk-kicker {
+    grid-area: kicker;
+    margin-bottom: 8px;
+    color: #1768b0;
+    letter-spacing: 0.22em;
+  }
+  .sk-admission-copy .sk-kicker::before {
+    background: #f43252;
+  }
+  .sk-admission-copy h1 {
+    grid-area: title;
+    align-self: baseline;
+    color: #060d34;
+    font-size: clamp(24px, 3.2vw, 38px);
+    font-weight: 950;
+    font-style: italic;
+    letter-spacing: -0.04em;
+    margin: 0;
+    line-height: 1.1;
+  }
+  .sk-admission-copy h1 span {
+    color: #1736e9;
+    margin-left: 0.25em;
+  }
+  .sk-admission-copy p {
+    grid-area: caption;
+    align-self: start;
+    margin: 8px 0 0;
+    color: #344b79;
+  }
+  .reload-header-brand {
+    display: contents;
+    color: #080c18;
+    white-space: nowrap;
+    > svg {
+      grid-area: emblem;
+      align-self: center;
+      position: static;
+      width: 120px;
+      height: 74px;
+      flex-shrink: 0;
+      transform: translateY(-6px);
+      opacity: 1;
+      color: inherit;
+    }
+    strong {
+      display: contents;
+      font-family: 'Microsoft YaHei UI', 'Microsoft YaHei', 'SimHei', sans-serif;
+      font-size: clamp(24px, 2.6vw, 32px);
+      line-height: 1.1;
+      font-style: normal;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      > span {
+        grid-area: school;
+        align-self: baseline;
+      }
+    }
+    small {
+      grid-area: english;
+      align-self: start;
+      margin-top: 8px;
+      font: 700 8px/1.2 var(--sk-mono);
+      letter-spacing: 0.22em;
+      color: #46516a;
+    }
+  }
+  .reload-dial {
+    grid-area: dial;
+    position: relative;
+    width: 128px;
+    aspect-ratio: 1;
+    flex: 0 0 128px;
+    color: #122bc4;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    strong {
+      font: 900 39px/1 var(--sk-display);
+      letter-spacing: -0.06em;
+    }
+    small {
+      font: 700 10px/1 var(--sk-mono);
+      margin-left: 3px;
+      letter-spacing: 0;
+    }
+    span {
+      font: 800 7px/1 var(--sk-mono);
+      margin-top: 7px;
+      letter-spacing: 0.12em;
+    }
+  }
+  .opening-sidebar {
+    background: transparent;
+    border: 0;
+    padding: 24px 20px 0 0;
+  }
+  .opening-step-nav {
+    gap: 12px;
+  }
+  .opening-step-button {
+    position: relative;
+    isolation: isolate;
+    margin: 0;
+    padding: 15px 12px;
+    gap: 9px;
+    border-radius: 0;
+    color: #86faff;
+    background: transparent;
+    box-shadow: none;
+    transition:
+      transform 0.2s,
+      color 0.2s;
+  }
+  .opening-step-button::before {
+    content: '';
+    display: block;
+    position: absolute;
+    inset: 4px -9px 1px -6px;
+    z-index: -1;
+    opacity: 0;
+    background: #fff;
+    width: auto;
+    height: auto;
+    transform: none;
+    animation: none;
+    clip-path: polygon(6% 17%, 100% 0, 91% 83%, 0 100%);
+  }
+  .opening-step-button::after {
+    display: none;
+  }
+  .opening-step-button .sk-step-number {
+    color: inherit;
+    font-style: italic;
+    font-size: 25px;
+    flex-basis: 30px;
+    width: 30px;
+  }
+  .opening-step-button .sk-step-label {
+    font-size: 12px;
+    gap: 5px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .sk-step-label > small {
+    color: inherit;
+    opacity: 0.8;
+    font-style: italic;
+  }
+  .opening-step-button.is-complete {
+    background: transparent;
+    color: #c6faff;
+  }
+  .opening-step-button.is-current {
+    background: transparent;
+    color: #ed2349;
+    box-shadow: none;
+    transform: translateX(4px);
+  }
+  .opening-step-button.is-current::before {
+    opacity: 1;
+  }
+  .opening-step-button.is-current .sk-step-number {
+    color: #050e38;
+  }
+  .opening-step-button:hover:not(:disabled):not(.is-current) {
+    background: #143fcd;
+    color: #fff;
+    transform: translateX(4px);
+  }
+  .opening-step-button .sk-step-number > i {
+    background: #103ee3;
+    color: #bcffff;
+  }
+  .archive-spine-note {
+    color: #b8faff;
+    padding: 44px 8px 25px;
+  }
+  .archive-spine-note strong {
+    color: #fff;
+    font-style: italic;
+    opacity: 0.94;
+  }
+  .archive-spine-note i {
+    width: 45px;
+    background: #f43252;
+  }
+  .archive-spine-note small {
+    color: #a3e4ff;
+  }
+  .opening-workspace {
+    background: #edf5ff;
+    box-shadow: 8px 8px 0 #00084544;
+  }
+  .opening-progress {
+    height: 4px;
+    background: #142ac6;
+  }
+  .opening-progress-fill {
+    background: #28dfee;
+  }
+  .opening-workspace-body {
+    background: #edf5ff;
+    grid-template-columns: minmax(0, 1fr) 200px;
+  }
+  .opening-content {
+    padding: 28px 28px 32px;
+  }
+  .opening-step-heading {
+    border-color: #9ebcdd;
+    padding-bottom: 16px;
+  }
+  .opening-step-heading::after {
+    background: #1634eb;
+    width: 64px;
+    height: 4px;
+    transform: skewX(-24deg);
+  }
+  .opening-step-heading h2 {
+    color: #101f76;
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  .opening-step-heading p {
+    color: #5d6a8c;
+  }
+  .opening-step-index {
+    color: #c5d8ed;
+    font-style: italic;
+  }
+  .opening-workspace-body.is-character-selection {
+    background: #eef7ff;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .opening-rail-slot {
+    padding: 28px 16px 24px 0;
+  }
+  .opening-live-summary {
+    color: #fff;
+    border: 0;
+    border-radius: 0;
+    background: #07104a;
+    box-shadow: 5px 5px 0 #bacde8;
+  }
+  .sk-record-card-top {
+    background: #142ee7;
+    color: #b3ffff;
+    border: 0;
+  }
+  .opening-summary-heading strong {
+    color: #fff;
+  }
+  .opening-summary-heading small {
+    color: #9bd8fd;
+    background: #14378c;
+  }
+  .sk-record-identity {
+    background: #102779;
+    border-color: #2c4791;
+  }
+  .sk-record-identity strong {
+    color: #fff;
+  }
+  .sk-record-avatar {
+    color: #94efff;
+    background: #1e3b96;
+    border-color: #537dd4;
+  }
+  .opening-summary-list dt {
+    color: #9ab6df;
+  }
+  .opening-summary-list dd {
+    color: #fff;
+  }
+  .opening-summary-list > div {
+    border-color: #2f4076;
+  }
+  .opening-summary-metrics {
+    border-color: #2f4076;
+  }
+  .opening-summary-metrics span {
+    color: #9ab6df;
+  }
+  .opening-summary-metrics strong {
+    color: #51ecfc;
+  }
+  .sk-record-progress > span {
+    background: #233773;
+  }
+  .sk-record-progress i {
+    background: #38e7f7;
+  }
+  .sk-record-footer {
+    color: #5bcdeb;
+    border-color: #2f4076;
+  }
+  .sk-admission-checks {
+    background: #dcecff;
+    border-radius: 0;
+    border-color: #abc6e6;
+  }
+  .sk-admission-checks h3 {
+    color: #12266f;
+  }
+  .sk-admission-checks li.is-complete .sk-check-indicator {
+    background: #173ce6;
+  }
+  .opening-footer {
+    background: #08134e;
+    border-top: 3px solid #30ddf3;
+    padding: 18px 24px;
+  }
+  .opening-prev,
+  .sk-footer-progress,
+  .sk-footer-progress small {
+    color: #b0e9ff;
+  }
+  .opening-prev:disabled {
+    color: #7187ab;
+  }
+  .opening-next,
+  .opening-start {
+    border: 0;
+    border-radius: 0;
+    color: #10163f;
+    background: #fff;
+    box-shadow: 4px 4px 0 #1c5dc1;
+    clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
+    padding-inline: 25px;
+    transition:
+      background 0.18s,
+      color 0.18s,
+      transform 0.18s;
+  }
+  .opening-next:hover,
+  .opening-start:hover {
+    background: #44edff;
+    color: #071344;
+    transform: translateX(3px);
+  }
+
+  // Classroom pairing: a small mascot on the left and the teacher on the right.
+  &.is-welcome-page .opening-content {
+    padding: 0 0 24px;
+  }
+  &.is-welcome-page .opening-workspace-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .archive-welcome-cover {
+    display: block;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    padding: 46px 32px 58px;
+    background: linear-gradient(145deg, #158bdf, #1635dd 60%, #111cad);
+    min-height: 420px;
+  }
+  .archive-welcome-cover::before,
+  .archive-welcome-cover::after {
+    display: none;
+  }
+  .archive-welcome-cover-copy {
+    position: relative;
+    z-index: 2;
+    width: 65%;
+  }
+  .archive-welcome-eyebrow {
+    color: #b4ffff;
+  }
+  .archive-welcome-eyebrow i {
+    background: #ff4a69;
+  }
+  .archive-welcome-title {
+    color: #fff;
+    font-style: italic;
+    letter-spacing: -0.05em;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.3;
+  }
+  .archive-welcome-title em {
+    color: #a5ffff;
+    font-style: italic;
+  }
+  .archive-welcome-intro {
+    // Retain the poster's spacing so removing the copy does not resize its figures.
+    visibility: hidden;
+    color: #e3f6ff;
+    line-height: 1.8;
+  }
+  .archive-welcome-cover-caption {
+    visibility: hidden;
+    color: #c3faff;
+  }
+  .archive-welcome-cover-caption b {
+    color: #fff;
+    background: transparent;
+    font-style: italic;
+  }
+  .archive-welcome-cover-footer {
+    color: #b7f7ff;
+    border-color: #75c7ff60;
+    z-index: 3;
+  }
+  .reload-welcome-art {
+    position: absolute;
+    right: -7%;
+    top: -6px;
+    bottom: 0;
+    width: 61%;
+    pointer-events: none;
+    svg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .reload-welcome-mascot {
+      position: absolute;
+      max-width: none;
+      width: auto;
+      filter: drop-shadow(-10px 10px 0 #062f9c50);
+    }
+    .reload-welcome-alice {
+      height: 145%;
+      top: 0;
+      left: 28%;
+    }
+    .reload-welcome-amane {
+      height: 60%;
+      bottom: 7%;
+      left: 24%;
+    }
+  }
+  .reload-welcome-art-word {
+    position: absolute;
+    bottom: 12%;
+    left: 4%;
+    color: #fff;
+    font: 950 italic clamp(40px, 7vw, 92px)/0.9 var(--sk-display);
+    letter-spacing: -0.07em;
+    transform: rotate(-13deg);
+    text-shadow: 5px 5px 0 #1430b3;
+  }
+  .reload-welcome-art-caption {
+    position: absolute;
+    bottom: 7%;
+    left: 12%;
+    font: 800 9px/1 var(--sk-mono);
+    color: #90efff;
+    letter-spacing: 0.16em;
+    transform: rotate(-13deg);
+  }
+  .archive-welcome-route {
+    margin: 22px 24px;
+    gap: 16px;
+  }
+  .archive-welcome-route li {
+    background: #fff;
+    border: 0;
+    border-bottom: 3px solid #1433dc;
+    border-radius: 0;
+  }
+  .archive-welcome-route b {
+    color: #193ce6;
+    font-style: italic;
+  }
+  .archive-welcome-route strong {
+    color: #0d1c64;
+  }
+  .archive-welcome-route span {
+    color: #60739a;
+  }
+  .archive-welcome-environment,
+  .archive-welcome-library,
+  .archive-welcome-library-heading {
+    margin-inline: 24px;
+  }
+  .archive-welcome-environment,
+  .archive-welcome-help {
+    border-radius: 0;
+    background: #fff;
+    border-color: #c2d7ed;
+  }
+  .archive-welcome-library-heading h3 {
+    color: #142778;
+    font-style: italic;
+  }
+
+  // Keep data entry horizontal; reserve diagonal silhouettes for section framing.
+  .sk-character-dossier.sk-enrollment-form {
+    --dossier-ink: #101c54;
+    --dossier-blue: #1c39e9;
+    --dossier-line: #bfd3ef;
+    --dossier-cut: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+  }
+  .sk-character-dossier :is(input, textarea, select) {
+    border-radius: 0;
+    border-color: #a8c5e5;
+    color: #121d4c;
+    background: #fff;
+  }
+  .sk-character-dossier :is(input, textarea, select):focus {
+    border-color: #1634ed;
+    box-shadow: 0 3px 0 #1634ed;
+  }
+  .archive-assessment > div:first-child {
+    background: #08134e;
+    border-bottom-color: #21dff3;
+  }
+  .archive-assessment > div:first-child .text-3xl {
+    color: #62efff;
+  }
+  .archive-assessment .font-mono.text-lg {
+    color: #1537db;
+  }
+  :is(.archive-assessment, .archive-archetypes, .archive-abilities) {
+    .rounded-2xl,
+    .rounded-xl,
+    .rounded-lg {
+      border-radius: 0;
+    }
+    [class*='ring-secondary'] {
+      background: #fff;
+      border-color: #1736e8;
+      box-shadow:
+        inset 0 3px #f43252,
+        3px 3px #bdc9ef;
+    }
+    [class*='text-secondary'] {
+      color: #1938df;
+    }
+    [class*='bg-secondary']:not([class*='bg-secondary/']) {
+      background: #1638e9;
+    }
+    button[class*='text-left']:hover:not(:disabled) {
+      background: #ecf6ff;
+      border-color: #193ee8;
+    }
+  }
+  .sk-page-enter-active {
+    transition:
+      opacity 0.22s,
+      transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+      clip-path 0.32s;
+  }
+  .sk-page-leave-active {
+    transition:
+      opacity 0.12s,
+      transform 0.16s;
+  }
+  .sk-page-enter-from {
+    opacity: 0;
+    transform: translate(24px, 6px);
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+  .sk-page-enter-to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  .sk-page-leave-to {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+
+@keyframes reload-drift {
+  to {
+    transform: translate(8px, -20px);
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 1100px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    .opening-terminal {
+      grid-template-columns: 174px minmax(0, 1fr);
+    }
+    .opening-workspace-body {
+      grid-template-columns: minmax(0, 1fr) 180px;
+    }
+    .opening-sidebar {
+      padding-right: 16px;
+    }
+    .opening-content {
+      padding-inline: 20px;
+    }
+    .archive-welcome-cover {
+      padding-inline: 25px;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    .opening-terminal {
+      display: block;
+    }
+    .opening-sidebar {
+      padding: 0 0 16px;
+    }
+    .opening-step-nav {
+      display: grid;
+      gap: 7px;
+    }
+    .opening-step-button {
+      padding: 10px 6px;
+      gap: 6px;
+      flex-direction: column;
+      align-items: center;
+    }
+    .opening-step-button::before {
+      inset: 0 -3px;
+    }
+    .opening-step-button .sk-step-number {
+      height: 25px;
+      width: auto;
+      flex-basis: auto;
+      font-size: 20px;
+    }
+    .opening-step-button .sk-step-label {
+      font-size: 10px;
+      text-align: center;
+    }
+    .sk-step-label > small {
+      display: none;
+    }
+    .opening-step-button.is-current {
+      transform: none;
+    }
+    .opening-workspace-body {
+      grid-template-columns: minmax(0, 1fr) 180px;
+    }
+    .archive-spine-note {
+      display: none;
+    }
+  }
+}
+@media (max-width: 760px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    padding: 8px 10px 20px;
+    .sk-admission-hero {
+      grid-template-columns: 80px minmax(0, 1fr) 96px;
+      grid-template-areas:
+        'emblem school dial'
+        'emblem english dial'
+        'kicker kicker kicker'
+        'title title title'
+        'caption caption caption';
+      column-gap: 10px;
+      padding: 22px 23px 26px;
+      margin-bottom: 10px;
+      min-height: 132px;
+    }
+    .reload-header-brand {
+      > svg {
+        width: 80px;
+        height: 50px;
+      }
+      strong {
+        font-size: 20px;
+      }
+      small {
+        font-size: 6px;
+      }
+    }
+    .sk-admission-copy .sk-kicker {
+      margin-top: 14px;
+    }
+    .reload-dial {
+      width: 96px;
+      flex-basis: 96px;
+      strong {
+        font-size: 30px;
+      }
+      span {
+        font-size: 6px;
+      }
+    }
+    .opening-workspace-body {
+      display: block;
+    }
+    .opening-rail-slot {
+      padding: 0 18px 24px;
+    }
+    .sk-admission-rail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .opening-live-summary {
+      display: block;
+    }
+    .opening-content {
+      padding: 22px 18px;
+    }
+    .archive-welcome-cover {
+      min-height: 360px;
+      padding: 35px 24px 58px;
+    }
+    .archive-welcome-title {
+      font-size: 32px;
+    }
+    .reload-welcome-art {
+      right: -14%;
+      width: 66%;
+    }
+    .archive-welcome-cover-copy {
+      width: 71%;
+    }
+    .archive-welcome-intro {
+      max-width: 72%;
+    }
+    .archive-welcome-route {
+      margin-inline: 18px;
+      gap: 9px;
+    }
+    .archive-welcome-environment,
+    .archive-welcome-library,
+    .archive-welcome-library-heading {
+      margin-inline: 18px;
+    }
+    .opening-footer {
+      padding: 15px 16px;
+    }
+  }
+}
+@media (max-width: 480px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    .reload-header-brand strong {
+      font-size: 18px;
+    }
+    .reload-header-brand > svg {
+      width: 72px;
+      height: 45px;
+    }
+    .sk-admission-service {
+      display: none;
+    }
+    .sk-admission-copy h1 {
+      font-size: 27px;
+    }
+    .sk-admission-copy p {
+      max-width: 205px;
+      line-height: 1.6;
+    }
+    .reload-dial {
+      width: 72px;
+      flex-basis: 72px;
+      strong {
+        font-size: 24px;
+      }
+      small {
+        font-size: 7px;
+      }
+      span {
+        display: none;
+      }
+    }
+    .sk-admission-hero {
+      grid-template-columns: 72px minmax(0, 1fr) 72px;
+      padding-inline: 16px;
+      column-gap: 8px;
+    }
+    .opening-step-button .sk-step-label {
+      font-size: 9px;
+    }
+    .opening-content {
+      padding-inline: 14px;
+    }
+    .opening-step-heading.is-character-selection-heading {
+      padding-right: 0;
+      padding-bottom: 50px;
+    }
+    .opening-step-index {
+      display: none;
+    }
+    .sk-admission-rail {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .archive-welcome-cover {
+      min-height: 380px;
+      padding: 29px 18px 55px;
+    }
+    .archive-welcome-title {
+      font-size: 29px;
+    }
+    .archive-welcome-cover-copy {
+      width: 100%;
+    }
+    .archive-welcome-intro {
+      font-size: 12px;
+      max-width: 65%;
+    }
+    .reload-welcome-art {
+      width: 78%;
+      right: -24%;
+      top: 94px;
+      opacity: 0.8;
+    }
+    .reload-welcome-art-word {
+      bottom: 16%;
+      font-size: 42px;
+    }
+    .reload-welcome-art-caption {
+      display: none;
+    }
+    .archive-welcome-route {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .opening-footer {
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .sk-footer-progress {
+      display: none;
+    }
+    .opening-next,
+    .opening-start {
+      padding-inline: 20px;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    box-sizing: border-box;
+    height: clamp(320px, calc(var(--admission-chat-height, 680px) - 25px), 880px);
+    min-height: 0;
+    padding: 4px 4px 6px;
+
+    .sk-admission-tablet,
+    .opening-terminal {
+      height: 100%;
+      min-height: 0;
+    }
+    .opening-terminal {
+      display: grid;
+      grid-template: auto auto minmax(0, 1fr) / minmax(0, 1fr);
+    }
+    .sk-admission-hero {
+      grid-template: 'emblem school . dial' auto 'emblem title . dial' auto / 44px minmax(0, 1fr) 32px 48px;
+      align-content: center;
+      gap: 2px 8px;
+      min-height: 68px;
+      padding: 8px 16px;
+      margin: 0 0 2px;
+    }
+    .reload-header-brand > svg {
+      width: 48px;
+      height: 34px;
+      transform: none;
+    }
+    .reload-header-brand strong {
+      font-size: 11px;
+    }
+    .reload-header-brand small,
+    .sk-admission-copy .sk-kicker,
+    .sk-admission-copy p,
+    .reload-dial span {
+      display: none;
+    }
+    .sk-admission-copy h1 {
+      font-size: clamp(14px, 4.8vw, 20px);
+    }
+    .reload-dial {
+      width: 48px;
+    }
+    .reload-dial strong {
+      font-size: 17px;
+    }
+    .opening-code-access {
+      position: absolute;
+      inset: 19px 74px auto auto;
+      z-index: 5;
+    }
+    .opening-code-access > button {
+      width: 32px;
+      height: 44px;
+      color: #2d5688;
+      background: transparent;
+    }
+    .opening-code-access > div {
+      inset: 100% 0 auto auto;
+    }
+    .opening-sidebar {
+      padding: 0 0 5px;
+      gap: 2px;
+      min-width: 0;
+    }
+    .opening-step-nav {
+      grid-template-columns: repeat(var(--admission-step-count), minmax(0, 1fr));
+      gap: 2px;
+      background: #112ab2;
+    }
+    .opening-step-button {
+      min-width: 0;
+      min-height: 44px;
+      padding: 3px 0;
+      gap: 1px;
+    }
+    .opening-step-button .sk-step-number {
+      height: auto;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .opening-step-button .sk-step-label {
+      font-size: 9px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .opening-workspace {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .opening-progress,
+    .opening-footer {
+      flex: none;
+    }
+    .opening-workspace-body {
+      display: block;
+      flex: 1 1 0;
+      min-height: 0;
+      overflow: auto;
+    }
+    .opening-content {
+      min-width: 0;
+      padding: 12px 10px 18px;
+    }
+    .opening-step-heading {
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+    }
+    .opening-step-heading h2 {
+      font-size: 20px;
+      line-height: 1.2;
+    }
+    .opening-step-heading p {
+      line-height: 1.5;
+    }
+    .opening-step-heading.is-character-selection-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 6px;
+      padding: 0 0 5px;
+      h2 {
+        margin: 0;
+      }
+    }
+    .sk-character-gender-switch {
+      position: static;
+      width: auto;
+    }
+    .sk-character-gender-switch button {
+      min-height: 44px;
+    }
+    .opening-rail-slot {
+      padding: 0 10px 16px;
+    }
+    .opening-footer {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+    }
+    .opening-prev,
+    .opening-next,
+    .opening-start {
+      min-height: 44px;
+      min-width: 0;
+      padding: 6px 16px;
+      white-space: normal;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+    .sk-footer-progress {
+      display: none;
+    }
+    .opening-prev {
+      padding-inline: 8px;
+      white-space: nowrap;
+    }
+    .opening-next,
+    .opening-start {
+      justify-content: center;
+    }
+    .archive-welcome-cover {
+      min-height: 0;
+      height: clamp(215px, 68vw, 315px);
+      padding: 20px 14px;
+    }
+    .archive-welcome-title {
+      margin-block: 8px;
+      font-size: clamp(21px, 6vw, 32px);
+    }
+    .archive-welcome-cover-copy {
+      padding: 5px 0;
+    }
+    .archive-welcome-cover-footer {
+      background: #08134e99;
+      padding: 5px 12px;
+    }
+    .archive-welcome-intro,
+    .archive-welcome-cover-caption {
+      display: none;
+    }
+    .reload-welcome-art {
+      inset: 0 -5% 0 auto;
+      width: 68%;
+      opacity: 1;
+    }
+    .reload-welcome-art .reload-welcome-alice {
+      height: 135%;
+      left: 24%;
+    }
+    .reload-welcome-art .reload-welcome-amane {
+      height: 51%;
+      left: 4%;
+      bottom: 8%;
+    }
+    .reload-welcome-art-word {
+      bottom: 9%;
+      left: 6%;
+      font-size: 28px;
+    }
+    .archive-welcome-environment,
+    .archive-welcome-library,
+    .archive-welcome-library-heading {
+      margin-inline: 12px;
+    }
+
+    .sk-character-dossier :is(input, select, textarea) {
+      min-width: 0;
+      max-width: 100%;
+      font-size: 14px;
+    }
+    .sk-character-dossier .sk-dossier-nameplate .sk-dossier-name-input {
+      font-size: clamp(16px, 4.8vw, 22px);
+      min-height: 44px;
+    }
+    .archive-assessment > div:first-child {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .archive-assessment .grid > div {
+      gap: 6px;
+      padding: 8px;
+    }
+    .archive-assessment .grid > div > .flex {
+      gap: 4px;
+      min-width: 0;
+    }
+    .archive-assessment .grid button {
+      width: 44px;
+      height: 44px;
+      flex: none;
+    }
+    .archive-assessment .grid .font-mono.text-lg {
+      width: auto;
+      min-width: 3ch;
+      font-size: 16px;
+      white-space: nowrap;
+    }
+    .opening-modal-card {
+      max-height: calc(var(--admission-chat-height, 680px) - 48px);
+      overflow-y: auto;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    .archive-assessment .grid > div {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .archive-assessment .grid > div > .flex:first-child > div:first-child {
+      display: none;
+    }
+    .sk-admission-hero {
+      grid-template-columns: 32px minmax(0, 1fr) 24px 40px;
+      column-gap: 5px;
+      padding-inline: 10px;
+    }
+    .reload-header-brand > svg {
+      width: 32px;
+    }
+    .reload-dial {
+      width: 40px;
+    }
+    .opening-code-access {
+      right: 54px;
+    }
+  }
+}
+
+@media (max-width: 600px) and (max-height: 640px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    .sk-admission-hero {
+      min-height: 54px;
+      padding-block: 3px;
+    }
+    .opening-code-access {
+      top: 9px;
+    }
+    .is-character-selection .opening-content {
+      padding-top: 5px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-reload-theme *,
+  .is-reload-theme *::before,
+  .is-reload-theme *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+.is-reload-theme[data-motion='reduced'] {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,1049 @@
+.skylink-phone.sda-phone-ui {
+  --sk-ex-gradient: linear-gradient(
+    110deg,
+    #83eaff 0%,
+    #a9b9ff 18%,
+    #d7acff 36%,
+    #ffb2e5 52%,
+    #fff3a6 70%,
+    #adf3df 86%,
+    #83eaff 100%
+  );
+  .status-content
+    > :is(
+      .dashboard-page,
+      .profile-page,
+      .skill-page,
+      .inventory-page,
+      .quest-page,
+      .relationship-page,
+      .map-page,
+      .shop-page,
+      .cg-page,
+      .settings-page
+    ) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0 0 12px;
+    color: var(--sk-ink);
+    min-width: 0;
+    width: 100%;
+  }
+  .sk-module-banner {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    gap: 10px;
+    align-items: center;
+    padding: 5px 2px 16px;
+    border-bottom: 1px solid var(--sk-line);
+    color: var(--sk-ink);
+    > div {
+      flex: 1;
+      min-width: 0;
+    }
+    .sk-kicker {
+      color: var(--sk-blue);
+      font-size: 8px;
+      letter-spacing: 0.06em;
+    }
+    h2 {
+      margin: 6px 0 3px;
+      font: 750 22px/1.3 var(--phone-font-family);
+      letter-spacing: -0.03em;
+      color: var(--sk-ink);
+    }
+    p {
+      margin: 0;
+      color: var(--sk-muted);
+      font-size: 10px;
+      line-height: 1.7;
+    }
+    &::after {
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      width: 35px;
+      height: 3px;
+      background: var(--sk-cyan);
+      content: '';
+    }
+  }
+  .sk-module-symbol {
+    display: grid;
+    width: 51px;
+    height: 51px;
+    place-items: center;
+    border: 1px dashed var(--sk-line);
+    border-radius: 50%;
+    color: var(--sk-blue);
+    font-size: 23px;
+    transform: rotate(-8deg);
+    animation: sk-float 7s ease-in-out infinite;
+  }
+
+  .status-content
+    :is(
+      .detail-card,
+      .section-card,
+      .quest-section,
+      .section,
+      .gacha-section,
+      .talent-gacha-section,
+      .current-talent-display,
+      .filter-bar,
+      .item-section,
+      .character-selector,
+      .character-section,
+      .map-controls,
+      .location-detail,
+      .settings-category-panel,
+      .difficulty-card
+    ) {
+    padding: 15px;
+    border: 1px solid var(--sk-line);
+    border-radius: 6px 16px 6px 6px;
+    background: var(--sk-paper);
+    box-shadow: var(--sk-shadow);
+    color: var(--sk-ink);
+    overflow-wrap: anywhere;
+  }
+  .status-content
+    :is(
+      .section-header,
+      .section-title,
+      .detail-title,
+      .upgrade-card-header,
+      .bonus-header,
+      .quest-header,
+      .main-header,
+      .settings-section-title,
+      .difficulty-header
+    ) {
+    margin-top: 0;
+    color: var(--sk-ink);
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: 0.02em;
+    text-shadow: none;
+    > i,
+    > span > i {
+      color: var(--sk-blue);
+    }
+  }
+  .status-content
+    :is(
+      .help-text,
+      .help-body,
+      .detail-row,
+      .bonus-label,
+      .upgrade-label,
+      .stat-label,
+      .bar-label,
+      .card-label,
+      .qs-label,
+      .quest-desc,
+      .item-desc,
+      .item-meta,
+      .item-type,
+      .skill-desc,
+      .skill-meta,
+      .talent-desc,
+      .talent-label,
+      .no-talent-copy,
+      .gacha-note,
+      .talent-gacha-note,
+      .rate-list,
+      .resource-label,
+      .coins-label,
+      .gold-label,
+      .filter-label,
+      .slot-label,
+      .rel-tags,
+      .stat-header,
+      .character-count,
+      .control-item,
+      .detail-item,
+      .empty-state,
+      .settings-helper,
+      .settings-row-label,
+      .settings-slider-row,
+      .settings-checkbox-row,
+      .settings-section-title small,
+      .settings-category-heading small,
+      .settings-text-field,
+      .settings-textarea-field,
+      .settings-hint
+    ) {
+    color: var(--sk-muted);
+    text-shadow: none;
+  }
+  .status-content
+    :is(
+      .item-name,
+      .skill-name,
+      .rel-name,
+      .quest-title,
+      .detail-value,
+      .upgrade-value,
+      .slot-value,
+      .card-value,
+      .stat-value,
+      .qs-value,
+      .resource-value,
+      .coins-amount,
+      .gold-value,
+      .points-value,
+      .points-label,
+      .profile-name,
+      .difficulty-header,
+      .difficulty-options,
+      .settings-category-heading,
+      .settings-section-title
+    ) {
+    color: var(--sk-ink);
+    text-shadow: none;
+  }
+  .status-content
+    :is(.resource-value, .coins-amount, .gold-value, .points-value, .stat-value, .qs-value, .card-value.gold) {
+    font-family: var(--sk-display);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+  }
+  .status-content :is(.tab-bar, .category-tabs, .filter-tabs, .filter-options, .thread-tabs) {
+    gap: 5px;
+  }
+  .status-content :is(.tab-bar, .category-tabs) {
+    display: flex;
+    padding: 4px;
+    border: 1px solid var(--sk-line);
+    border-radius: 8px;
+    background: var(--sk-paper);
+    flex-shrink: 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .status-content
+    :is(
+      .tab-btn,
+      .category-tab,
+      .filter-btn,
+      .slot-btn,
+      .gender-btn,
+      .attr-btn,
+      .icon-style-button,
+      .wallpaper-preset-button
+    ) {
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: var(--sk-soft);
+    color: var(--sk-muted);
+    box-shadow: none;
+    font-size: 10px;
+    transition:
+      background 0.2s,
+      color 0.2s,
+      transform 0.2s;
+    white-space: nowrap;
+    &:hover {
+      color: var(--sk-blue);
+      border-color: var(--sk-line);
+    }
+    &.active {
+      color: #fff;
+      background: #087dff;
+      border-color: #087dff;
+      box-shadow: 0 4px 10px #087dff22;
+    }
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+  .status-content :is(.tab-btn, .category-tab) {
+    min-height: 36px;
+    flex: 1 0 auto;
+  }
+  .status-content :is(.filter-group, .filter-options) {
+    flex-wrap: wrap;
+  }
+  .status-content :is(input:not([type='range']):not([type='checkbox']):not([type='file']), textarea, select) {
+    max-width: 100%;
+    border: 1px solid var(--sk-line);
+    border-radius: 5px;
+    background: var(--sk-soft);
+    color: var(--sk-ink);
+    box-shadow: none;
+    caret-color: var(--sk-blue);
+    &::placeholder {
+      color: var(--sk-muted);
+      opacity: 0.8;
+    }
+  }
+  .status-content :is(input[type='range'], input[type='checkbox']) {
+    accent-color: #087dff;
+  }
+  .status-content
+    :is(
+      .upgrade-btn,
+      .equip-btn,
+      .buy-btn,
+      .purchase-btn,
+      .confirm-btn,
+      .replace-btn,
+      .gacha-btn,
+      .talent-gacha-btn,
+      .settings-action-primary
+    ) {
+    border: 1px solid #087dff;
+    border-radius: 5px;
+    background: #087dff;
+    color: #fff;
+    box-shadow: 0 4px 12px #087dff15;
+    transition:
+      filter 0.2s,
+      transform 0.2s;
+    &:hover:not(:disabled) {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+    &:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+    &:disabled {
+      opacity: 0.45;
+    }
+  }
+  .status-content
+    :is(
+      .inventory-item,
+      .skill-card,
+      .shop-item,
+      .quest-card,
+      .relationship-card,
+      .equipment-slot,
+      .upgrade-item,
+      .stat-card,
+      .quick-stat,
+      .bonus-item,
+      .current-location,
+      .current-talent-display,
+      .talent-card,
+      .result-item,
+      .exchange-item,
+      .completed-item
+    ) {
+    border: 1px solid var(--sk-line);
+    border-radius: 5px;
+    background: var(--sk-paper);
+    color: var(--sk-ink);
+    box-shadow: none;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s,
+      transform 0.25s var(--sk-ease);
+  }
+  .status-content :is(.shop-item, .inventory-item, .skill-card, .relationship-card):hover {
+    border-color: var(--sk-blue);
+    box-shadow: 0 6px 15px #087dff10;
+    transform: translateY(-2px);
+  }
+  .status-content :is(.inventory-list, .skills-list, .quest-list, .item-grid, .relationship-list) > * {
+    animation: sk-rise 0.45s var(--sk-ease) both;
+    &:nth-child(2) {
+      animation-delay: 40ms;
+    }
+    &:nth-child(3) {
+      animation-delay: 80ms;
+    }
+    &:nth-child(4) {
+      animation-delay: 120ms;
+    }
+  }
+  .status-content :is(.rarity-s, .rarity-ss, .grade-s, .grade-ss, .item-grade) {
+    border-color: #c2a361;
+  }
+  .status-content
+    :is(.skill-rarity, .rate-item, .item-level, .item-grade, .slot-level, .quest-badge, .quest-type-badge) {
+    border-radius: 3px;
+    font-family: var(--sk-mono);
+    font-size: 9px;
+  }
+  .status-content :is(.rate-item.rarity-c, .rate-item.rarity-b) {
+    color: var(--sk-muted);
+    background: var(--sk-soft);
+  }
+  .status-content :is(.rate-item.rarity-a, .rate-item.rarity-s, .rate-item.rarity-ss) {
+    color: #977312;
+    background: #f1e9c233;
+  }
+  .status-content :is(.inventory-item, .skill-card, .talent-card, .my-talent-card, .result-card).rarity-ex {
+    border-color: transparent;
+    background:
+      linear-gradient(var(--sk-paper), var(--sk-paper)) padding-box,
+      var(--sk-ex-gradient) border-box;
+  }
+  .status-content :is(.item-level, .slot-level, .tooltip-level, .skill-rarity).rarity-ex > .rarity-text {
+    display: inline-block;
+  }
+  .status-content .talent-rarity-badge.rarity-ex,
+  .status-content .rarity-ex :is(.rarity-text, .item-name-text, .skill-name, .talent-rarity, .result-rarity) {
+    color: transparent;
+    background: var(--sk-ex-gradient);
+    background-origin: content-box;
+    background-clip: text;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    font-weight: 900;
+  }
+  .status-content .empty-state {
+    padding: 30px 12px;
+    border: 1px dashed var(--sk-line);
+    background: transparent;
+    border-radius: 6px;
+    text-align: center;
+  }
+  .status-content .empty-state > i,
+  .status-content .empty-icon {
+    color: var(--sk-blue);
+    opacity: 0.5;
+  }
+  .status-content :is(.empty-state p, .empty-state span) {
+    color: var(--sk-muted);
+  }
+
+  /* Dossier and telemetry. */
+  .dashboard-page .top-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 0;
+  }
+  .dashboard-page .top-row > div {
+    display: flex;
+    padding: 12px;
+    border: 1px solid var(--sk-line);
+    border-radius: 4px;
+    background: var(--sk-paper);
+    color: var(--sk-ink);
+  }
+  .dashboard-page .top-row > .coins-card {
+    grid-column: 1 / -1;
+    align-items: center;
+    background: #087dff;
+    color: #fff;
+  }
+  .dashboard-page .coins-card :is(.card-label, .card-value) {
+    color: #fff;
+  }
+  .dashboard-page .coins-card .card-content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .dashboard-page .card-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 17px;
+    color: var(--sk-blue);
+    background: transparent;
+  }
+  .dashboard-page .coins-card .card-icon {
+    color: var(--sk-yellow);
+  }
+  .dashboard-page .card-label {
+    font-size: 9px;
+  }
+  .dashboard-page .card-value {
+    font-size: 12px;
+  }
+  .dashboard-page .card-value.gold {
+    font-size: 24px;
+  }
+  .dashboard-page .card-sub {
+    color: var(--sk-muted);
+    font-size: 10px;
+  }
+  .dashboard-page .character-card {
+    padding: 16px;
+    background: var(--sk-paper);
+    border: 1px solid var(--sk-line);
+    border-radius: 6px 18px 6px 6px;
+    box-shadow: none;
+  }
+  .dashboard-page .character-header {
+    border-bottom: 1px solid var(--sk-line);
+    padding-bottom: 12px;
+  }
+  .dashboard-page .character-level {
+    color: var(--sk-blue);
+    background: var(--sk-soft);
+    border-radius: 3px;
+    font-family: var(--sk-display);
+  }
+  .dashboard-page .character-rank {
+    color: var(--sk-muted);
+    background: transparent;
+  }
+  .dashboard-page .combat-stats,
+  .dashboard-page .bar-value {
+    color: var(--sk-ink);
+  }
+  .dashboard-page .quick-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+  .dashboard-page .quick-stat {
+    padding: 12px 3px;
+    background: transparent;
+    border-width: 0 0 2px;
+  }
+  .dashboard-page .qs-label {
+    font-size: 9px;
+  }
+  .dashboard-page .qs-value {
+    font-size: 22px;
+    color: var(--sk-blue);
+  }
+  .status-content :is(.bar-track, .stat-bar, .progress-track, .exp-bar, .status-bar-track) {
+    background: var(--sk-soft);
+    border: 1px solid var(--sk-line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .status-content :is(.bar-fill, .stat-fill, .exp-fill) {
+    border-radius: 2px;
+    transition: width 0.7s var(--sk-ease);
+    animation: sk-bar-in 0.85s var(--sk-ease);
+  }
+  .status-content :is(.bar-fill.stamina, .stat-fill.favor) {
+    background: linear-gradient(90deg, #087dff, #00bce5);
+  }
+  .status-content .bar-fill.lust {
+    background: linear-gradient(90deg, #d65887, #f09caf);
+  }
+  .difficulty-card .difficulty-option {
+    min-width: 0;
+    min-height: 42px;
+    padding: 8px 2px;
+    background: var(--sk-soft);
+    border: 1px solid var(--sk-line);
+    color: var(--sk-muted);
+    font-size: 10px;
+    border-radius: 4px;
+  }
+  .difficulty-card .difficulty-option.active {
+    background: #087dff;
+    color: #fff;
+    border-color: #087dff;
+  }
+  .difficulty-card .difficulty-hint {
+    color: var(--sk-muted);
+    font-size: 10px;
+  }
+  .profile-header {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 14px;
+    align-items: center;
+    padding: 35px 14px 18px;
+    border: 1px solid var(--sk-line);
+    border-radius: 6px 18px 6px 6px;
+    background: linear-gradient(120deg, var(--sk-paper), var(--sk-soft));
+    text-align: left;
+  }
+  .profile-avatar {
+    width: 82px;
+    height: 100px;
+    border: 1px solid var(--sk-blue);
+    border-radius: 3px;
+    background: var(--sk-soft);
+    box-shadow: 4px 4px 0 var(--sk-line);
+  }
+  .profile-avatar .avatar-inner {
+    background: var(--sk-soft);
+    border-radius: 2px;
+    color: var(--sk-blue);
+  }
+  .profile-summary {
+    min-width: 0;
+  }
+  .profile-field-caption {
+    color: var(--sk-blue);
+    font: 7px var(--sk-mono);
+    letter-spacing: 0.08em;
+  }
+  .profile-name {
+    margin: 6px 0 10px;
+    font-size: 22px;
+  }
+  .profile-level {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .profile-level > span {
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+    padding: 4px 7px;
+    border: 1px solid var(--sk-line);
+    border-radius: 3px;
+    background: var(--sk-paper);
+    color: var(--sk-ink);
+    font-size: 11px;
+  }
+  .profile-level small {
+    color: var(--sk-muted);
+    font-size: 8px;
+  }
+  .profile-pending-row {
+    display: flex;
+    gap: 15px;
+    margin-top: 12px;
+  }
+  .profile-pending-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 9px;
+    color: var(--sk-ink);
+  }
+  .profile-pending-item > small {
+    color: var(--sk-muted);
+    font-size: 8px;
+  }
+  .points-section,
+  .resource-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .status-content :is(.points-card, .resource-card, .inventory-page > .coins-card, .shop-header .gold-card) {
+    margin: 0;
+    padding: 14px;
+    border: 1px solid var(--sk-line);
+    border-radius: 4px;
+    background: var(--sk-paper);
+    color: var(--sk-ink);
+    box-shadow: none;
+    > i,
+    > .coins-icon {
+      color: var(--sk-blue);
+      background: transparent;
+    }
+  }
+  .status-content .shop-header {
+    padding: 0;
+    background: none;
+  }
+  .status-content .coins-amount,
+  .status-content .gold-value {
+    color: var(--sk-blue);
+    font-size: 29px;
+  }
+  .profile-page .help-btn,
+  .profile-page .avatar-reset-btn {
+    top: 8px;
+    width: 24px;
+    height: 24px;
+    color: var(--sk-blue);
+    background: var(--sk-paper);
+    border: 1px solid var(--sk-line);
+    font-size: 9px;
+  }
+  .status-content .stat-icon {
+    background: var(--sk-soft);
+    color: var(--sk-blue);
+    border-radius: 4px;
+  }
+  .status-content .equipment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .status-content .equipment-slot {
+    padding: 12px 9px;
+    align-items: flex-start;
+  }
+  .equipment-slot.empty {
+    border-style: dashed;
+    background: var(--sk-soft);
+  }
+  .equipment-slot .slot-icon {
+    color: var(--sk-blue);
+    background: transparent;
+  }
+  .slot-value {
+    font-size: 11px;
+  }
+  .status-content .inventory-list {
+    display: grid;
+    gap: 10px;
+  }
+  .inventory-item {
+    padding: 13px;
+  }
+  .status-content .item-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+  .shop-item {
+    padding: 14px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .shop-item .item-icon {
+    display: grid;
+    width: 37px;
+    height: 37px;
+    place-items: center;
+    border-radius: 5px;
+    background: var(--sk-soft);
+    color: var(--sk-blue);
+    font-size: 21px;
+  }
+  .shop-item .item-price {
+    margin-top: auto;
+    color: var(--sk-blue);
+    font: 600 14px var(--sk-display);
+  }
+  .shop-item .item-name {
+    font-size: 11px;
+  }
+  .status-content .quest-section {
+    border: 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .quest-page .quest-card.main {
+    border-color: var(--sk-blue);
+    border-top-width: 4px;
+    padding: 17px;
+    background: var(--sk-paper);
+  }
+  .quest-page .quest-badge {
+    color: #fff;
+    background: #087dff;
+  }
+  .quest-page .quest-card {
+    padding: 14px;
+  }
+  .quest-page .objective-item {
+    color: var(--sk-muted);
+    background: var(--sk-soft);
+    border-color: var(--sk-line);
+  }
+  .quest-page .meta-item {
+    color: var(--sk-blue);
+  }
+  .quest-page .quest-reward {
+    color: #94721d;
+    background: #d6c05610;
+    border-color: #d6c05633;
+  }
+  .relationship-page .rel-avatar,
+  .relationship-page .present-avatar {
+    border: 1px solid var(--sk-line);
+    border-radius: 9px;
+    background: var(--sk-soft);
+    color: var(--sk-blue);
+  }
+  .relationship-page .present-item {
+    color: var(--sk-ink);
+  }
+  .relationship-page .dominance-bar {
+    border: 1px solid var(--sk-line);
+    background: var(--sk-soft);
+    border-radius: 3px;
+  }
+  .relationship-page .relationship-card {
+    padding: 15px;
+  }
+  .status-content .map-controls {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+  }
+  .status-content .map-container {
+    border: 1px solid var(--sk-line);
+    border-radius: 4px;
+    background: var(--sk-paper);
+  }
+  .status-content .map-cell {
+    border-color: var(--sk-line);
+    background: var(--sk-soft);
+    color: var(--sk-muted);
+  }
+  .status-content .map-cell.has-location {
+    background: #087dff0e;
+    border-color: #80b7ed;
+    color: var(--sk-ink);
+  }
+  .status-content .map-cell.player-position {
+    color: #fff;
+    background: #087dff;
+    border-color: #42b6ff;
+    box-shadow: 0 0 12px #087dff50;
+  }
+  .status-content .map-cell.selected {
+    outline: 2px solid var(--sk-blue);
+    outline-offset: -2px;
+  }
+  .status-content .map-cell .location-label {
+    color: inherit;
+  }
+  .status-content .map-cell.empty {
+    background: transparent;
+  }
+  .status-content .zoom-btn,
+  .status-content .close-detail {
+    border: 1px solid var(--sk-line);
+    background: var(--sk-paper);
+    color: var(--sk-blue);
+  }
+  .status-content .cg-card {
+    border: 1px solid var(--sk-line);
+    border-radius: 4px;
+    background: var(--sk-paper);
+    box-shadow: var(--sk-shadow);
+  }
+  .cg-page .character-selector {
+    padding: 12px;
+  }
+  .cg-page .cg-name,
+  .cg-page .character-name {
+    color: var(--sk-ink);
+  }
+
+  /* Settings remain fully functional, including the existing selective resets. */
+  .status-content .settings-category-panel {
+    padding: 0;
+    overflow: hidden;
+  }
+  .status-content .settings-category-heading {
+    padding: 14px;
+    background: var(--sk-paper);
+    border-bottom: 1px solid var(--sk-line);
+  }
+  .status-content .settings-section {
+    padding: 14px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--sk-line);
+    border-radius: 0;
+  }
+  .status-content .settings-section:last-child {
+    border-bottom: 0;
+  }
+  .status-content .settings-section-title {
+    margin-bottom: 12px;
+  }
+  .status-content .settings-row {
+    padding: 10px 0;
+    border-color: var(--sk-line);
+  }
+  .status-content .settings-row-icon {
+    color: var(--sk-blue);
+    background: var(--sk-soft);
+  }
+  .status-content .settings-actions > button {
+    padding: 8px 10px;
+    border: 1px solid var(--sk-line);
+    border-radius: 5px;
+    color: var(--sk-ink);
+    background: var(--sk-soft);
+    font-size: 10px;
+  }
+  .status-content .settings-actions > .settings-action-primary {
+    color: white;
+    background: #087dff;
+    border-color: #087dff;
+  }
+  .status-content .settings-helper {
+    background: var(--sk-soft);
+    border: 1px solid var(--sk-line);
+    border-radius: 4px;
+    padding: 9px;
+  }
+  .status-content .settings-helper.ready {
+    color: var(--sk-success);
+  }
+  .status-content .icon-style-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+  }
+  .status-content .icon-style-button {
+    padding: 7px 2px;
+    font-size: 8px;
+    white-space: normal;
+  }
+  .status-content .icon-style-preview {
+    width: 27px;
+    height: 27px;
+    color: var(--sk-blue);
+    background: var(--sk-paper);
+  }
+  .status-content .icon-style-label {
+    color: var(--sk-muted);
+    font-size: 10px;
+  }
+  .status-content .settings-row select {
+    width: 128px;
+    padding: 5px;
+    font-size: 10px;
+  }
+  .status-content .sk-motion-setting {
+    margin: 0 14px;
+  }
+  .sk-motion-setting button {
+    padding: 5px 9px;
+    border: 1px solid var(--sk-line);
+    background: var(--sk-soft);
+    color: var(--sk-blue);
+    border-radius: 4px;
+    font-size: 10px;
+  }
+
+  /* Overlay typography must not inherit the old dark-theme white labels. */
+  :is(
+    .confirm-modal,
+    .help-modal,
+    .item-detail,
+    .item-detail-modal,
+    .avatar-modal,
+    .tooltip-content,
+    .talent-tooltip,
+    .skill-tooltip
+  ) {
+    color: var(--sk-ink);
+    background: var(--sk-paper);
+    border: 1px solid var(--sk-line);
+    border-radius: 10px;
+    box-shadow: 0 15px 45px #081b3d33;
+  }
+  :is(
+    .confirm-modal-header,
+    .confirm-modal-body,
+    .help-title,
+    .help-text,
+    .help-section-title,
+    .help-body,
+    .tooltip-title,
+    .tooltip-desc,
+    .confirm-modal .difficulty-text
+  ) {
+    color: var(--sk-ink);
+  }
+  :is(.help-close, .cancel-btn, .close-btn) {
+    color: var(--sk-muted);
+    background: var(--sk-soft);
+    border-color: var(--sk-line);
+  }
+
+  /* Backstreet is a complete messenger, not a repainted home tile. */
+  .backstreet-page {
+    --backstreet-accent: #087dff;
+    height: 100%;
+    min-height: 0;
+    color: var(--sk-ink);
+    background: var(--sk-soft);
+  }
+  .backstreet-page
+    :is(
+      .contact-panel,
+      .chat-panel,
+      .chat-header,
+      .contact-toolbar,
+      .composer,
+      .chat-composer,
+      .thread-tabs,
+      .group-workspace
+    ) {
+    color: var(--sk-ink);
+    background: var(--sk-paper);
+    border-color: var(--sk-line);
+  }
+  .backstreet-page .contact-toolbar {
+    padding: 14px 12px 10px;
+  }
+  .backstreet-page
+    :is(
+      .home-back-btn,
+      .chat-back-btn,
+      .search-row,
+      .group-creator,
+      .group-launch-card,
+      .contact-launch-card,
+      .contact-item,
+      .group-name-field,
+      .member-option,
+      .selected-member-chip
+    ) {
+    color: var(--sk-ink);
+    background: var(--sk-soft);
+    border-color: var(--sk-line);
+    border-radius: 6px;
+  }
+  .backstreet-page
+    :is(
+      .search-row input,
+      .composer textarea,
+      .chat-composer textarea,
+      .contact-name,
+      .chat-title,
+      .group-launch-main strong,
+      .group-creator-title strong
+    ) {
+    color: var(--sk-ink);
+  }
+  .backstreet-page
+    :is(
+      .contact-preview,
+      .contact-time,
+      .chat-subtitle,
+      .group-launch-main > span,
+      .message-time,
+      .empty-chat,
+      .thread-empty
+    ) {
+    color: var(--sk-muted);
+  }
+  .backstreet-page .group-launch-card {
+    padding: 14px;
+    border-left: 3px solid #087dff;
+  }
+  .backstreet-page :is(.group-launch-icon, .group-launch-action, .member-avatar, .contact-avatar) {
+    color: var(--sk-blue);
+    background: var(--sk-soft);
+  }
+  .backstreet-page :is(.thread-tab, .nav-tab) {
+    color: var(--sk-muted);
+    border-color: var(--sk-line);
+  }
+  .backstreet-page :is(.thread-tab.active, .nav-tab.active, .group-create, .send-btn, .send-button) {
+    color: #fff;
+    background: #087dff;
+    border-color: #087dff;
+  }
+  .backstreet-page .message-bubble {
+    border: 1px solid var(--sk-line);
+    color: var(--sk-ink);
+    background: var(--sk-paper);
+    border-radius: 4px 14px 14px;
+  }
+  .backstreet-page :is(.message-row.self, .message-row.user, .message-item.is-user) .message-bubble {
+    color: #fff;
+    background: #087dff;
+    border-color: #087dff;
+    border-radius: 14px 4px 14px 14px;
+  }
+}

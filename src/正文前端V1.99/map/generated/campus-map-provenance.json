@@ -1,0 +1,17 @@
+{
+  "width": 1672,
+  "height": 941,
+  "imageBytes": 2452985,
+  "imageSha256": "36e91058777aec7ebdedbaea68e0c43fe5207b86d990a7ac824d04a05d95e37e",
+  "destinationCount": 50,
+  "sourceImage": "生图/天海地图_老图增高简化版_20261003_03/天海地图_老图增高简化版.png",
+  "runtimeImage": "https://raw.githubusercontent.com/enterprise20020924-web/-/main/llm1/天海附加背景/天海校园地图.png",
+  "imageEmbedded": false,
+  "method": "original PNG with SVG contour spotlight",
+  "settings": {
+    "imageResized": false,
+    "imageReencoded": false,
+    "contourSource": "map/campus-map-contours.ts",
+    "dimOutsideSelection": true
+  }
+}

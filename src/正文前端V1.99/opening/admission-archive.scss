@@ -1,0 +1,1086 @@
+// Fork admission art direction: a school archive opened on a blue dossier cover.
+.academy-opening.skylink-opening.sda-ui.sk-admission-page {
+  .opening-modal-overlay > .opening-modal-card {
+    translate: 0 var(--archive-modal-shift, 0px);
+  }
+  --sk-blue: #087cde;
+  --sk-ink: #163f61;
+  --sk-muted: #627f95;
+  --sk-line: #d1e2ed;
+  --archive-navy: #153d60;
+  padding: 18px clamp(10px, 2.2vw, 32px) 28px;
+  background: linear-gradient(132deg, #eaf5fc 0 72%, #d9eef9 72% 83%, #eaf5fc 83%);
+  color: var(--sk-ink);
+
+  .sk-opening-masthead {
+    max-width: 1420px;
+    padding: 0 5px 16px;
+    border: 0;
+  }
+  .sk-opening-masthead::after {
+    display: none;
+  }
+  .sk-opening-logo {
+    gap: 12px;
+  }
+  .archive-school-mark {
+    position: static;
+    width: 78px;
+    height: 46px;
+    color: #087cde;
+    flex-shrink: 0;
+  }
+  .sk-opening-logo strong {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 18px;
+    letter-spacing: 0.16em;
+  }
+  .sk-opening-logo strong small {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: 700 8px/1.2 var(--sk-mono);
+    letter-spacing: 0.22em;
+    color: #5083a5;
+  }
+  .sk-admission-service {
+    color: #365a76;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  .sk-motion-toggle {
+    border: 1px solid #bfd7e6;
+    border-radius: 3px;
+    background: #fff;
+  }
+  .sk-admission-tablet {
+    max-width: 1420px;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .sk-admission-tablet::before,
+  .sk-admission-tablet::after,
+  .sk-tablet-hardware,
+  .sk-tablet-home {
+    display: none;
+  }
+  .opening-terminal {
+    display: grid;
+    grid-template-columns: 184px minmax(0, 1fr);
+    max-width: none;
+    border: 1px solid #bad1e0;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow:
+      0 14px 36px #25476416,
+      5px 5px 0 #d3e6f1;
+    overflow: hidden;
+  }
+  .sk-admission-hero {
+    grid-column: 1 / -1;
+    min-height: 116px;
+    padding: 22px 30px;
+    gap: 20px;
+    border: 0;
+    border-bottom: 4px solid #35cae7;
+    background: #173e60;
+    color: #fff;
+  }
+  .sk-admission-hero::before {
+    inset: 0 0 0 auto;
+    width: 54%;
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      #2570a633 30% 55%,
+      transparent 55% 65%,
+      #2675b340 65% 85%,
+      transparent 85%
+    );
+  }
+  .sk-admission-hero::after {
+    display: none;
+  }
+  .sk-admission-copy .sk-kicker {
+    height: auto;
+    color: #7bd8ed;
+    font: 700 8px/1.3 var(--sk-mono);
+    letter-spacing: 0.2em;
+  }
+  .sk-admission-copy .sk-kicker::before {
+    width: 16px;
+    height: 2px;
+    background: #b7e768;
+  }
+  .sk-admission-copy .sk-kicker::after {
+    display: none;
+  }
+  .sk-admission-copy h1 {
+    margin: 10px 0 6px;
+    color: #fff;
+    font-size: clamp(26px, 3vw, 40px);
+    letter-spacing: 0.05em;
+    line-height: 1.15;
+  }
+  .sk-admission-copy h1 > span {
+    margin-left: 0.25em;
+    background: none;
+    color: #79dfed;
+    -webkit-text-fill-color: currentColor;
+  }
+  .sk-admission-copy > p {
+    font-size: 11px;
+    color: #a8c9dd;
+  }
+  .sk-enrollment-visual {
+    flex: 0 0 215px;
+    height: 83px;
+    margin: 0;
+    max-width: none;
+    animation: none;
+  }
+  .sk-enrollment-visual > :not(.sk-enrollment-sheet):not(.sk-enrollment-step-marks) {
+    display: none;
+  }
+  .sk-enrollment-sheet {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 1px solid #ffffff30;
+    border-radius: 0;
+    transform: none;
+    background: #163854;
+    box-shadow: none;
+  }
+  .sk-enrollment-sheet-content {
+    padding: 12px 17px;
+    transform: none;
+  }
+  .sk-enrollment-paper-lines {
+    opacity: 0.5;
+  }
+  .sk-enrollment-page-number {
+    color: #fff;
+  }
+  .sk-enrollment-page-number strong {
+    font-size: 52px;
+    color: #fff;
+  }
+  .sk-enrollment-page-number small {
+    color: #83b7d3;
+    white-space: nowrap;
+  }
+  .sk-enrollment-sheet-corner {
+    border-color: #35cae7;
+  }
+  .sk-enrollment-step-marks {
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+    width: auto;
+    transform: none;
+  }
+  .sk-enrollment-step-marks span {
+    background: #496d86;
+  }
+  .sk-enrollment-step-marks .is-reached {
+    background: #72ddeb;
+  }
+
+  .opening-sidebar {
+    display: flex;
+    flex-direction: column;
+    border: 0;
+    border-right: 1px solid #c7deec;
+    background: #eaf4fb;
+    padding-top: 20px;
+  }
+  .opening-step-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 7px;
+  }
+  .opening-step-button {
+    min-height: 70px;
+    padding: 12px 12px 12px 17px;
+    margin: 0 10px 0 0;
+    gap: 10px;
+    border: 0;
+    border-radius: 0 3px 3px 0;
+    color: #69869a;
+    background: transparent;
+    text-align: left;
+  }
+  .opening-step-button::before {
+    display: none;
+  }
+  .opening-step-button::after {
+    inset: 12px auto 12px 0;
+    width: 3px;
+    height: auto;
+    transform: none;
+    background: transparent;
+  }
+  .opening-step-button .sk-step-number {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 34px;
+    flex: 0 0 26px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    font: 800 24px/1 var(--sk-display);
+    color: #97b4c8;
+    opacity: 1;
+  }
+  .opening-step-button .sk-step-number > i {
+    position: absolute;
+    font-size: 9px;
+    right: -2px;
+    bottom: -4px;
+    color: #118bb1;
+    background: #eaf4fb;
+  }
+  .opening-step-button .sk-step-label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+  }
+  .sk-step-label > small {
+    font: 600 7px/1 var(--sk-mono);
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+  }
+  .opening-step-button .sk-step-symbol {
+    display: none;
+  }
+  .opening-step-button.is-current {
+    color: #fff;
+    background: #087cde;
+    box-shadow: 3px 4px 0 #c8dfef;
+  }
+  .opening-step-button.is-current::after {
+    background: #b9ec70;
+  }
+  .opening-step-button.is-current .sk-step-number {
+    background: none;
+    color: #fff;
+  }
+  .opening-step-button.is-complete {
+    color: #226087;
+    background: #dceefa;
+  }
+  .opening-step-button:hover:not(:disabled):not(.is-current) {
+    background: #d3e9f7;
+  }
+  .archive-spine-note {
+    padding: 42px 20px 24px;
+    margin-top: auto;
+    color: #6a9bb8;
+  }
+  .archive-spine-note > span {
+    font: 700 7px var(--sk-mono);
+    letter-spacing: 0.22em;
+  }
+  .archive-spine-note strong {
+    display: block;
+    margin-top: 9px;
+    font: 900 28px/0.95 var(--sk-display);
+    letter-spacing: -0.04em;
+    color: #aecddd;
+  }
+  .archive-spine-note > i {
+    display: block;
+    width: 27px;
+    height: 3px;
+    margin: 20px 0 14px;
+    background: #26bfda;
+  }
+  .archive-spine-note > small {
+    font-size: 8px;
+    line-height: 1.7;
+  }
+
+  .opening-workspace {
+    min-width: 0;
+  }
+  .opening-progress {
+    height: 2px;
+    background: #e3eef5;
+  }
+  .opening-progress-fill {
+    background: #087cde;
+  }
+  .opening-workspace-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    align-items: stretch;
+    background: none;
+  }
+  .opening-content {
+    min-width: 0;
+    padding: 28px clamp(18px, 2.3vw, 32px) 30px;
+  }
+  .opening-step-heading {
+    padding: 0 46px 18px 0;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #d4e3ee;
+  }
+  .opening-step-heading::after {
+    width: 30px;
+    height: 3px;
+    bottom: -2px;
+    background: #087cde;
+  }
+  .opening-step-heading h2 {
+    margin-bottom: 8px;
+    font-size: 26px;
+    color: #163f61;
+    font-weight: 900;
+  }
+  .opening-step-heading p {
+    color: #627f95;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .opening-step-index {
+    right: 0;
+    top: 0;
+    color: #e2eff8;
+    -webkit-text-stroke: 0;
+    font: 800 48px/0.95 var(--sk-display);
+  }
+  .opening-step-heading.is-character-selection-heading {
+    padding-right: 64px;
+  }
+  .opening-workspace-body.is-character-selection {
+    grid-template-columns: minmax(0, 1fr);
+    background: linear-gradient(150deg, #fff 70%, #eef7fc 70%);
+  }
+
+  .opening-rail-slot {
+    padding: 24px 18px 24px 0;
+  }
+  .sk-admission-rail,
+  .sk-admission-rail[data-follow='outer'] {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  .opening-live-summary {
+    padding: 0;
+    gap: 0;
+    border: 1px solid #cddfeb;
+    border-radius: 0;
+    background: #f8fbfe;
+    box-shadow: 3px 3px 0 #e4eff6;
+    overflow: hidden;
+  }
+  .sk-record-card-top {
+    height: 28px;
+    margin: 0;
+    padding: 0 12px;
+    background: #173f60;
+    color: #92ddeb;
+    font: 700 7px var(--sk-mono);
+    letter-spacing: 0.13em;
+  }
+  .sk-record-top-lines {
+    display: none;
+  }
+  .opening-summary-heading {
+    margin: 0 14px;
+    padding: 16px 0 12px;
+  }
+  .opening-summary-heading strong {
+    font-size: 15px;
+  }
+  .opening-summary-heading small {
+    font-size: 8px;
+    padding: 3px 5px;
+    border: 0;
+    background: #f0f5be;
+    color: #64723a;
+  }
+  .sk-record-identity {
+    margin: 0 14px;
+    padding: 14px 0 18px;
+    gap: 10px;
+  }
+  .sk-record-avatar {
+    width: 48px;
+    height: 52px;
+    border: 1px solid #cadfea;
+    background: #e6f3fb;
+    border-radius: 0;
+  }
+  .sk-record-avatar > svg {
+    position: static;
+    width: 40px;
+    height: 30px;
+    color: #1688c6;
+  }
+  .sk-record-identity strong {
+    font-size: 15px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  .opening-summary-list {
+    margin: 0 14px;
+  }
+  .opening-summary-list > div {
+    gap: 8px;
+    padding: 10px 0;
+    font-size: 10px;
+  }
+  .opening-summary-list dt {
+    flex-shrink: 0;
+    color: #6c879b;
+  }
+  .opening-summary-list dd {
+    text-align: right;
+    font-size: 10px;
+  }
+  .opening-summary-metrics {
+    margin: 14px;
+    border-radius: 0;
+    background: #eaf4fa;
+  }
+  .opening-summary-metrics > span {
+    padding: 10px 5px;
+    font-size: 9px;
+  }
+  .opening-summary-metrics strong {
+    color: #087cde;
+    font: 800 26px var(--sk-display);
+  }
+  .sk-record-progress {
+    margin: 0 14px;
+  }
+  .sk-record-footer {
+    padding: 12px 14px;
+  }
+  .sk-admission-checks {
+    margin-top: 18px;
+    padding: 15px 12px;
+    border: 1px solid #d5e5ef;
+    border-radius: 0;
+    box-shadow: none;
+    background: #fff;
+  }
+  .sk-admission-checks header {
+    padding-bottom: 10px;
+  }
+  .sk-admission-checks h3 {
+    font-size: 12px;
+  }
+  .sk-admission-checks header > span {
+    font-size: 23px;
+  }
+  .sk-admission-checks li {
+    min-height: 36px;
+    gap: 6px;
+    padding: 6px 0;
+    font-size: 10px;
+  }
+  .sk-admission-checks li > small {
+    font-size: 8px;
+  }
+  .sk-check-indicator {
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    font-size: 10px;
+  }
+
+  .opening-footer {
+    position: relative;
+    bottom: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 26px;
+    border-top: 1px solid #cadfea;
+    background: #edf6fc;
+    box-shadow: none;
+  }
+  .opening-next,
+  .opening-start {
+    min-height: 45px;
+    padding: 12px 22px;
+    border: 0;
+    border-radius: 2px;
+    color: #fff;
+    background: #087cde;
+    box-shadow: 3px 3px 0 #afd7ef;
+    font-size: 13px;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+  }
+  .opening-start {
+    background: #173f60;
+  }
+  .opening-next:hover,
+  .opening-start:hover {
+    background: #0c66b6;
+    transform: translateY(-2px);
+    box-shadow: 3px 5px 0 #afd7ef;
+  }
+  .opening-next:disabled,
+  .opening-start:disabled {
+    transform: none;
+    opacity: 0.45;
+  }
+  .opening-prev {
+    padding: 12px 0;
+    border-radius: 0;
+    color: #486f8e;
+    font-size: 12px;
+  }
+  .opening-prev:disabled {
+    opacity: 0.3;
+  }
+  .sk-footer-progress {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    color: #2f688d;
+  }
+
+  &.is-welcome-page .opening-workspace-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  &.is-welcome-page .opening-rail-slot,
+  &.is-welcome-page .opening-step-heading {
+    display: none;
+  }
+  &.is-welcome-page .opening-content {
+    padding: 25px 30px;
+  }
+
+  // The older step components use utility classes. Style their actual form states here.
+  .archive-assessment,
+  .archive-abilities,
+  .archive-archetypes {
+    h3 {
+      letter-spacing: 0.04em;
+    }
+    .rounded-2xl {
+      border-radius: 3px;
+    }
+    .rounded-xl {
+      border-radius: 3px;
+    }
+    .rounded-lg {
+      border-radius: 3px;
+    }
+    [class*='bg-black/20'] {
+      background: #f5f9fd;
+      border-color: #d4e3ee;
+    }
+    [class*='bg-white/5'] {
+      background: #fff;
+      border-color: #d4e3ee;
+    }
+    [class*='bg-secondary/20'] {
+      background: #e2f3ff;
+    }
+    [class*='ring-secondary'] {
+      box-shadow: inset 3px 0 #087cde;
+      border-color: #087cde;
+      background: #edf7ff;
+    }
+    button[class*='text-left'] {
+      transition:
+        background 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+    }
+    button[class*='text-left']:hover:not(:disabled) {
+      border-color: #4ba5e0;
+      background: #eef8ff;
+      transform: translateY(-2px);
+    }
+    [class*='text-gray-400'],
+    [class*='text-gray-500'] {
+      color: #658299;
+    }
+    [class*='text-white'],
+    [class*='text-gray-200'] {
+      color: #163f61;
+    }
+    [class*='text-secondary'] {
+      color: #087cde;
+    }
+    [class*='bg-secondary']:not([class*='bg-secondary/']) {
+      background: #087cde;
+      color: #fff;
+    }
+    .custom-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: #91cbe9 #ecf5fb;
+    }
+  }
+  .archive-assessment {
+    container: archive-assessment / inline-size;
+  }
+  .archive-assessment > div:first-child {
+    padding: 22px;
+    background: #163f61;
+    border: 0;
+    border-bottom: 4px solid #31c8e5;
+  }
+  .archive-assessment > div:first-child :is(p, span) {
+    color: #edf7ff;
+  }
+  .archive-assessment > div:first-child button {
+    background: #285779;
+    border-color: #5386a9;
+    color: #e9f8ff;
+  }
+  .archive-assessment > div:first-child button i {
+    color: #9ae5f2;
+  }
+  .archive-assessment > div:first-child .text-3xl {
+    color: #bcea70;
+    font-size: 42px;
+    line-height: 1.1;
+    animation: none;
+  }
+  .archive-assessment > .grid > div {
+    padding: 18px 14px;
+    border-left: 3px solid #c9e4f5;
+  }
+  .archive-assessment .font-mono.text-lg {
+    color: #087cde;
+    font-size: 25px;
+  }
+  .archive-assessment button.rounded-full {
+    border-radius: 2px;
+    width: 34px;
+    height: 34px;
+  }
+  .archive-archetypes > .grid {
+    gap: 18px;
+  }
+  .archive-archetypes .h-\[450px\] {
+    height: 400px;
+  }
+  .archive-abilities .h-\[350px\] {
+    height: 380px;
+  }
+  .archive-abilities h4.truncate {
+    white-space: normal;
+  }
+  .sk-page-enter-active,
+  .sk-page-leave-active {
+    transition:
+      opacity 0.2s,
+      transform 0.28s;
+  }
+  .sk-page-enter-from {
+    opacity: 0;
+    transform: translate(12px, 5px);
+  }
+  .sk-page-leave-to {
+    opacity: 0;
+    transform: translate(-8px, 0);
+  }
+  .archive-welcome-seal {
+    animation: archive-cover-enter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .archive-admitted {
+    border-radius: 3px;
+    border: 1px solid #9cbfd5;
+    border-top: 5px solid #25bfdd;
+    background: #fff;
+  }
+  .archive-admitted > .p-8 {
+    text-align: center;
+    padding-top: 35px;
+  }
+  .archive-admission-stamp {
+    display: grid;
+    place-items: center;
+    gap: 6px;
+    width: 200px;
+    margin: 0 auto 24px;
+    padding: 14px 10px 18px;
+    border: 2px solid #087cde;
+    outline: 1px solid #087cde;
+    outline-offset: 4px;
+    transform: rotate(-5deg);
+    color: #087cde;
+    animation: archive-stamp-enter 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+  }
+  .archive-admission-stamp .sk-amami-mark {
+    position: static;
+    width: 80px;
+    height: 48px;
+    color: currentColor;
+  }
+  .archive-admission-stamp strong {
+    font: 900 28px/1 var(--sk-display);
+    letter-spacing: 0.1em;
+  }
+  .archive-admission-stamp span {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+  }
+  .archive-admitted h3 {
+    color: #163f61;
+  }
+  .archive-admitted .h-32 {
+    height: auto;
+    padding: 18px;
+    border: 0;
+    background: #edf7fc;
+  }
+}
+
+@keyframes archive-cover-enter {
+  from {
+    opacity: 0;
+    transform: translate(22px, 15px) rotate(3deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes archive-stamp-enter {
+  from {
+    opacity: 0;
+    transform: rotate(-12deg) scale(1.35);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-5deg) scale(1);
+  }
+}
+
+@container archive-assessment (max-width: 620px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page .archive-assessment > .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page {
+    .opening-terminal {
+      grid-template-columns: 160px minmax(0, 1fr);
+    }
+    .opening-step-button {
+      padding-left: 10px;
+      gap: 7px;
+    }
+    .opening-step-button .sk-step-label {
+      font-size: 11px;
+    }
+    .opening-workspace-body {
+      grid-template-columns: minmax(0, 1fr) 185px;
+    }
+    .opening-rail-slot {
+      padding-right: 12px;
+    }
+    .opening-content {
+      padding: 24px 18px;
+    }
+    .sk-record-identity {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page {
+    .opening-terminal {
+      display: block;
+    }
+    .opening-sidebar {
+      padding-top: 0;
+      border: 0;
+      border-bottom: 1px solid #c7deec;
+    }
+    .opening-step-nav {
+      display: grid;
+      grid-template-columns: repeat(var(--admission-step-count), minmax(0, 1fr));
+      gap: 0;
+    }
+    .opening-step-button {
+      min-height: 65px;
+      margin: 0;
+      padding: 13px 10px;
+      gap: 8px;
+      border-radius: 0;
+    }
+    .opening-step-button.is-current {
+      box-shadow: none;
+    }
+    .opening-step-button::after {
+      inset: auto 10px 0;
+      height: 3px;
+      width: auto;
+    }
+    .opening-step-button .sk-step-number {
+      width: 23px;
+      flex-basis: 23px;
+      font-size: 23px;
+    }
+    .archive-spine-note {
+      display: none;
+    }
+    .sk-step-label > small {
+      font-size: 6px;
+    }
+  }
+}
+@media (max-width: 760px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page {
+    padding: 12px 10px 20px;
+    .sk-admission-hero {
+      padding: 22px;
+    }
+    .sk-enrollment-visual {
+      flex-basis: 145px;
+      height: 74px;
+    }
+    .sk-enrollment-paper-lines {
+      display: none;
+    }
+    .sk-enrollment-page-number {
+      margin-left: auto;
+    }
+    .opening-workspace-body {
+      display: flex;
+      flex-direction: column;
+    }
+    .opening-rail-slot {
+      padding: 0 18px 22px;
+      width: 100%;
+    }
+    .sk-admission-rail,
+    .sk-admission-rail[data-follow='outer'] {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      transform: none;
+    }
+    .sk-admission-checks {
+      margin-top: 0;
+    }
+    .sk-record-identity {
+      flex-direction: row;
+    }
+    .opening-step-heading h2 {
+      font-size: 25px;
+    }
+    .opening-content {
+      width: 100%;
+      padding: 24px 18px;
+    }
+    &.is-welcome-page .opening-content {
+      padding: 20px;
+    }
+    .opening-footer {
+      padding: 16px 18px;
+    }
+  }
+}
+@media (max-width: 520px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page {
+    padding: 10px 7px 14px;
+    .sk-opening-masthead {
+      padding: 0 3px 12px;
+      gap: 8px;
+    }
+    .archive-school-mark {
+      width: 53px;
+      height: 34px;
+    }
+    .sk-opening-logo {
+      gap: 8px;
+    }
+    .sk-opening-logo strong {
+      font-size: 14px;
+    }
+    .sk-opening-logo strong small {
+      font-size: 6px;
+    }
+    .sk-admission-service {
+      font-size: 9px;
+      letter-spacing: 0;
+    }
+    .sk-motion-toggle {
+      width: 25px;
+      height: 25px;
+    }
+    .sk-admission-hero {
+      min-height: 118px;
+      padding: 22px 17px;
+      gap: 12px;
+    }
+    .sk-admission-copy .sk-kicker {
+      font-size: 6px;
+      letter-spacing: 0.1em;
+    }
+    .sk-admission-copy h1 {
+      font-size: 27px;
+      white-space: nowrap;
+    }
+    .sk-admission-copy > p {
+      font-size: 9px;
+      line-height: 1.6;
+    }
+    .sk-enrollment-visual {
+      display: none;
+    }
+    .opening-step-button {
+      flex-direction: column;
+      align-items: start;
+      min-height: 69px;
+      padding: 10px 8px;
+      gap: 5px;
+    }
+    .opening-step-button .sk-step-number {
+      height: 22px;
+      width: auto;
+      flex-basis: auto;
+      font-size: 20px;
+    }
+    .opening-step-button .sk-step-label {
+      font-size: 10px;
+      white-space: nowrap;
+      letter-spacing: 0;
+    }
+    .sk-step-label > small {
+      display: none;
+    }
+    .opening-step-button::after {
+      left: 8px;
+      right: 8px;
+    }
+    .opening-step-button .sk-step-number > i {
+      bottom: 0;
+      right: -13px;
+    }
+    .opening-content {
+      padding: 22px 14px;
+    }
+    &.is-welcome-page .opening-content {
+      padding: 16px;
+    }
+    .opening-step-heading {
+      padding-bottom: 15px;
+      margin-bottom: 18px;
+    }
+    .opening-step-heading h2 {
+      font-size: 23px;
+    }
+    .opening-step-heading p {
+      font-size: 11px;
+    }
+    .opening-step-heading.is-character-selection-heading {
+      padding-right: 0;
+      gap: 10px;
+    }
+    .opening-step-heading.is-character-selection-heading .opening-step-index {
+      display: none;
+    }
+    .opening-step-index {
+      font-size: 40px;
+    }
+    .opening-rail-slot {
+      padding: 0 14px 18px;
+    }
+    .sk-admission-rail,
+    .sk-admission-rail[data-follow='outer'] {
+      display: block;
+    }
+    .sk-admission-checks {
+      margin-top: 14px;
+    }
+    .opening-live-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+    .sk-record-card-top,
+    .opening-summary-heading {
+      grid-column: 1 / -1;
+    }
+    .opening-summary-heading {
+      padding-block: 10px;
+    }
+    .sk-record-identity {
+      grid-row: span 2;
+      flex-direction: column;
+      border: 0;
+      padding: 12px 0;
+    }
+    .opening-summary-list {
+      padding-top: 4px;
+    }
+    .opening-summary-metrics {
+      margin: 8px 14px;
+    }
+    .sk-record-progress,
+    .sk-record-footer {
+      display: none;
+    }
+    .opening-footer {
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 15px 14px;
+    }
+    .opening-next,
+    .opening-start {
+      flex: 1;
+      justify-content: center;
+      font-size: 12px;
+      padding: 12px 15px;
+    }
+    .sk-footer-progress {
+      font-size: 10px;
+      margin-inline: auto;
+    }
+    .opening-prev {
+      font-size: 10px;
+    }
+    .opening-start {
+      flex-basis: 100%;
+    }
+    .archive-assessment > div:first-child {
+      padding: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .archive-assessment > .grid > div {
+      padding: 14px 10px;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page:not([data-motion='full']) *,
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page:not([data-motion='full']) *::before,
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page:not([data-motion='full']) *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

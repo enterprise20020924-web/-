@@ -1,0 +1,1610 @@
+.shittim-dossier {
+  --shittim-ink: #050845;
+  --shittim-cyan: #42f3ee;
+  --shittim-red: #ff354f;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #0b1597;
+  color: #fff;
+  font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  font-size: clamp(12px, 1.2cqw, 18px);
+  line-height: 1.5;
+  text-align: left;
+}
+.shittim-dossier *,
+.shittim-dossier *::before,
+.shittim-dossier *::after {
+  box-sizing: border-box;
+}
+.shittim-dossier :is(h3, h4, h5, p, dl, dd) {
+  margin: 0;
+  padding: 0;
+}
+.shittim-dossier button {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  box-shadow: none;
+  text-shadow: none;
+}
+.shittim-dossier button:focus-visible {
+  outline: 2px solid #fbff9b;
+  outline-offset: -3px;
+}
+.shittim-dossier button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+.shittim-dossier :is(button, svg, img) {
+  -webkit-tap-highlight-color: transparent;
+}
+.shittim-dossier
+  :is(.shittim-skill-list, .shittim-skill-analysis-scroll, .shittim-stats-layout, .shittim-skills-layout) {
+  scrollbar-width: thin;
+  scrollbar-color: #5decf1 #07125b;
+  overscroll-behavior: contain;
+}
+.shittim-topline {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 7.5%;
+  min-height: 0;
+  padding: 0 2.8%;
+}
+.shittim-topline .shittim-brand {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  height: 64%;
+  min-height: 28px;
+  max-height: 40px;
+  padding: 0 1.25em 0 0.85em;
+  font-size: clamp(12px, 1.15cqw, 17px);
+  line-height: 1;
+  white-space: nowrap;
+}
+.shittim-brand::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    108deg,
+    rgba(6, 16, 86, 0.88) 0%,
+    rgba(10, 34, 138, 0.78) 68%,
+    rgba(16, 62, 184, 0.56) 100%
+  );
+  border: 1px solid rgba(94, 245, 245, 0.45);
+  border-left: 3.5px solid var(--shittim-cyan);
+  box-shadow:
+    inset 0 1px 0 rgba(180, 250, 255, 0.25),
+    0 4px 14px rgba(4, 10, 68, 0.22);
+  transform: skewX(-16deg);
+  content: '';
+}
+.shittim-brand::after {
+  position: absolute;
+  z-index: -1;
+  top: 15%;
+  bottom: 15%;
+  right: -0.48em;
+  width: 0.24em;
+  background: var(--shittim-red);
+  transform: skewX(-16deg);
+  content: '';
+}
+.shittim-brand > svg {
+  width: 1.55em;
+  height: 1.55em;
+  flex: 0 0 auto;
+  color: #5ef7f5;
+  filter: drop-shadow(0 0 6px rgba(66, 243, 238, 0.45));
+}
+.shittim-brand-root {
+  color: #c8f2ff;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.shittim-brand-sep {
+  padding: 0 0.08em;
+  color: var(--shittim-cyan);
+  font-style: normal;
+  font-weight: 900;
+  opacity: 0.85;
+}
+.shittim-brand-page {
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+.shittim-topline .shittim-close {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.52em;
+  height: 64%;
+  min-height: 28px;
+  max-height: 40px;
+  padding: 0 1.15em 0 0.95em;
+  color: #ffffff;
+  font-size: clamp(12px, 1.08cqw, 16px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    color 150ms ease,
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.shittim-close::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(115deg, #0d36b8 0%, #071b78 58%, #050d52 100%);
+  border: 1px solid rgba(82, 244, 244, 0.72);
+  border-right: 3.5px solid var(--shittim-cyan);
+  box-shadow:
+    inset 0 1px 0 rgba(190, 252, 255, 0.32),
+    0 4px 12px rgba(6, 20, 96, 0.22);
+  transform: skewX(-16deg);
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+  content: '';
+}
+.shittim-close::after {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(66, 243, 238, 0.78), rgba(20, 143, 241, 0.52));
+  transform: translate(-4px, 4px) skewX(-16deg);
+  transition:
+    background 150ms ease,
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  content: '';
+}
+.shittim-close svg {
+  width: 1.25em;
+  height: 1.25em;
+  flex: 0 0 auto;
+  color: var(--shittim-cyan);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    color 150ms ease,
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.shittim-close:hover {
+  color: #ffffff;
+  transform: translate(-2px, -1px);
+}
+.shittim-close:hover::before {
+  background: linear-gradient(115deg, #1652e8 0%, #0b2ba3 60%, #06166e 100%);
+  border-color: #82ffff;
+  border-right-color: var(--shittim-red);
+  box-shadow:
+    inset 0 1px 0 rgba(220, 255, 255, 0.45),
+    0 6px 16px rgba(7, 25, 118, 0.3);
+}
+.shittim-close:hover::after {
+  background: linear-gradient(120deg, var(--shittim-cyan), #49c4ff);
+  transform: translate(-5px, 5px) skewX(-16deg);
+}
+.shittim-close:hover svg {
+  color: #ffffff;
+  transform: translateX(-2px);
+}
+.shittim-close:active {
+  transform: translate(0, 0);
+}
+.shittim-close:active::after {
+  transform: translate(-2px, 2px) skewX(-16deg);
+}
+.shittim-dossier-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+.shittim-identity-ribbon {
+  position: absolute;
+  z-index: 1;
+  left: -5%;
+  top: 8%;
+  width: 115%;
+  height: 27%;
+  transform: rotate(-8deg);
+  transform-origin: 12% 50%;
+  color: #080c21;
+  animation: shittim-ribbon-in 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.shittim-ribbon-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.shittim-identity-copy {
+  position: relative;
+  width: 53%;
+  height: 100%;
+  padding: 1.2% 0 0.9% 8.5%;
+}
+.shittim-affiliation {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  color: #334863;
+  font-size: clamp(11px, 1.1cqw, 17px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.shittim-affiliation::before {
+  display: inline-block;
+  width: 0.28em;
+  height: 0.92em;
+  background: var(--shittim-red);
+  transform: skewX(-16deg);
+  content: '';
+}
+.shittim-identity-copy h4 {
+  width: max-content;
+  max-width: 100%;
+  font-size: clamp(24px, 3.6cqw, 59px);
+  font-weight: 950;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
+}
+.shittim-identity-copy h4.is-long {
+  font-size: clamp(20px, 2.9cqw, 48px);
+}
+.shittim-identity-values {
+  display: flex;
+  align-items: end;
+  gap: 5%;
+  margin-top: 1.2%;
+}
+.shittim-level {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  margin-right: 0.5%;
+  padding-right: 2.6%;
+  color: #03051a;
+  font-family: 'Bahnschrift', 'Arial Narrow', sans-serif;
+  font-style: italic;
+  line-height: 1;
+}
+.shittim-level::after {
+  position: absolute;
+  right: 0;
+  top: 16%;
+  bottom: 10%;
+  width: 1.5px;
+  background: rgba(11, 34, 128, 0.22);
+  transform: skewX(-16deg);
+  content: '';
+}
+.shittim-level small {
+  font-size: clamp(18px, 2.4cqw, 38px);
+  font-weight: 800;
+}
+.shittim-level strong {
+  font-size: clamp(42px, 5.6cqw, 86px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+.shittim-capacity {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 0.6em;
+  align-items: baseline;
+  padding-bottom: 0.2em;
+}
+.shittim-capacity > span {
+  color: #364e6b;
+  font-size: clamp(10px, 1cqw, 16px);
+  font-weight: 800;
+}
+.shittim-capacity > b {
+  color: #060d33;
+  font:
+    italic 700 clamp(24px, 2.9cqw, 48px)/1.1 'Bahnschrift',
+    'Arial Narrow',
+    sans-serif;
+  letter-spacing: -0.04em;
+}
+.shittim-capacity > i {
+  grid-column: 1 / -1;
+  height: clamp(3px, 0.42cqw, 6px);
+  background: linear-gradient(90deg, #05c2dc, #42f5ee);
+  transform: skewX(-18deg);
+}
+.shittim-capacity.is-pleasure > i {
+  background: linear-gradient(90deg, #ff355e, #ff6fa8);
+}
+.shittim-portrait {
+  position: absolute;
+  z-index: 2;
+  top: -1%;
+  right: 1%;
+  width: 49%;
+  height: 99%;
+  pointer-events: none;
+  transition:
+    opacity 220ms,
+    transform 320ms;
+}
+.shittim-portrait::before {
+  position: absolute;
+  z-index: 0;
+  inset: 8% 6% 12% 10%;
+  background: radial-gradient(
+    ellipse 62% 54% at 54% 44%,
+    rgba(76, 240, 255, 0.24),
+    rgba(20, 143, 241, 0.08) 56%,
+    transparent 76%
+  );
+  content: '';
+}
+.shittim-portrait img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(10px 7px 0 #04034d44) drop-shadow(0 0 18px rgba(66, 243, 238, 0.14));
+  animation: shittim-portrait-in 440ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.shittim-portrait-word {
+  position: absolute;
+  bottom: 23%;
+  right: -9%;
+  color: #6dc5ff;
+  opacity: 0.13;
+  font:
+    italic 900 clamp(110px, 19cqw, 300px)/0.9 'Impact',
+    'Arial Narrow',
+    sans-serif;
+  letter-spacing: -0.06em;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+.shittim-portrait-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75%;
+  color: #c2fcff;
+}
+.shittim-portrait-fallback > span {
+  font-size: clamp(100px, 18cqw, 240px);
+  font-weight: 900;
+  opacity: 0.35;
+}
+.shittim-portrait-fallback small {
+  font-size: 0.9em;
+  letter-spacing: 0.35em;
+  opacity: 0.65;
+}
+.is-skills .shittim-portrait {
+  transform: translate(3%, -3%) scale(0.94);
+  opacity: 0.43;
+}
+.shittim-intelligence {
+  position: absolute;
+  z-index: 3;
+  inset: calc(34% + clamp(16px, 2cqw, 28px)) 3.4% 2%;
+  display: flex;
+  flex-direction: column;
+  gap: 4%;
+  min-height: 0;
+}
+.shittim-detail-tabs {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 1%;
+  width: 49%;
+  height: clamp(34px, 3.7cqw, 58px);
+}
+.shittim-detail-tabs button {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  flex: 1;
+  min-width: 0;
+  padding: 0 7% 0 5%;
+  color: #58f5f4;
+  font-weight: 900;
+  white-space: nowrap;
+  transition:
+    transform 150ms,
+    color 150ms;
+}
+.shittim-detail-tabs button > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: visible;
+}
+.tab-paper {
+  fill: #060d5c;
+  transition: fill 140ms ease;
+}
+.tab-edge {
+  fill: none;
+  stroke: rgba(82, 226, 255, 0.32);
+  stroke-width: 1.5;
+  transition:
+    stroke 140ms ease,
+    stroke-width 140ms ease;
+}
+.shittim-detail-tabs button small {
+  font:
+    italic 800 1em 'Bahnschrift',
+    sans-serif;
+  opacity: 0.65;
+}
+.shittim-detail-tabs button span {
+  font-size: clamp(12px, 1.4cqw, 21px);
+}
+.shittim-detail-tabs button b {
+  margin-left: auto;
+  font:
+    800 1.3em 'Bahnschrift',
+    sans-serif;
+}
+.shittim-detail-tabs button.is-active {
+  color: #060c3c;
+  transform: translateY(-2px);
+  filter: drop-shadow(0 5px 12px rgba(4, 10, 62, 0.28));
+}
+.is-active .tab-paper {
+  fill: #fff;
+}
+.is-active .tab-edge {
+  stroke: var(--shittim-red);
+  stroke-width: 3;
+}
+.shittim-detail-tabs button:hover {
+  transform: translateY(-3px);
+}
+.shittim-detail-tabs button:hover:not(.is-active) .tab-paper {
+  fill: #0e2596;
+}
+.shittim-detail-tabs button:hover:not(.is-active) .tab-edge {
+  stroke: var(--shittim-cyan);
+}
+.shittim-stats-layout {
+  display: grid;
+  grid-template-columns: 49% 48%;
+  grid-template-rows: minmax(0, 1fr) auto;
+  column-gap: 3%;
+  flex: 1;
+  min-height: 0;
+}
+.shittim-profile-record {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  padding: 0;
+}
+.shittim-relation-line {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  flex-wrap: wrap;
+  padding: 0.42em 0.8em 0.42em 0.75em;
+  background: linear-gradient(100deg, rgba(6, 17, 90, 0.82), rgba(10, 32, 134, 0.46) 76%, rgba(10, 32, 134, 0));
+  border-left: 3px solid var(--shittim-cyan);
+  border-bottom: 1px solid rgba(84, 244, 244, 0.24);
+}
+.shittim-relation-line > span {
+  padding: 0.14em 0.52em;
+  background: rgba(66, 243, 238, 0.15);
+  border: 1px solid rgba(66, 243, 238, 0.48);
+  color: #5ef7f5;
+  font:
+    italic 800 0.75em/1.15 'Bahnschrift',
+    sans-serif;
+  letter-spacing: 0.09em;
+  transform: skewX(-12deg);
+}
+.shittim-relation-line > strong {
+  color: #ffffff;
+  font-size: 1.04em;
+  font-weight: 800;
+}
+.shittim-relation-line > b {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35em;
+  padding: 0.08em 0.65em;
+  background: rgba(4, 10, 62, 0.66);
+  border: 1px solid rgba(245, 250, 136, 0.32);
+  color: #a9efff;
+  font-size: 0.82em;
+  font-weight: 600;
+  transform: skewX(-12deg);
+}
+.shittim-relation-line em {
+  color: #f5fa88;
+  font:
+    italic 800 1.48em/1 'Bahnschrift',
+    sans-serif;
+}
+.shittim-profile-record > p {
+  max-width: 96%;
+  margin-top: 0.6em;
+  padding: 0.35em 0.75em;
+  background: linear-gradient(90deg, rgba(4, 11, 68, 0.46), transparent 95%);
+  border-left: 2px solid rgba(84, 244, 244, 0.48);
+  color: #c8e7ff;
+  line-height: 1.65;
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+.shittim-skill-overview {
+  position: relative;
+  isolation: isolate;
+  grid-column: 1;
+  grid-row: 2;
+  padding: 2.1% 2.8% 1.8%;
+  background: none;
+}
+.shittim-overview-paper {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 20px rgba(3, 7, 52, 0.34));
+}
+.shittim-skill-overview > header,
+.shittim-skill-catalog > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.45em;
+}
+.shittim-skill-overview h5,
+.shittim-skill-catalog h5 {
+  color: #54f3f3;
+  font:
+    italic 900 clamp(24px, 3.4cqw, 50px)/1.1 'Impact',
+    'Arial Narrow',
+    sans-serif;
+  letter-spacing: -0.02em;
+}
+.shittim-skill-overview h5 > span,
+.shittim-skill-catalog h5 > span {
+  margin-left: 0.6em;
+  color: #c4e9ff;
+  font:
+    500 clamp(10px, 1cqw, 15px) 'Microsoft YaHei',
+    sans-serif;
+  letter-spacing: 0.12em;
+}
+.shittim-skill-overview > header > span {
+  color: #7feff3;
+  font:
+    italic 700 1.45em 'Bahnschrift',
+    sans-serif;
+}
+.shittim-skill-overview > header small {
+  font-size: 0.5em;
+}
+.shittim-skill-slots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.38em 0.52em;
+}
+.shittim-skill-slots button {
+  display: flex;
+  align-items: center;
+  gap: 0.38em;
+  min-height: clamp(29px, 3.1cqw, 48px);
+  padding: 0.22em 0.42em 0.22em 0.34em;
+  background: linear-gradient(105deg, rgba(26, 36, 134, 0.9), rgba(14, 21, 92, 0.85));
+  border: 1px solid rgba(90, 190, 255, 0.2);
+  border-left: 2.5px solid rgba(66, 243, 238, 0.58);
+  text-align: left;
+  transition:
+    color 120ms ease,
+    background 120ms ease,
+    border-color 120ms ease,
+    transform 120ms ease;
+}
+.shittim-skill-slots button:nth-child(4n + 3),
+.shittim-skill-slots button:nth-child(4n + 4) {
+  background: linear-gradient(105deg, rgba(17, 25, 102, 0.9), rgba(9, 15, 74, 0.88));
+}
+.shittim-skill-slots svg {
+  flex: 0 0 19%;
+  width: 19%;
+  max-height: 2.3em;
+}
+.shittim-skill-slots button > span {
+  min-width: 0;
+  font-size: 0.92em;
+  font-weight: 700;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+.shittim-skill-slots button > b {
+  margin-left: auto;
+  padding-right: 0.2em;
+  color: #63f5ed;
+  transition:
+    color 120ms ease,
+    transform 120ms ease;
+}
+.shittim-skill-slots button:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  border-left-color: var(--shittim-red);
+  color: #050845;
+  transform: translateX(3px);
+}
+.shittim-skill-slots button:hover > b {
+  color: #ff354f;
+  transform: translateX(2px);
+}
+.shittim-skill-overview .shittim-all-skills {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0.55em;
+  padding: 0.42em 0.72em;
+  background: linear-gradient(90deg, rgba(45, 236, 233, 0.14), rgba(45, 236, 233, 0.04));
+  border: 1px solid rgba(89, 241, 239, 0.28);
+  color: #6ef6f4;
+  font-size: 0.85em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: left;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease;
+}
+.shittim-all-skills:hover {
+  background: linear-gradient(90deg, rgba(66, 243, 238, 0.28), rgba(66, 243, 238, 0.1));
+  border-color: rgba(130, 255, 255, 0.72);
+  color: #ffffff;
+}
+.shittim-all-skills > span {
+  font-size: 1.3em;
+  line-height: 1;
+  transition: transform 140ms ease;
+}
+.shittim-all-skills:hover > span {
+  transform: translate(2px, -2px);
+}
+.shittim-quiet-empty {
+  padding: 1.5em 0.3em;
+  color: #b0d2e9;
+}
+.shittim-parameters {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: end;
+  margin: 0 1.5% 3%;
+  transform: rotate(-7deg);
+  transform-origin: 15% 50%;
+}
+.shittim-skills-layout {
+  display: grid;
+  grid-template-columns: 49% 48%;
+  gap: 3%;
+  flex: 1;
+  min-height: 0;
+}
+.shittim-skill-catalog {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+.shittim-skill-catalog > header {
+  flex: 0 0 auto;
+  padding: 0 3% 0 1%;
+}
+.shittim-skill-catalog > header > span {
+  color: #b8f9ff;
+  font:
+    italic 800 1.2em 'Arial Narrow',
+    sans-serif;
+}
+.shittim-skill-catalog > header > .shittim-catalog-swipe-label {
+  display: none;
+}
+.shittim-skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 2px 0.45em 6px 2px;
+}
+.shittim-skill-list button {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 0.4em;
+  min-height: clamp(43px, 4.2cqw, 68px);
+  padding: 0.25em 3% 0.25em 2%;
+  color: #6af2f0;
+  text-align: left;
+  transition:
+    color 130ms,
+    transform 130ms;
+}
+.shittim-skill-selection {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: visible;
+}
+.selection-paper {
+  fill: #050b52e8;
+  transition: fill 130ms ease;
+}
+.selection-edge {
+  fill: none;
+  stroke: rgba(82, 214, 255, 0.22);
+  stroke-width: 1.5;
+  transition:
+    stroke 130ms ease,
+    stroke-width 130ms ease;
+}
+.shittim-skill-order {
+  flex: 0 0 6%;
+  color: #7799c2;
+  font:
+    italic 700 0.8em 'Bahnschrift',
+    sans-serif;
+}
+.shittim-skill-glyph {
+  flex: 0 0 12%;
+  width: 12%;
+  max-height: 2.5em;
+}
+.shittim-skill-name {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+.shittim-skill-name strong {
+  font-size: clamp(13px, 1.35cqw, 21px);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.shittim-skill-name small {
+  margin-top: 0.12em;
+  font-size: 0.72em;
+  opacity: 0.65;
+}
+.shittim-skill-cost {
+  flex: 0 0 18%;
+  color: #f5f376;
+  font:
+    italic 600 clamp(11px, 1.1cqw, 17px)/1.3 'Bahnschrift',
+    'Microsoft YaHei',
+    sans-serif;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.shittim-skill-list button.is-active {
+  color: #070b29;
+  transform: translateX(2px);
+}
+.is-active .selection-paper {
+  fill: #fff;
+}
+.is-active .selection-edge {
+  stroke: var(--shittim-red);
+  stroke-width: 3;
+}
+.shittim-skill-list .is-active .shittim-skill-cost {
+  color: #6a6100;
+}
+.shittim-skill-list .is-active .shittim-skill-order {
+  color: #e52647;
+}
+.shittim-skill-list button:hover:not(.is-active) .selection-paper {
+  fill: #122fa6;
+}
+.shittim-skill-list button:hover:not(.is-active) .selection-edge {
+  stroke: var(--shittim-cyan);
+}
+.shittim-skill-analysis {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  padding: 4% 5% 5%;
+  animation: shittim-detail-in 160ms ease-out both;
+}
+.shittim-analysis-paper {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.shittim-skill-analysis > header {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 0.25em 0 1em;
+}
+.shittim-skill-analysis > header > span {
+  display: block;
+  color: #57eaf4;
+  font:
+    italic 800 0.8em 'Bahnschrift',
+    sans-serif;
+  letter-spacing: 0.07em;
+}
+.shittim-skill-analysis > header i {
+  color: #ad9fcf;
+  font-style: normal;
+}
+.shittim-skill-analysis > header > svg {
+  float: right;
+  width: 3.3em;
+  height: 2.15em;
+  margin: 0.35em 0 0 0.7em;
+}
+.shittim-skill-analysis h5 {
+  margin-top: 0.35em;
+  color: #fff;
+  font-size: clamp(20px, 2.15cqw, 33px);
+  font-weight: 900;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.shittim-skill-analysis-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 0.5em;
+}
+.shittim-skill-effect {
+  color: #e2f4ff;
+  line-height: 1.8;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.shittim-skill-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55em;
+  margin-top: 1.2em !important;
+  padding-top: 1em !important;
+  border-top: 1px solid rgba(94, 184, 248, 0.28);
+}
+.shittim-skill-metrics > div {
+  padding: 0.45em 0.65em;
+  background: rgba(14, 34, 132, 0.46);
+  border: 1px solid rgba(90, 212, 255, 0.18);
+  border-left: 2px solid rgba(66, 243, 238, 0.58);
+}
+.shittim-skill-metrics dt {
+  color: #7ee2fa;
+  font-size: 0.78em;
+  letter-spacing: 0.04em;
+}
+.shittim-skill-metrics dd {
+  margin-top: 0.2em;
+  color: #fff;
+  font-weight: 800;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.shittim-skill-formula {
+  margin-top: 1em;
+  padding: 0.62em 0.8em;
+  background: rgba(8, 22, 102, 0.44);
+  border-left: 2.5px solid var(--shittim-cyan);
+}
+.shittim-skill-formula > span {
+  display: inline-block;
+  padding: 0.1em 0.7em;
+  background: #69e8ed;
+  color: #080d4c;
+  font-size: 0.78em;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  transform: skewX(-10deg);
+}
+.shittim-skill-formula > p {
+  margin-top: 0.48em;
+  color: #d6edff;
+  font-size: 0.92em;
+  line-height: 1.7;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.shittim-empty {
+  align-self: start;
+  margin: 4% 0 0 1%;
+  padding: 3% 5%;
+  background: #050a4ccf;
+}
+.shittim-empty > span {
+  display: block;
+  color: #36cbe2;
+  font:
+    italic 800 1.8em 'Arial Narrow',
+    sans-serif;
+}
+.shittim-empty > strong {
+  display: block;
+  margin-top: 0.5em;
+  font-size: 1.4em;
+}
+.shittim-empty > p {
+  margin-top: 0.5em;
+  color: #b8d7f0;
+}
+.shittim-dossier-footer {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 3%;
+  flex: 0 0 11%;
+  min-height: 0;
+  padding: 0 3.2%;
+}
+.shittim-dossier-footer .shittim-back {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  flex: 0 0 auto;
+  height: 60%;
+  min-height: 30px;
+  max-height: 44px;
+  padding: 0 1.2em 0 0.92em;
+  color: #eaf9ff;
+  font-size: clamp(12px, 1.08cqw, 16px);
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    color 150ms ease,
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.shittim-back::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(11, 36, 146, 0.86), rgba(5, 14, 78, 0.78));
+  border: 1px solid rgba(86, 232, 245, 0.52);
+  border-left: 3.5px solid var(--shittim-cyan);
+  box-shadow:
+    inset 0 1px 0 rgba(185, 250, 255, 0.25),
+    0 4px 12px rgba(4, 10, 62, 0.26);
+  transform: skewX(-16deg);
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+  content: '';
+}
+.shittim-back svg {
+  width: 1.25em;
+  height: 1.25em;
+  flex: 0 0 auto;
+  color: var(--shittim-cyan);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    color 150ms ease,
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.shittim-back:hover {
+  color: #ffffff;
+  transform: translate(-2px, -1px);
+}
+.shittim-back:hover::before {
+  background: linear-gradient(115deg, rgba(20, 68, 214, 0.94), rgba(8, 26, 126, 0.9));
+  border-color: #82ffff;
+  border-left-color: var(--shittim-red);
+}
+.shittim-back:hover svg {
+  color: #ffffff;
+  transform: translateX(-3px);
+}
+.shittim-guide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.24em;
+  flex: 1;
+  min-width: 0;
+}
+.shittim-guide > strong {
+  display: block;
+  color: #eef9ff;
+  font-size: clamp(11px, 1.15cqw, 18px);
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+.shittim-guide-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.shittim-guide-meta > i {
+  padding: 0.05em 0.45em;
+  background: rgba(66, 243, 238, 0.14);
+  border: 1px solid rgba(66, 243, 238, 0.36);
+  color: #7eeeff;
+  font:
+    italic 800 0.64em/1.2 'Bahnschrift',
+    sans-serif;
+  letter-spacing: 0.16em;
+  transform: skewX(-14deg);
+}
+.shittim-guide-meta > em {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(100, 236, 255, 0.68), rgba(100, 236, 255, 0.14) 76%, transparent);
+}
+.shittim-launch-notice {
+  flex: 1;
+  color: #e0ff9b;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+.shittim-dossier-footer .shittim-launch {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  flex: 0 0 23%;
+  height: 76%;
+  min-width: 0;
+  margin-left: auto;
+  color: #4ef6ef;
+  transition:
+    color 150ms ease,
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.shittim-launch::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0 4% 0 2%;
+  background: linear-gradient(120deg, rgba(66, 243, 238, 0.48), rgba(255, 53, 79, 0.36));
+  transform: translate(-5px, 5px) skewX(-16deg);
+  transition:
+    background 150ms ease,
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  content: '';
+}
+.shittim-launch > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 6px 14px rgba(3, 8, 56, 0.36));
+}
+.shittim-launch .launch-arrow,
+.shittim-launch .launch-arrow-echo {
+  transition:
+    transform 150ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    fill 150ms ease;
+}
+.shittim-launch > span {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-left: 16%;
+  color: #041251;
+  text-align: left;
+}
+.shittim-launch small {
+  font:
+    italic 800 clamp(8px, 0.7cqw, 12px)/1.35 'Bahnschrift',
+    sans-serif;
+  letter-spacing: 0.11em;
+}
+.shittim-launch strong {
+  font-size: clamp(17px, 2.05cqw, 33px);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1.22;
+}
+.shittim-launch:hover:not(:disabled) {
+  transform: translate(3px, -2px);
+  color: #ffffff;
+}
+.shittim-launch:hover:not(:disabled)::after {
+  background: linear-gradient(120deg, var(--shittim-cyan), rgba(73, 196, 255, 0.78));
+  transform: translate(-7px, 6px) skewX(-16deg);
+}
+.shittim-launch:hover:not(:disabled) .launch-arrow {
+  fill: var(--shittim-red);
+  transform: translateX(4px);
+}
+.shittim-launch:hover:not(:disabled) .launch-arrow-echo {
+  fill: #041251;
+  transform: translateX(2px);
+}
+.shittim-page-enter {
+  animation: shittim-page-in 230ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes shittim-ribbon-in {
+  from {
+    opacity: 0;
+    translate: -7% 2%;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes shittim-portrait-in {
+  from {
+    opacity: 0;
+    translate: 5% 2%;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes shittim-page-in {
+  from {
+    opacity: 0;
+    translate: -12px 4px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes shittim-detail-in {
+  from {
+    opacity: 0.4;
+    translate: 8px 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@container shittim-panel (min-width: 721px) and (max-width: 1000px) {
+  .shittim-identity-copy {
+    width: 60%;
+  }
+  .shittim-identity-values {
+    gap: 3%;
+  }
+  .shittim-capacity {
+    grid-template-columns: 1fr;
+  }
+  .shittim-capacity > span {
+    font-size: 9px;
+    line-height: 1.1;
+  }
+  .shittim-skill-overview {
+    padding-top: 1%;
+  }
+  .shittim-profile-record > p {
+    margin-top: 0.3em;
+    font-size: 11px;
+  }
+  .shittim-skill-slots button {
+    gap: 0.15em;
+  }
+  .shittim-skill-slots button > span {
+    font-size: 11px;
+  }
+  .shittim-skill-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container shittim-panel (max-width: 720px) {
+  .shittim-dossier {
+    font-size: 13px;
+  }
+  .shittim-topline {
+    flex-basis: 46px;
+    padding: 0 12px;
+  }
+  .shittim-topline .shittim-brand {
+    height: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    gap: 0.38em;
+    padding: 0 0.82em 0 0.62em;
+    font-size: 11px;
+  }
+  .shittim-brand::after {
+    right: -0.4em;
+    width: 0.2em;
+  }
+  .shittim-brand-root,
+  .shittim-brand-page {
+    letter-spacing: 0.02em;
+  }
+  .shittim-topline .shittim-close {
+    height: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    gap: 0.36em;
+    padding: 0 0.85em 0 0.72em;
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+  }
+  .shittim-close::after {
+    transform: translate(-3px, 3px) skewX(-16deg);
+  }
+  .shittim-identity-ribbon {
+    top: 16px;
+    left: -4%;
+    width: 112%;
+    height: 180px;
+    transform: rotate(-6deg);
+  }
+  .shittim-identity-copy {
+    width: 68%;
+    padding: 15px 0 10px 7%;
+  }
+  .shittim-affiliation {
+    max-width: 82%;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+  }
+  .shittim-identity-copy h4 {
+    margin-top: 4px;
+    max-width: 95%;
+    font-size: clamp(23px, 6.5cqw, 35px);
+    line-height: 1.2;
+  }
+  .shittim-identity-copy h4.is-long {
+    font-size: clamp(17px, 4.6cqw, 27px);
+  }
+  .shittim-identity-values {
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .shittim-level {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    margin-right: 2px;
+    padding-right: 0;
+  }
+  .shittim-level::after {
+    display: none;
+  }
+  .shittim-level small {
+    font-size: 14px;
+  }
+  .shittim-level strong {
+    font-size: 42px;
+  }
+  .shittim-capacity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 45px;
+    padding-bottom: 3px;
+  }
+  .shittim-capacity > span {
+    font-size: 9px;
+  }
+  .shittim-capacity > b {
+    font-size: 25px;
+  }
+  .shittim-capacity > i {
+    width: 100%;
+    height: 3px;
+  }
+  .shittim-portrait {
+    top: -5px;
+    right: -5%;
+    width: 46%;
+    height: 225px;
+  }
+  .shittim-portrait img {
+    object-position: center top;
+    filter: drop-shadow(6px 5px 0 #04034d33);
+  }
+  .shittim-portrait-word {
+    display: none;
+  }
+  .shittim-portrait-fallback {
+    height: 100%;
+    padding-bottom: 10px;
+  }
+  .shittim-portrait-fallback > span {
+    font-size: 90px;
+  }
+  .shittim-portrait-fallback > small {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+  .is-skills .shittim-portrait {
+    transform: none;
+    opacity: 0.9;
+  }
+  .shittim-intelligence {
+    inset: 212px 13px 0;
+    gap: 9px;
+  }
+  .shittim-detail-tabs {
+    width: 100%;
+    height: 42px;
+    gap: 5px;
+  }
+  .shittim-detail-tabs button {
+    padding-left: 7%;
+    padding-right: 7%;
+    gap: 8px;
+  }
+  .shittim-detail-tabs button span {
+    font-size: 14px;
+  }
+  .shittim-detail-tabs button small {
+    font-size: 12px;
+  }
+  .shittim-stats-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    padding: 5px 3px 12px;
+  }
+  .shittim-profile-record {
+    order: 0;
+    flex: 0 0 auto;
+    padding: 0 2px;
+  }
+  .shittim-relation-line {
+    gap: 6px;
+    padding: 6px 8px;
+  }
+  .shittim-relation-line > span {
+    font-size: 9px;
+  }
+  .shittim-relation-line > strong {
+    font-size: 13px;
+  }
+  .shittim-profile-record > p {
+    max-width: 100%;
+    margin-top: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .shittim-parameters {
+    order: 1;
+    flex: 0 0 auto;
+    width: 100%;
+    margin: 0;
+    transform: none;
+  }
+  .shittim-skill-overview {
+    order: 2;
+    flex: 0 0 auto;
+    padding: 12px 10px 10px;
+  }
+  .shittim-skill-overview h5,
+  .shittim-skill-catalog h5 {
+    font-size: 28px;
+  }
+  .shittim-skill-overview h5 > span,
+  .shittim-skill-catalog h5 > span {
+    font-size: 10px;
+  }
+  .shittim-skill-overview > header > span {
+    font-size: 18px;
+  }
+  .shittim-skill-slots {
+    gap: 5px;
+  }
+  .shittim-skill-slots button {
+    min-height: 44px;
+    gap: 3px;
+  }
+  .shittim-skill-slots button > span {
+    font-size: 11px;
+  }
+  .shittim-skill-overview .shittim-all-skills {
+    min-height: 40px;
+    align-items: center;
+    font-size: 12px;
+  }
+  .shittim-skills-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+    padding: 3px 2px 6px;
+  }
+  .shittim-skill-catalog {
+    flex: 0 0 112px;
+    max-height: none;
+  }
+  .shittim-skill-catalog > header {
+    margin-bottom: 6px;
+    padding-right: 14px;
+  }
+  .shittim-skill-catalog > header > span {
+    font-size: 10px;
+  }
+  .shittim-skill-catalog > header > .shittim-catalog-cost-label {
+    display: none;
+  }
+  .shittim-skill-catalog > header > .shittim-catalog-swipe-label {
+    display: block;
+    font-style: normal;
+  }
+  .shittim-skill-list {
+    flex: 1;
+    flex-direction: row;
+    gap: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 5px 6px 2px;
+    scroll-snap-type: x proximity;
+  }
+  .shittim-skill-list button {
+    flex: 0 0 164px;
+    min-height: 0;
+    padding: 6px 10px;
+    gap: 4px;
+    scroll-snap-align: start;
+  }
+  .shittim-skill-list .shittim-skill-order {
+    display: none;
+  }
+  .shittim-skill-list .shittim-skill-glyph {
+    flex-basis: 24px;
+  }
+  .shittim-skill-name strong {
+    font-size: 13px;
+  }
+  .shittim-skill-name small {
+    font-size: 10px;
+  }
+  .shittim-skill-cost {
+    font-size: 12px;
+  }
+  .shittim-skill-analysis {
+    flex: 1;
+    min-height: 0;
+    padding: 14px;
+  }
+  .shittim-skill-analysis h5 {
+    font-size: 22px;
+  }
+  .shittim-skill-analysis-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+  }
+  .shittim-skill-effect {
+    font-size: 13px;
+  }
+  .shittim-skill-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .shittim-skill-metrics > div {
+    padding: 5px 6px;
+  }
+  .shittim-skill-metrics dd {
+    font-size: 12px;
+  }
+  .shittim-empty {
+    margin-top: 10px;
+    padding: 20px;
+  }
+  .shittim-empty > span {
+    font-size: 20px;
+  }
+  .shittim-dossier-footer {
+    flex-basis: 66px;
+    gap: 12px;
+    padding: 7px 14px;
+    background: #05084dcc;
+  }
+  .shittim-dossier-footer .shittim-back {
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    gap: 5px;
+    padding: 0 12px 0 10px;
+    font-size: 12px;
+  }
+  .shittim-back svg {
+    width: 15px;
+    height: 15px;
+  }
+  .shittim-guide {
+    display: none;
+  }
+  .shittim-launch-notice {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 100%;
+    max-height: 65px;
+    overflow-y: auto;
+    padding: 8px 12px !important;
+    background: #041248;
+    border-top: 2px solid #b4f3b3;
+    font-size: 12px;
+  }
+  .shittim-dossier-footer .shittim-launch {
+    flex: 0 0 158px;
+    height: 46px;
+  }
+  .shittim-launch::after {
+    transform: translate(-3px, 3px) skewX(-16deg);
+  }
+  .shittim-launch small {
+    font-size: 8px;
+  }
+  .shittim-launch strong {
+    font-size: 19px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shittim-dossier *,
+  .shittim-dossier *::before,
+  .shittim-dossier *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

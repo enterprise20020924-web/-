@@ -1,0 +1,232 @@
+/* 保留性斗开场的蓝色与缓动；地图册正面展开，背景平稳淡出。 */
+.amami-map-entrance {
+  --atlas-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --atlas-open-duration: 700ms;
+  --atlas-open-delay: 220ms;
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  isolation: isolate;
+  overflow: hidden;
+  container: campus-atlas / inline-size;
+  color: #fff;
+  font-family: 'Bahnschrift', 'Microsoft YaHei', sans-serif;
+}
+.amami-map-entrance.is-warm {
+  --atlas-open-duration: 430ms;
+  --atlas-open-delay: 100ms;
+}
+.amami-atlas-backdrop {
+  position: absolute;
+  inset: -1px;
+  background: radial-gradient(ellipse at 50% 42%, #0c4770 0, #082e53 44%, #041a37 100%);
+}
+.amami-atlas-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 24px;
+  border-top: 1px solid #c2ddea12;
+  border-bottom: 1px solid #c2ddea12;
+  pointer-events: none;
+}
+.amami-atlas-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 20px;
+  animation: amami-atlas-arrive 320ms var(--atlas-ease) both;
+}
+.amami-atlas-object {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(230px, 32cqi, 390px);
+  max-width: 84%;
+  aspect-ratio: 480 / 340;
+  filter: drop-shadow(0 18px 16px #00132966);
+}
+.amami-atlas-pages {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 50%;
+  animation: amami-atlas-unfold var(--atlas-open-duration) var(--atlas-open-delay) var(--atlas-ease) both;
+}
+.amami-atlas-cover-position {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  width: 42%;
+  height: 88%;
+  transform: translateX(-50%);
+}
+.amami-atlas-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 50%;
+  animation: amami-atlas-cover-open var(--atlas-open-duration) var(--atlas-open-delay) ease-out both;
+}
+.amami-atlas-map {
+  animation: amami-atlas-ink 420ms calc(var(--atlas-open-delay) + var(--atlas-open-duration) * 0.5) ease-out both;
+}
+.amami-atlas-center h3 {
+  margin: 12px 0 14px;
+  color: #fff;
+  font-size: clamp(25px, 2.8cqi, 36px);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding-left: 0.2em;
+}
+.amami-atlas-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 34px;
+  color: #a4becf;
+  font-size: clamp(12px, 1.1cqi, 15px);
+  line-height: 1.5;
+}
+.amami-atlas-status > i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #87e7fa;
+  animation: amami-atlas-wait 950ms ease-in-out infinite alternate;
+}
+.amami-map-entrance .amami-atlas-return,
+.amami-atlas-status button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 13px;
+  border: 1px solid #7ccce466;
+  border-radius: 3px;
+  color: #e6faff;
+  background: #052b55;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.amami-atlas-return {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+}
+.amami-atlas-return .amami-map-icon {
+  width: 16px;
+  height: 16px;
+}
+.amami-atlas-return:hover,
+.amami-atlas-status button:hover {
+  border-color: #a2eafa;
+  background: #096297;
+}
+.amami-atlas-return:focus-visible,
+.amami-atlas-status button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.amami-map-entrance.is-revealing .amami-atlas-center {
+  animation: amami-atlas-release 360ms ease-out both;
+}
+.amami-map-entrance.is-revealing .amami-atlas-backdrop {
+  animation: amami-atlas-fade 460ms 30ms ease-in-out both;
+}
+.amami-map-entrance.is-reduced .amami-atlas-center,
+.amami-map-entrance.is-reduced .amami-atlas-pages,
+.amami-map-entrance.is-reduced .amami-atlas-map {
+  animation: none;
+}
+.amami-map-entrance.is-reduced .amami-atlas-cover-position {
+  display: none;
+}
+.amami-map-entrance.is-reduced .amami-atlas-status > i {
+  animation: none;
+}
+.amami-map-entrance.is-reduced.is-revealing {
+  animation: amami-atlas-fade 150ms ease-out both;
+}
+.amami-map-entrance.is-reduced.is-revealing .amami-atlas-backdrop {
+  animation: none;
+}
+@container campus-atlas (max-width: 520px) {
+  .amami-atlas-return {
+    top: 16px;
+    right: 16px;
+  }
+  .amami-atlas-center h3 {
+    margin-top: 4px;
+  }
+}
+@keyframes amami-atlas-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes amami-atlas-unfold {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.46);
+  }
+  22% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+@keyframes amami-atlas-cover-open {
+  0% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  45% {
+    opacity: 0;
+    transform: scaleX(0.15);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(0.15);
+  }
+}
+@keyframes amami-atlas-ink {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes amami-atlas-wait {
+  to {
+    opacity: 0.25;
+  }
+}
+@keyframes amami-atlas-release {
+  to {
+    opacity: 0;
+    transform: scale(1.025);
+  }
+}
+@keyframes amami-atlas-fade {
+  to {
+    opacity: 0;
+  }
+}

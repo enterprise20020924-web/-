@@ -1,0 +1,726 @@
+// P3R's diagonal identity ribbon and cobalt / navy status plane, adapted to
+// the existing two-column illustration + dossier and head-crop roster.
+.academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme .admission-select {
+  --select-ink: #040b53;
+  --select-cyan: #39ddff;
+  --select-accent: #f43252;
+  border: 0;
+  box-shadow: none;
+  background: #1028ef;
+  color: #fff;
+  overflow: hidden;
+
+  .admission-reload-scenery {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .admission-select-heading {
+    position: relative;
+    padding: 18px 25px 28px;
+    border: 0;
+    background: none;
+    color: #040b53;
+    gap: 18px;
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: #fff;
+      clip-path: polygon(0 0, 100% 0, 100% 68%, 0 100%);
+    }
+  }
+  .admission-select-eyebrow {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 8px;
+    color: #040b53;
+    font: italic 900 clamp(15px, 2.7cqi, 25px)/1 var(--sk-display);
+    letter-spacing: -0.04em;
+    i {
+      display: none;
+    }
+    b {
+      color: #1028ef;
+      font-weight: 900;
+    }
+    small {
+      flex-basis: 100%;
+      margin-top: 5px;
+      color: #5175a9;
+      font: 700 7px/1.4 var(--sk-mono);
+      letter-spacing: 0.24em;
+    }
+  }
+  .admission-select-counter {
+    color: #1c3dcc;
+    font-style: italic;
+    white-space: nowrap;
+    b {
+      font: italic 900 clamp(27px, 4.5cqi, 44px)/0.9 var(--sk-display);
+      color: #040b53;
+    }
+  }
+  .admission-select-stage {
+    position: relative;
+    grid-template-columns: minmax(0, 53%) minmax(0, 47%);
+    padding: 3px 18px 30px 0;
+    align-items: stretch;
+  }
+  .admission-select-art {
+    // Let the dossier set the row height. A stretched grid item with an auto
+    // width + aspect ratio can grow beyond its column and paint over the text.
+    width: 100%;
+    aspect-ratio: auto;
+    align-self: stretch;
+    isolation: isolate;
+    margin-top: -12px;
+    background: none;
+    overflow: hidden;
+    &::before {
+      background:
+        linear-gradient(0deg, #071278 0%, #07127800 35%), linear-gradient(90deg, transparent 87%, #1028ef 100%);
+      z-index: 2;
+    }
+    &::after {
+      display: block;
+      inset: auto 4% 12% -15%;
+      height: 2px;
+      border: 0;
+      background: #39ddff;
+      transform: rotate(-12deg);
+      opacity: 0.75;
+    }
+  }
+  .admission-reload-orbit {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: #39ddff;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .admission-battle-illustration {
+    object-position: center 23%;
+    clip-path: polygon(0 4%, 100% 0, 100% 89%, 0 100%);
+  }
+  .admission-art-caption {
+    left: 15px;
+    right: 12px;
+    bottom: 28px;
+    gap: 5px;
+    transform: rotate(-5deg);
+    small {
+      background: #39ddff;
+      color: #040b53;
+      padding: 3px 10px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      transform: skewX(-12deg);
+    }
+    strong {
+      padding: 4px 15px 8px 10px;
+      background: #fff;
+      color: #040b53;
+      font: italic 900 clamp(24px, 4cqi, 43px)/1.2 var(--sk-display);
+      text-shadow: none;
+      letter-spacing: -0.04em;
+      clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+    }
+  }
+  .admission-art-corner {
+    top: 35px;
+    left: 17px;
+    width: 26px;
+    height: 26px;
+    border-color: #39ddff;
+    transform: rotate(-12deg);
+  }
+  .admission-art-loading {
+    top: 62px;
+    color: #fff;
+  }
+  .admission-select-placeholder {
+    background: none;
+    padding: 55px 15px 100px;
+    > i {
+      color: #fff;
+      font-size: 58px;
+    }
+    > strong {
+      color: #fff;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      &.is-custom {
+        font-size: clamp(22px, 2.8cqi, 30px);
+        font-weight: 900;
+        line-height: 1.2;
+        letter-spacing: 0.12em;
+        text-align: center;
+      }
+    }
+    > span:not(.admission-placeholder-number) {
+      color: #39ddff;
+      font-size: 8px;
+      text-align: center;
+    }
+    .admission-placeholder-number {
+      top: 23px;
+      left: 0;
+      color: #3158ff;
+      font: italic 900 clamp(90px, 21cqi, 220px)/1 var(--sk-display);
+      opacity: 0.85;
+    }
+  }
+  .admission-select-info {
+    position: relative;
+    padding: 19px 21px 22px;
+    margin-top: 15px;
+    background: #040b53;
+    gap: 15px;
+    box-shadow: 7px 8px 0 #071278;
+    &::before {
+      position: absolute;
+      content: '';
+      inset: -11px 0 auto;
+      height: 12px;
+      background: #040b53;
+      clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    }
+    h3 {
+      position: relative;
+      isolation: isolate;
+      margin: 1px -13px 0;
+      padding: 14px 12px 16px;
+      color: #040b53;
+      font: italic 900 clamp(18px, 2.6cqi, 30px)/1.4 var(--sk-display);
+      letter-spacing: 0;
+      white-space: pre-line;
+      overflow-wrap: anywhere;
+      text-wrap: pretty;
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: #fff;
+        clip-path: polygon(0 12%, 100% 0, 98% 89%, 0 100%);
+      }
+    }
+  }
+  .admission-profile-kicker {
+    color: #39ddff;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    i {
+      background: #2248cb;
+    }
+    small {
+      color: #fff;
+      font-style: italic;
+    }
+  }
+  .admission-profile-tags {
+    margin-top: -2px;
+    gap: 4px 9px;
+    span {
+      padding: 1px 0;
+      border: 0;
+      color: #c9daff;
+      font-size: 10px;
+      &:not(:first-child)::before {
+        content: '/';
+        color: #39ddff;
+        margin-right: 9px;
+      }
+      &:nth-child(2) {
+        color: #39ddff;
+      }
+    }
+  }
+  .admission-profile-description {
+    color: #fff;
+    font-size: clamp(12px, 1.5cqi, 14px);
+    line-height: 1.85;
+  }
+  .admission-profile-preset {
+    color: #39ddff;
+    span {
+      color: #c9daff;
+    }
+  }
+  .admission-profile-trait {
+    position: relative;
+    margin-top: auto;
+    padding: 14px 13px 13px;
+    border: 0;
+    background: #19256a;
+    > div:first-child {
+      gap: 6px 11px;
+    }
+    small {
+      color: #39ddff;
+      font-size: 9px;
+    }
+    strong {
+      color: #fff;
+      font-size: 17px;
+      font-style: italic;
+    }
+    > p {
+      color: #e0eaff;
+      margin: 9px 0 14px;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+  }
+  .admission-profile-bonuses {
+    gap: 10px 8px;
+    > div {
+      border: 0;
+      padding: 0;
+    }
+    dt {
+      color: #aebff8;
+      font-size: 9px;
+    }
+    dd {
+      color: #39ddff;
+      font-style: italic;
+      font-size: 18px;
+    }
+  }
+  .admission-custom-note {
+    > span {
+      color: #39ddff;
+      font-style: italic;
+    }
+    p {
+      color: #fff;
+    }
+    small {
+      color: #aec7ff;
+    }
+  }
+  .admission-select-confirm {
+    position: relative;
+    isolation: isolate;
+    margin-top: 3px;
+    padding: 14px 17px;
+    background: #fff;
+    color: #040b53;
+    clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 100%);
+    font-size: 14px;
+    font-style: italic;
+    transition:
+      background 140ms,
+      color 140ms,
+      transform 140ms;
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset: 0 auto 0 0;
+      width: 7px;
+      background: #f43252;
+    }
+    &:hover {
+      background: #39ddff;
+      color: #040b53;
+      transform: translateX(3px);
+    }
+    &:active {
+      background: #a1f3ff;
+      transform: translateX(5px);
+    }
+    &:focus-visible {
+      outline: 3px solid #f43252;
+      outline-offset: -3px;
+    }
+  }
+  .admission-roster-heading {
+    position: relative;
+    padding: 16px 23px 4px;
+    border: 0;
+    background: #040b53;
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -17px 0 auto;
+      height: 18px;
+      background: #040b53;
+      clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    }
+    strong {
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+    strong em {
+      display: inline-block;
+      margin-right: 5px;
+      color: #39ddff;
+      font: italic 900 19px/1 var(--sk-display);
+      letter-spacing: -0.06em;
+    }
+    > span {
+      color: #aabef4;
+      font-size: 9px;
+    }
+  }
+  .admission-roster {
+    background: #040b53;
+    gap: 5px;
+    padding-inline: 10px;
+  }
+  .admission-roster-arrow {
+    border: 0;
+    background: #1028ef;
+    color: #fff;
+    height: 42px;
+    transform: skewX(-8deg);
+    &:hover:not(:disabled) {
+      background: #39ddff;
+      color: #040b53;
+    }
+  }
+  .admission-roster-rail {
+    gap: 9px;
+    align-items: stretch;
+    padding: 13px 5px 12px;
+    scrollbar-color: #39ddff #0b166c;
+  }
+  .admission-roster-card {
+    flex: 0 0 clamp(72px, 8.5cqi, 88px);
+    width: clamp(72px, 8.5cqi, 88px);
+    margin-top: 0;
+    border: 1px solid #3155c9;
+    background: #10236b;
+    color: #c8d8ff;
+    box-shadow: none;
+    transform: none;
+    &:nth-child(even) {
+      margin-top: 0;
+    }
+    > strong {
+      height: 34px;
+      padding: 4px 2px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    &:hover {
+      background: #203aa1;
+      color: #fff;
+      border-color: #39ddff;
+      transform: translateY(-3px);
+    }
+    &.is-selected {
+      border-color: #f43252;
+      background: #fff;
+      color: #040b53;
+      box-shadow: 0 0 0 2px #f43252;
+      transform: translateY(-3px);
+      .admission-roster-number {
+        color: #fff;
+        background: #f43252;
+      }
+      .admission-roster-portrait {
+        background: #39ddff;
+      }
+      .admission-roster-selected {
+        width: 12px;
+        height: 12px;
+        background: #f43252;
+      }
+      .admission-roster-placeholder > i {
+        color: #040b53;
+      }
+      .admission-roster-placeholder > b {
+        color: #0784ca;
+      }
+    }
+  }
+  .admission-roster-number {
+    background: #040b53;
+    color: #39ddff;
+    transform: skewX(-8deg);
+    left: 3px;
+  }
+  .admission-roster-portrait {
+    background: #1740b5;
+    height: clamp(86px, 10.5cqi, 108px);
+  }
+  .admission-roster-placeholder {
+    background: linear-gradient(125deg, transparent 50%, #204adb 50% 70%, transparent 70%);
+    > i {
+      color: #b9eaff;
+    }
+    > b {
+      color: #4f72e7;
+      font-style: italic;
+    }
+  }
+  .admission-roster-footer {
+    padding: 7px 23px 12px;
+    background: #040b53;
+    color: #9bb2ee;
+    font-size: 8px;
+  }
+  .admission-illustration-enter-active,
+  .admission-illustration-leave-active {
+    transition:
+      opacity 160ms,
+      transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .admission-illustration-enter-from {
+    opacity: 0;
+    transform: translate(25px, -5px);
+  }
+}
+
+.admission-selection-inline { display: contents; }
+
+@container admission-picker (max-width: 680px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme .admission-select {
+    .admission-select-stage {
+      padding-right: 12px;
+      grid-template-columns: minmax(0, 49%) minmax(0, 51%);
+    }
+    .admission-select-info {
+      padding: 13px 15px 16px;
+      gap: 12px;
+    }
+    .admission-select-info h3 {
+      font-size: 22px;
+    }
+    .admission-profile-trait {
+      padding: 12px 10px;
+    }
+    .admission-profile-bonuses {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .admission-profile-description {
+      font-size: 12px;
+    }
+    .admission-art-caption {
+      left: 11px;
+      right: 8px;
+    }
+    .admission-art-caption strong {
+      font-size: clamp(22px, 4.2cqi, 29px);
+    }
+    .admission-roster-heading > span {
+      font-size: 8px;
+    }
+  }
+}
+
+@container admission-picker (max-width: 520px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme .admission-select {
+    .admission-select-heading {
+      padding: 16px 18px 26px;
+    }
+    .admission-select-eyebrow {
+      font-size: 19px;
+    }
+    .admission-select-stage {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 0 12px 27px;
+    }
+    .admission-select-art {
+      width: calc(100% + 24px);
+      aspect-ratio: 1.13;
+      align-self: start;
+      margin: -8px -12px 0;
+    }
+    .admission-battle-illustration {
+      object-position: center 23%;
+      clip-path: polygon(0 0, 100% 0, 100% 89%, 0 100%);
+    }
+    .admission-select-art::before {
+      background: linear-gradient(0deg, #071278 0%, transparent 45%);
+    }
+    .admission-art-caption {
+      bottom: 24px;
+      left: 19px;
+    }
+    .admission-art-caption strong {
+      font-size: clamp(26px, 8cqi, 37px);
+    }
+    .admission-select-info {
+      margin-top: 2px;
+      padding: 18px;
+      gap: 13px;
+    }
+    .admission-select-info h3 {
+      font-size: 28px;
+    }
+    .admission-profile-bonuses {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .admission-profile-description {
+      font-size: 13px;
+    }
+    .admission-profile-trait {
+      padding: 14px;
+    }
+    .admission-profile-trait > p {
+      font-size: 12px;
+    }
+    .admission-select-placeholder {
+      padding-bottom: 64px;
+    }
+    .admission-roster-heading {
+      align-items: start;
+      padding-inline: 16px;
+      gap: 6px;
+    }
+    .admission-roster-heading strong em {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .admission-roster-heading > span {
+      padding-top: 4px;
+      max-width: 135px;
+      text-align: right;
+      line-height: 1.6;
+    }
+    .admission-roster {
+      padding-inline: 8px;
+    }
+    .admission-roster-footer {
+      padding-inline: 16px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    .admission-selection-name {
+      color: #c4fbff;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+    .admission-selection-footer .admission-select-confirm {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-style: italic;
+      svg {
+        width: 22px;
+        height: 16px;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+    }
+    .admission-select {
+      display: grid;
+      grid-template: 'counter' 'roster' 'art' 'info' 'foot' / minmax(0, 1fr);
+      .admission-select-heading {
+        grid-area: counter;
+        padding: 8px 12px;
+      }
+      .admission-select-eyebrow {
+        font-size: 13px;
+      }
+      .admission-select-eyebrow small,
+      .admission-roster-heading {
+        display: none;
+      }
+      .admission-select-counter b {
+        font-size: 18px;
+      }
+      .admission-select-stage {
+        display: contents;
+      }
+      .admission-roster {
+        grid-area: roster;
+        grid-template-columns: 44px minmax(0, 1fr) 44px;
+        padding: 0 4px;
+      }
+      .admission-roster-arrow {
+        width: 42px;
+        min-height: 44px;
+        transform: none;
+      }
+      .admission-roster-rail {
+        padding: 7px 4px 4px;
+        gap: 6px;
+      }
+      .admission-roster-card {
+        width: 72px;
+        flex-basis: 72px;
+      }
+      .admission-roster-card > strong {
+        height: 29px;
+        line-height: 1.12;
+      }
+      .admission-roster-portrait {
+        height: 46px;
+      }
+      .admission-select-art {
+        grid-area: art;
+        width: 100%;
+        margin: 0;
+        aspect-ratio: auto;
+        height: clamp(170px, 58vw, 275px);
+      }
+      .admission-art-caption {
+        bottom: 12px;
+        left: 10px;
+      }
+      .admission-art-caption strong {
+        font-size: 23px;
+      }
+      .admission-select-info {
+        grid-area: info;
+        margin: 0;
+        padding: 12px 14px;
+        gap: 10px;
+      }
+      .admission-select-info h3 {
+        font-size: 19px;
+        margin-inline: 0;
+      }
+      .admission-roster-footer {
+        grid-area: foot;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) and (max-height: 640px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme .admission-select {
+    .admission-select-heading {
+      display: none;
+    }
+    .admission-roster-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-basis: 94px;
+      min-height: 44px;
+    }
+    .admission-roster-number {
+      display: none;
+    }
+    .admission-roster-portrait {
+      flex: 0 0 32px;
+      height: 42px;
+    }
+    .admission-roster-card > strong {
+      height: auto;
+      flex: 1;
+    }
+  }
+}
+

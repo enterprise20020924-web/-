@@ -1,0 +1,796 @@
+.amami-training {
+  --training-white: #fff5e9;
+  --training-faint: #e7aaa9;
+  position: absolute;
+  inset: 0;
+  container: amami-training / size;
+  overflow: hidden;
+  isolation: isolate;
+  background: #4c020f;
+  color: var(--training-white);
+  color-scheme: dark;
+  font:
+    15px/1.5 'MiSans',
+    'Noto Sans SC',
+    'Microsoft YaHei',
+    sans-serif;
+  animation: amami-training-enter 260ms ease-out;
+}
+.amami-training *,
+.amami-training *::before,
+.amami-training *::after {
+  box-sizing: border-box;
+}
+.amami-training button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.amami-training button:focus-visible {
+  outline: 2px solid #fff2d5;
+  outline-offset: 4px;
+}
+.amami-training .amami-map-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.amami-training-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.amami-training::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border: 1px solid #ffb39240;
+  pointer-events: none;
+  background: linear-gradient(180deg, #11000740, transparent 20% 70%, #1a000950);
+}
+.amami-training-sigil-orbit {
+  animation: amami-training-orbit 180s linear infinite;
+}
+.amami-training-header {
+  height: 66px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  position: relative;
+  z-index: 3;
+  padding: 0 28px 0 20px;
+  border-bottom: 1px solid #e8928530;
+  background: linear-gradient(90deg, #200009e6, #4a030c80 45%, #5a031350);
+}
+.amami-training-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 6px 14px 6px 10px;
+  border: 1px solid #d9867e70;
+  border-radius: 2px;
+  background: #1a020840;
+  font-size: 12px !important;
+}
+.amami-training-back:hover {
+  background: #8b192a80;
+  border-color: #efb0a8;
+}
+.amami-training-heading {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.amami-training-heading > span {
+  width: 5px;
+  height: 22px;
+  background: #ecada2;
+  transform: skew(-16deg);
+}
+.amami-training-heading h1 {
+  font-size: clamp(17px, 1.7cqw, 23px);
+  letter-spacing: 0.13em;
+  margin: 0;
+  font-weight: 800;
+}
+.amami-training-modes {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+}
+.amami-training-modes button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 126px;
+  min-height: 38px;
+  padding: 5px 18px;
+  border: 1px solid #dc8c8770;
+  border-radius: 2px 10px 2px 10px;
+  background: #32010b99;
+  color: #d19c9c;
+  font-size: 14px;
+}
+.amami-training-modes button[aria-pressed='true'] {
+  color: #fff4e8;
+  border-color: #ffe1cc;
+  background: linear-gradient(110deg, #99091c, #e21b29);
+  box-shadow:
+    0 0 16px #ff322e40,
+    inset 0 0 10px #ffb17d26;
+}
+.amami-training-scene {
+  position: relative;
+  height: calc(100% - 94px);
+}
+.amami-training-character {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+}
+.amami-training-character img {
+  position: absolute;
+  height: 174%;
+  width: auto;
+  max-width: none;
+  top: 0;
+  left: 64%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 20px #21000880);
+  user-select: none;
+}
+.amami-training-stages {
+  position: absolute;
+  z-index: 2;
+  top: 17px;
+  bottom: 24px;
+  left: 25px;
+  width: clamp(260px, 32cqw, 440px);
+  display: flex;
+  flex-direction: column;
+}
+.amami-training-stages-heading {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 0 7px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+.amami-training-stages-heading > span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+.amami-training-stages-heading > small {
+  font-size: 10px;
+  color: #dfa49b;
+  letter-spacing: 0.15em;
+}
+.amami-training-stages-heading i {
+  height: 1px;
+  background: linear-gradient(90deg, #e9aa9a80, transparent);
+  flex: 1;
+}
+.amami-training-step {
+  align-self: center;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  height: 36px;
+  width: 78px;
+  padding: 2px 15px;
+  filter: drop-shadow(0 0 7px #ff9e8b);
+  flex-shrink: 0;
+}
+.amami-training-step svg {
+  width: 40px;
+  height: 25px;
+  fill: none;
+  stroke: #fff4e4;
+  stroke-width: 3;
+  stroke-linejoin: miter;
+}
+.amami-training-step:hover {
+  filter: drop-shadow(0 0 12px #ffe4cb);
+}
+.amami-training-step:disabled {
+  opacity: 0.24;
+  cursor: default;
+  filter: none;
+}
+.amami-training-stage-list {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2.5cqh, 26px);
+  padding: 8px 0;
+}
+.amami-training-stage {
+  position: relative;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 0;
+  text-align: left;
+  padding: 14px 22px 14px 16px;
+  opacity: 0.6;
+  transition:
+    opacity 160ms,
+    transform 160ms,
+    filter 160ms;
+}
+.amami-training-stage:hover {
+  opacity: 0.88;
+}
+.amami-training-stage.is-selected {
+  opacity: 1;
+  transform: translateX(8px);
+  filter: drop-shadow(0 0 9px #ff635a80);
+}
+.amami-training-stage-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: visible;
+}
+.amami-training-stage-fill {
+  fill: #44020fe6;
+}
+.amami-training-stage-edge {
+  fill: none;
+  stroke: #c36b64;
+  stroke-width: 1.6;
+}
+.amami-training-stage-rim {
+  fill: none;
+  stroke: #d4886b;
+  stroke-width: 0.8;
+  opacity: 0.4;
+}
+.is-selected .amami-training-stage-fill {
+  fill: #ad091ce8;
+}
+.is-selected .amami-training-stage-edge {
+  stroke: #fff2dc;
+  stroke-width: 2.2;
+}
+.is-selected .amami-training-stage-rim {
+  stroke: #ffb68e;
+  opacity: 0.75;
+}
+.amami-training-emblem {
+  display: block;
+  width: 78px;
+  height: 78px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+.amami-training-emblem-star {
+  fill: #60020b;
+  stroke: #e72729;
+  stroke-width: 2;
+}
+.amami-training-emblem-core {
+  fill: #b9101c;
+  stroke: #f94a3d;
+  stroke-width: 0.6;
+}
+.amami-training-emblem-mark {
+  fill: #fff2d8;
+  stroke: #ffb6a1;
+  stroke-width: 1;
+  filter: drop-shadow(0 0 4px #ffb9b5);
+}
+.amami-training-emblem-mark.is-shield {
+  fill: #fff0dc;
+  stroke: #a70e1e;
+  stroke-width: 2;
+}
+.amami-training-stage-copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.amami-training-stage-copy > small {
+  color: #e5ab9d;
+  font-size: clamp(9px, 0.85cqw, 12px);
+  letter-spacing: 0.18em;
+}
+.amami-training-stage-copy > strong {
+  display: block;
+  margin: 4px 0;
+  font-size: clamp(20px, 2.3cqw, 32px);
+  line-height: 1.35;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px #300005;
+}
+.amami-training-stage-copy > span {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: #dfa799;
+}
+.amami-training-stage-number {
+  position: absolute;
+  right: 18px;
+  bottom: 5px;
+  font:
+    italic 500 clamp(30px, 4.6cqw, 62px)/1 'Bahnschrift',
+    sans-serif;
+  color: #f18b761c;
+  pointer-events: none;
+}
+.amami-training-stage-selected {
+  position: absolute;
+  left: 13%;
+  right: 13%;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #fff5d5, transparent);
+  box-shadow: 0 0 10px #ffb78b;
+}
+.amami-training-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 8px;
+  flex-shrink: 0;
+}
+.amami-training-pagination > span {
+  width: 5px;
+  height: 5px;
+  border: 1px solid #c87c75;
+  transform: rotate(45deg);
+}
+.amami-training-pagination > span.active {
+  background: #fff2d5;
+  border-color: #fff2d5;
+  box-shadow: 0 0 6px #ffe0bc;
+}
+.amami-training-pagination > small {
+  margin-left: 12px;
+  font:
+    11px 'Bahnschrift',
+    sans-serif;
+  letter-spacing: 0.1em;
+  color: #e3b2a6;
+}
+.amami-training-feature-mark {
+  position: absolute;
+  z-index: 0;
+  width: clamp(120px, 19cqw, 290px);
+  top: 30%;
+  right: 2%;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 24px #ff412b50);
+}
+.amami-training-feature-mark .amami-training-emblem {
+  width: 100%;
+  height: auto;
+}
+.amami-training-character-caption {
+  position: absolute;
+  z-index: 2;
+  top: 29px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-bottom: 1px solid #eebbb35c;
+  padding-bottom: 7px;
+  text-shadow: 0 2px 6px #27000a;
+}
+.amami-training-character-caption > span {
+  color: #e0a69b;
+  font-size: 10px;
+}
+.amami-training-character-caption > strong {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+.amami-training-feature {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 22px;
+  width: 51%;
+}
+.amami-training-feature-name {
+  position: relative;
+  padding: 14px 28px 14px 38px;
+  text-align: right;
+  background: linear-gradient(90deg, #a0051900, #9c0a1fa6 25%, #bd0a1da6);
+  border-block: 1px solid #f69e8c73;
+  animation: amami-training-title 200ms ease-out;
+}
+.amami-training-feature-name::after {
+  content: '';
+  height: 1px;
+  position: absolute;
+  left: 12%;
+  right: 0;
+  top: -1px;
+  background: linear-gradient(90deg, transparent, #ffdfb7);
+}
+.amami-training-feature-name > span {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: #f7c3af;
+}
+.amami-training-feature-name h2 {
+  margin: 1px 0 7px;
+  font-size: clamp(30px, 4.8cqw, 66px);
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-shadow:
+    0 0 5px #ffe3d3a6,
+    0 0 20px #ff4c4573;
+}
+.amami-training-feature-rule {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
+}
+.amami-training-feature-rule small {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: #edb5a8;
+}
+.amami-training-feature-rule i {
+  height: 1px;
+  width: 38px;
+  background: #e59e8f;
+}
+.amami-training-launch {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+  padding: 18px 28px 0 20px;
+}
+.amami-training-launch > span {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  color: #d8a49a;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+.amami-training-launch > span i {
+  width: 4px;
+  height: 4px;
+  border: 1px solid #dba39b;
+  transform: rotate(45deg);
+}
+.amami-training-launch button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+  min-height: 56px;
+  min-width: 250px;
+  padding: 10px 26px;
+  border: 1px solid #e3a49b;
+  border-radius: 2px 16px 2px 16px;
+  background: linear-gradient(110deg, #820819, #c21b2a);
+  color: #f8d4bf;
+  box-shadow:
+    inset 0 0 0 4px #39000a80,
+    0 0 14px #d70b1a26;
+  cursor: default;
+}
+.amami-training-launch button strong {
+  font-size: clamp(19px, 2.2cqw, 30px);
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+.amami-training-footer {
+  position: absolute;
+  left: 25px;
+  right: 28px;
+  bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: #d49b91a6;
+  pointer-events: none;
+}
+@container amami-training (width < 1050px) {
+  .amami-training-header {
+    padding-inline: 16px;
+    gap: 12px;
+  }
+  .amami-training-modes {
+    gap: 8px;
+  }
+  .amami-training-modes button {
+    min-width: 100px;
+    padding-inline: 12px;
+  }
+  .amami-training-stages {
+    left: 16px;
+    width: 35%;
+  }
+  .amami-training-stage {
+    padding-left: 8px;
+    gap: 5px;
+  }
+  .amami-training-stage .amami-training-emblem {
+    width: 58px;
+    height: 58px;
+  }
+  .amami-training-launch > span {
+    display: none;
+  }
+  .amami-training-launch button {
+    min-width: 220px;
+  }
+}
+@container amami-training (height < 560px) and (width >= 760px) {
+  .amami-training-header {
+    height: 54px;
+  }
+  .amami-training-scene {
+    height: calc(100% - 76px);
+  }
+  .amami-training-stages {
+    top: 10px;
+    bottom: 14px;
+  }
+  .amami-training-stages-heading {
+    display: none;
+  }
+  .amami-training-step {
+    height: 24px;
+  }
+  .amami-training-stage-list {
+    gap: 10px;
+    padding-block: 4px;
+  }
+  .amami-training-stage {
+    padding-block: 8px;
+  }
+  .amami-training-stage-copy > strong {
+    font-size: 21px;
+  }
+  .amami-training-stage-copy > span {
+    display: none;
+  }
+  .amami-training-feature {
+    bottom: 10px;
+  }
+  .amami-training-feature-name {
+    padding-block: 8px;
+  }
+  .amami-training-launch {
+    padding-top: 10px;
+  }
+  .amami-training-launch button {
+    min-height: 46px;
+  }
+}
+@container amami-training (width < 760px) {
+  .amami-training-header {
+    height: 104px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    gap: 12px;
+  }
+  .amami-training-heading {
+    padding-top: 7px;
+  }
+  .amami-training-heading h1 {
+    font-size: 17px;
+    letter-spacing: 0.08em;
+  }
+  .amami-training-back {
+    min-height: 44px;
+    min-width: 44px;
+    padding-inline: 8px;
+  }
+  .amami-training-back > span {
+    display: none;
+  }
+  .amami-training-modes {
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    right: 12px;
+    justify-content: flex-end;
+  }
+  .amami-training-modes button {
+    min-width: 100px;
+    min-height: 40px;
+    font-size: 12px;
+  }
+  .amami-training-modes .amami-map-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .amami-training-scene {
+    height: calc(100% - 128px);
+  }
+  .amami-training-character img {
+    height: 145%;
+    left: 70%;
+    top: 0;
+  }
+  .amami-training-stages {
+    top: 12%;
+    bottom: 150px;
+    left: 10px;
+    width: 44%;
+  }
+  .amami-training-stages-heading {
+    margin-bottom: 3px;
+    gap: 7px;
+  }
+  .amami-training-stages-heading > small,
+  .amami-training-stages-heading i {
+    display: none;
+  }
+  .amami-training-stages-heading > span {
+    font-size: 9px;
+  }
+  .amami-training-step {
+    height: 44px;
+    width: 55px;
+  }
+  .amami-training-step svg {
+    width: 30px;
+    height: 19px;
+  }
+  .amami-training-stage-list {
+    gap: 10px;
+    padding-block: 4px;
+  }
+  .amami-training-stage {
+    gap: 4px;
+    padding: 6px;
+  }
+  .amami-training-stage.is-selected {
+    transform: translateX(4px);
+  }
+  .amami-training-stage .amami-training-emblem {
+    width: 37px;
+    height: 37px;
+  }
+  .amami-training-stage-copy > small {
+    font-size: 7px;
+    letter-spacing: 0.04em;
+  }
+  .amami-training-stage-copy > strong {
+    margin-block: 2px;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+  .amami-training-stage-copy > span {
+    display: none;
+  }
+  .amami-training-stage-number {
+    font-size: 29px;
+    right: 10px;
+  }
+  .amami-training-pagination {
+    gap: 4px;
+    padding-top: 5px;
+  }
+  .amami-training-pagination > small {
+    font-size: 9px;
+    margin-left: 6px;
+  }
+  .amami-training-feature-mark {
+    right: -8%;
+    top: 36%;
+    width: 45%;
+  }
+  .amami-training-character-caption {
+    top: 10px;
+    right: 12px;
+    gap: 6px;
+  }
+  .amami-training-character-caption > strong {
+    font-size: 12px;
+  }
+  .amami-training-character-caption > span {
+    font-size: 8px;
+  }
+  .amami-training-feature {
+    width: 100%;
+    bottom: 4px;
+  }
+  .amami-training-feature-name {
+    padding: 8px 18px;
+  }
+  .amami-training-feature-name > span {
+    font-size: 9px;
+  }
+  .amami-training-feature-name h2 {
+    font-size: 30px;
+    margin-bottom: 2px;
+  }
+  .amami-training-feature-rule {
+    gap: 9px;
+  }
+  .amami-training-feature-rule small {
+    font-size: 8px;
+  }
+  .amami-training-feature-rule i {
+    width: 24px;
+  }
+  .amami-training-launch {
+    padding: 10px 16px 0;
+  }
+  .amami-training-launch button {
+    min-height: 44px;
+    min-width: 192px;
+    gap: 10px;
+    padding: 7px 18px;
+  }
+  .amami-training-launch button strong {
+    font-size: 19px;
+  }
+  .amami-training-footer {
+    left: 12px;
+    right: 16px;
+    font-size: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .amami-training,
+  .amami-training-sigil-orbit,
+  .amami-training-feature-name {
+    animation: none;
+  }
+  .amami-training-stage {
+    transition: none;
+  }
+}
+@keyframes amami-training-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes amami-training-title {
+  from {
+    opacity: 0.3;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes amami-training-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}

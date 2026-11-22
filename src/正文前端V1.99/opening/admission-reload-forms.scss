@@ -1,0 +1,1563 @@
+// BA clarity + P3R kinetic contrast for Opening Steps 1–4 and the Student Record rail.
+// All font sizes scale by 1.2x via tools/build-narrative-opening.mjs.
+.academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+  --p3r-navy: #08134e;
+  --p3r-navy-deep: #050c36;
+  --p3r-cobalt: #1638e8;
+  --p3r-cobalt-soft: #2654f5;
+  --p3r-cyan: #24e2f8;
+  --p3r-cyan-soft: #9ef6ff;
+  --p3r-red: #f43252;
+  --ba-sky: #00a0e9;
+  --ba-paper: #ffffff;
+  --ba-ice: #f3f9ff;
+  --ba-ice-strong: #e4f2ff;
+  --ba-line: #bfd9f2;
+  --ba-line-strong: #87bef0;
+
+  // --- Right Rail: Live Student Record Card polish ---
+  .opening-live-summary {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(150deg, #0b1b66 0%, #07104a 52%, #050b34 100%);
+    border-bottom: 3px solid var(--p3r-cyan);
+    box-shadow:
+      6px 6px 0 #b7d2ee,
+      inset 0 1px 0 #70ecff33;
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(122deg, transparent 0 64%, #24e2f814 64% 69%, transparent 69% 73%, #1638e82e 73% 84%, transparent 84%);
+    }
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+  .sk-record-card-top {
+    background: linear-gradient(95deg, #1638e8 0 74%, #0d26b5 100%);
+    border-bottom: 2px solid var(--p3r-cyan);
+  }
+  .opening-summary-heading small {
+    border-radius: 0;
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+    padding: 2px 10px;
+    background: #1638e8;
+    color: #c2fbff;
+    font-weight: 800;
+  }
+  .sk-record-progress > span {
+    border-radius: 0;
+    height: 6px;
+    background: #1b2f73;
+    overflow: hidden;
+  }
+  .sk-record-progress i {
+    border-radius: 0;
+    background: linear-gradient(90deg, #1d8cf8, var(--p3r-cyan));
+    box-shadow: 0 0 10px #24e2f888;
+  }
+  .sk-admission-checks {
+    background: #f5faff;
+    border: 1px solid var(--ba-line);
+    border-left: 3px solid var(--p3r-cobalt);
+    box-shadow: 4px 4px 0 #d0e3f6;
+  }
+
+  // --- Step 1: Character Dossier (unify teal residues into BA sky + P3R cobalt/navy) ---
+  .sk-character-dossier.sk-enrollment-form {
+    --dossier-ink: #0a184d;
+    --dossier-blue: #1638e8;
+    --dossier-line: #b4d2ef;
+    --dossier-cut: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+
+    .sk-dossier-toolbar {
+      .sk-admission-return {
+        background: var(--p3r-navy);
+        color: #fff;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+        padding: 8px 18px 8px 14px;
+        box-shadow: 3px 3px 0 #1638e855;
+        transition:
+          background 160ms ease,
+          color 160ms ease,
+          transform 160ms ease;
+        &:hover {
+          background: var(--p3r-cobalt);
+          color: #fff;
+          transform: translateX(-2px);
+        }
+      }
+      .sk-dossier-mode {
+        color: #17347a;
+        font-weight: 800;
+        > i {
+          border-radius: 0;
+          clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+          background: #dcebff;
+          color: var(--p3r-cobalt);
+        }
+        &:hover,
+        &.is-active {
+          color: var(--p3r-cobalt);
+          > i {
+            background: var(--p3r-navy);
+            color: var(--p3r-cyan);
+          }
+        }
+      }
+    }
+    .sk-dossier-toolbar-rule {
+      background: linear-gradient(90deg, #98bfe9, #dceafa);
+      > i {
+        background: var(--p3r-cobalt);
+        &:last-child {
+          background: var(--p3r-red);
+        }
+      }
+    }
+    .sk-dossier-sheet-edge {
+      background: #cfe2f7;
+    }
+    .sk-dossier-basics,
+    .sk-dossier-folio,
+    .sk-dossier-arrival {
+      &::after {
+        background: linear-gradient(145deg, #ffffff 0 65%, #f2f8ff 100%);
+      }
+    }
+    .sk-dossier-section-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      .sk-dossier-section-heading {
+        flex: 1;
+      }
+    }
+    .sk-dossier-section-meta {
+      flex-shrink: 0;
+      font: 800 italic 9px / 1 var(--sk-mono);
+      letter-spacing: 0.16em;
+      color: #5b78b0;
+    }
+    .sk-dossier-section-heading {
+      color: var(--p3r-navy);
+      font-weight: 900;
+      &::after {
+        background: linear-gradient(90deg, #a6c7ec, transparent);
+      }
+      > span {
+        background: var(--p3r-navy);
+        color: var(--p3r-cyan);
+        font-style: italic;
+        font-weight: 900;
+        padding: 3px 12px 3px 9px;
+        clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+        box-shadow: 2px 2px 0 var(--p3r-cobalt);
+      }
+    }
+    .sk-dossier-portrait {
+      background:
+        linear-gradient(#1638e80e 1px, transparent 1px) 0 0 / 16px 16px,
+        linear-gradient(90deg, #1638e80e 1px, transparent 1px) 0 0 / 16px 16px,
+        linear-gradient(155deg, #f3f9ff, #e2efff);
+      border: 1px solid #bcd7f3;
+    }
+    .sk-dossier-portrait-orbit {
+      border-color: #8cc2f2;
+      box-shadow: 0 0 0 9px #dceeff90;
+      &::after {
+        background: var(--p3r-cobalt);
+      }
+    }
+    .sk-dossier-emblem {
+      color: var(--p3r-cobalt);
+    }
+    .sk-dossier-portrait-baseline {
+      background: linear-gradient(90deg, var(--p3r-red) 0 16%, var(--p3r-cobalt) 16% 62%, var(--p3r-cyan) 62%);
+    }
+    .sk-dossier-identity-tag {
+      background: var(--p3r-navy);
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+      padding: 5px 22px 5px 12px;
+      > i {
+        color: var(--p3r-cyan);
+      }
+    }
+    .sk-dossier-nameplate {
+      > label {
+        color: #4b6594;
+        font-weight: 700;
+      }
+      .sk-required-label {
+        background: var(--p3r-red);
+        color: #fff;
+        font-style: normal;
+        font-weight: 800;
+        border-radius: 0;
+        clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+        padding: 1px 8px;
+      }
+      .sk-dossier-name-input {
+        color: var(--p3r-navy);
+        border-bottom: 2px solid #96bce9;
+        &:focus {
+          border-bottom-color: var(--p3r-cobalt);
+          box-shadow: 0 3px 0 #1638e822;
+        }
+      }
+    }
+    .sk-dossier-name-stripes > i {
+      background: #9fc5ec;
+      &:first-child {
+        background: var(--p3r-red);
+      }
+      &:nth-child(2) {
+        background: var(--p3r-cobalt);
+      }
+    }
+    .sk-dossier-basic-grid {
+      border-top-color: #cde0f4;
+    }
+    .sk-dossier-field {
+      > label,
+      .sk-dossier-field-label {
+        color: #466194;
+        font-weight: 750;
+        > i {
+          color: var(--p3r-cobalt);
+        }
+      }
+      .sk-registration-choice button {
+        border-radius: 0;
+        border: 1px solid #b0cceb;
+        background: #f5faff;
+        color: #2c477d;
+        font-weight: 800;
+        transition:
+          background 160ms ease,
+          color 160ms ease,
+          border-color 160ms ease;
+        &[aria-pressed='true'] {
+          background: var(--p3r-navy);
+          border-color: var(--p3r-navy);
+          color: #fff;
+          box-shadow: inset 0 -3px 0 var(--p3r-cyan);
+        }
+        &:hover:not(:disabled):not([aria-pressed='true']) {
+          background: #e5f2ff;
+          border-color: var(--p3r-cobalt);
+          color: var(--p3r-navy);
+        }
+      }
+    }
+    .sk-dossier-note-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+      > label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        color: var(--p3r-navy);
+        font-size: 13px;
+        font-weight: 850;
+        > i {
+          color: var(--p3r-cobalt);
+        }
+      }
+    }
+    .sk-dossier-char-count {
+      flex-shrink: 0;
+      padding: 2px 9px;
+      background: #e6f2ff;
+      color: #1638e8;
+      font: 800 9px / 1.3 var(--sk-mono);
+      font-variant-numeric: tabular-nums;
+      clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+    }
+    .sk-dossier-note-index {
+      background: var(--p3r-navy);
+      color: var(--p3r-cyan);
+      font-style: italic;
+      font-weight: 900;
+      width: 24px;
+      height: 26px;
+      left: -30px;
+      clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
+    }
+    .sk-dossier-note > textarea {
+      background: repeating-linear-gradient(transparent 0 35px, #d6e6f7 35px 36px);
+      border-bottom: 1px solid #a8c7ea;
+      color: var(--p3r-navy);
+      padding-inline: 8px;
+      &:focus {
+        background: repeating-linear-gradient(#eef7ff99 0 35px, #9bc0ec 35px 36px);
+        border-bottom-color: var(--p3r-cobalt);
+        box-shadow: 0 3px 0 #1638e822;
+      }
+    }
+    .sk-dossier-profile-warning {
+      border-left: 4px solid var(--p3r-red);
+      background: #fff2f5;
+      color: #8b1730;
+      font-weight: 700;
+    }
+
+    // Command bar for AI Persona Generation & Tavern Persona Writer
+    .sk-dossier-generator {
+      padding: 18px 20px;
+      color: #fff;
+      &::before {
+        background: linear-gradient(128deg, #0b1c68 0%, #08134e 62%, #112485 100%);
+        border-bottom: 3px solid var(--p3r-cyan);
+        clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+      }
+      .sk-dossier-gen-title {
+        color: #fff;
+        font-weight: 900;
+        letter-spacing: 0.03em;
+        > i {
+          color: var(--p3r-cyan);
+        }
+      }
+      .sk-dossier-gen-btn {
+        border-radius: 0;
+        border: 0;
+        box-shadow: 3px 3px 0 #04092c;
+        clip-path: polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+        padding: 9px 18px;
+        font-weight: 900;
+        letter-spacing: 0.03em;
+        &.is-primary {
+          background: #fff;
+          color: var(--p3r-navy);
+          &:hover:not(:disabled) {
+            background: var(--p3r-cyan);
+            color: var(--p3r-navy-deep);
+            transform: translateX(2px);
+          }
+        }
+        &.is-secondary {
+          background: #173bf0;
+          color: #fff;
+          &:hover:not(:disabled) {
+            background: #2751ff;
+            color: #fff;
+            transform: translateX(2px);
+          }
+        }
+      }
+      .sk-dossier-help {
+        color: #b4d8ff;
+        > summary {
+          color: #8ef2ff;
+          font-weight: 700;
+        }
+        > p {
+          color: #d6ebff;
+        }
+      }
+      .sk-dossier-preview-label {
+        color: #9ceeff;
+        font-weight: 800;
+        > i {
+          color: var(--p3r-cyan);
+        }
+      }
+      .sk-dossier-preview-box {
+        border-radius: 0;
+        background: #f6fbff;
+        border: 1px solid #88bef0;
+        border-left: 4px solid var(--p3r-cyan);
+        color: var(--p3r-navy);
+        box-shadow: inset 0 0 0 1px #ffffff;
+        backdrop-filter: none;
+      }
+      .sk-dossier-persona-bar {
+        border-radius: 0;
+        background: #0d2175;
+        border: 1px solid #3558c9;
+      }
+      .sk-dossier-persona-title {
+        color: #fff;
+        font-weight: 850;
+        > i {
+          color: var(--p3r-cyan);
+        }
+      }
+      .sk-dossier-persona-desc {
+        color: #b6d6fa;
+      }
+      .sk-dossier-persona-btn {
+        border-radius: 0;
+        border: 0;
+        background: var(--p3r-cyan);
+        color: var(--p3r-navy-deep);
+        font-weight: 900;
+        box-shadow: 3px 3px 0 #040a2c;
+        clip-path: polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+        &:hover:not(:disabled) {
+          background: #fff;
+          color: var(--p3r-navy);
+          transform: translateX(2px);
+        }
+      }
+      .sk-dossier-feedback {
+        border-radius: 0;
+        font-weight: 700;
+        &.is-error {
+          background: #470d20;
+          border-color: var(--p3r-red);
+          color: #ffd0da;
+        }
+        &.is-warning {
+          background: #3d2c0b;
+          border-color: #f6c445;
+          color: #ffefc2;
+        }
+        &.is-success {
+          background: #0a3448;
+          border-color: var(--p3r-cyan);
+          color: #c8fbff;
+        }
+      }
+    }
+
+    // Timeline summary card
+    .sk-dossier-timeline {
+      border-top-color: #bfd7f0;
+      > label {
+        color: var(--p3r-navy);
+        font-weight: 850;
+        > i {
+          color: var(--p3r-cobalt);
+        }
+      }
+      .sk-timeline-summary {
+        grid-column: 1 / -1;
+        border-radius: 0;
+        background: linear-gradient(100deg, #0b1a5d, #132b8d);
+        border: 1px solid #3559cc;
+        border-left: 4px solid var(--p3r-cyan);
+        color: #fff;
+        box-shadow: 4px 4px 0 #c5dbf2;
+        > span {
+          border-radius: 0;
+          background: #1638e8;
+          color: var(--p3r-cyan);
+          clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+        }
+        p {
+          color: #fff;
+        }
+        p + p {
+          color: #c7e2ff;
+        }
+      }
+    }
+  }
+
+  // --- Step 2: Campus Archetype & Body Customization ---
+  .archive-archetypes {
+    .sk-archetype-list-shell {
+      display: grid;
+      gap: 0;
+      border: 1px solid var(--ba-line);
+      background: #fff;
+      box-shadow: 5px 5px 0 #ccdff5;
+    }
+    .sk-archetype-list-head {
+      background: linear-gradient(105deg, #08134e 0%, #10247a 75%, #1638e8 100%);
+      border: 0;
+      border-bottom: 3px solid var(--p3r-cyan);
+      color: #fff;
+      padding: 14px 18px;
+      h3 {
+        color: #fff;
+        font-style: italic;
+        font-weight: 900;
+        letter-spacing: 0.02em;
+      }
+      p {
+        color: #a9e6ff;
+      }
+    }
+    .sk-archetype-head-icon {
+      border-radius: 0;
+      background: #1638e8;
+      color: var(--p3r-cyan);
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+    }
+    .sk-archetype-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 10px;
+      min-height: 34px;
+      background: #060e3c;
+      border: 1px solid #3c65d6;
+      color: #9defff;
+      flex: 0 1 200px;
+      min-width: 0;
+      > i {
+        font-size: 11px;
+        color: var(--p3r-cyan);
+      }
+      > input {
+        width: 100%;
+        min-width: 0;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        outline: 0;
+        &::placeholder {
+          color: #82a5dd;
+        }
+      }
+    }
+    .sk-archetype-scroll {
+      background: #f5faff;
+      border: 0;
+      padding: 16px;
+    }
+    .sk-archetype-card {
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid #c4daf2;
+      box-shadow: 0 2px 6px #0f2d730a;
+      transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        background 160ms ease;
+      .sk-archetype-card-icon {
+        border-radius: 0;
+        background: #e7f3ff;
+        color: var(--p3r-cobalt);
+        clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+      }
+      h4 {
+        color: var(--p3r-navy);
+        font-weight: 900;
+      }
+      p {
+        color: #536a92;
+      }
+      &:hover:not(:disabled) {
+        background: #fff;
+        border-color: var(--p3r-cobalt);
+        transform: translateY(-2px);
+        box-shadow: 4px 4px 0 #c3dbf6;
+      }
+      &.is-selected {
+        background: linear-gradient(135deg, #0b1a64 0%, #08134e 100%);
+        border-color: var(--p3r-navy);
+        box-shadow:
+          inset 0 3px 0 var(--p3r-red),
+          4px 4px 0 #95b5eb;
+        .sk-archetype-card-icon {
+          background: var(--p3r-cyan);
+          color: var(--p3r-navy-deep);
+        }
+        h4 {
+          color: #fff;
+        }
+        p {
+          color: #c8e4ff;
+        }
+      }
+    }
+    .sk-archetype-selected-tag {
+      flex-shrink: 0;
+      padding: 2px 7px;
+      background: var(--p3r-red);
+      color: #fff;
+      font: 900 italic 8px / 1.2 var(--sk-mono);
+      letter-spacing: 0.12em;
+      clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+    }
+    .sk-archetype-empty {
+      text-align: center;
+      padding: 36px 12px;
+      color: #5a739c;
+      font-weight: 700;
+    }
+
+    // Selected Archetype Intelligence Card (P3R Navy Dossier)
+    .sk-archetype-detail {
+      border: 1px solid #1e3aa8;
+      background: linear-gradient(160deg, #0b1b66 0%, #07104a 58%, #050b33 100%);
+      color: #fff;
+      box-shadow: 5px 5px 0 #bfd4f0;
+      border-bottom: 4px solid var(--p3r-cyan);
+      padding: 20px 18px;
+      text-align: left;
+      align-items: stretch;
+      &.grayscale {
+        background: #edf5ff;
+        border-color: var(--ba-line);
+        color: #5a7298;
+        box-shadow: none;
+        align-items: center;
+        text-align: center;
+      }
+    }
+    .sk-archetype-detail-head {
+      display: grid;
+      justify-items: start;
+      gap: 4px;
+      padding-bottom: 14px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #2b459c;
+    }
+    .sk-archetype-detail-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 0;
+      margin-bottom: 8px;
+      background: #1638e8;
+      color: var(--p3r-cyan);
+      box-shadow: 3px 3px 0 #04092c;
+      clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+      font-size: 18px;
+    }
+    .sk-archetype-detail-kicker {
+      color: var(--p3r-cyan);
+      font: 900 italic 9px / 1.2 var(--sk-mono);
+      letter-spacing: 0.18em;
+      margin: 0;
+    }
+    .sk-archetype-detail-name {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 900;
+      margin: 0;
+    }
+    .sk-archetype-mech,
+    .sk-archetype-fixed {
+      color: #d7ecff;
+      background: #11267d;
+      border-left: 3px solid var(--p3r-cyan);
+      padding: 8px 10px;
+      font-size: 11px;
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+    .sk-archetype-fixed {
+      border-left-color: var(--p3r-red);
+      background: #231652;
+      color: #ffdce5;
+    }
+    .sk-archetype-bonuses {
+      border-top-color: #2b459c;
+      margin-top: auto;
+    }
+    .sk-archetype-bonus-title {
+      color: #84c5ff;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+    }
+    .sk-archetype-bonus-name span {
+      color: #fff;
+    }
+    .sk-archetype-bonus-grid {
+      justify-content: flex-start;
+    }
+    .sk-archetype-bonus-chip {
+      border-radius: 0;
+      background: #102575;
+      border: 1px solid #3050b8;
+      color: #e4f3ff;
+      font-weight: 750;
+      padding: 4px 8px;
+      &.is-positive > span {
+        color: var(--p3r-cyan);
+        font-weight: 900;
+      }
+      &.is-negative > span {
+        color: #ff7a92;
+        font-weight: 900;
+      }
+    }
+
+    // Body Stats Panel
+    .sk-body-panel {
+      background: #fff;
+      border: 1px solid var(--ba-line);
+      border-top: 3px solid var(--p3r-cobalt);
+      box-shadow: 5px 5px 0 #cde0f5;
+      padding: 20px 22px 24px;
+    }
+    .sk-body-panel-title {
+      color: var(--p3r-navy);
+      font-weight: 900;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #d5e6f8;
+      i {
+        color: var(--p3r-cobalt);
+      }
+    }
+    .sk-range-card {
+      padding: 12px 14px;
+      background: #f5faff;
+      border: 1px solid #cde1f5;
+    }
+    .sk-range-head {
+      margin-bottom: 10px;
+      color: var(--p3r-navy);
+      font-weight: 800;
+      i {
+        color: var(--p3r-cobalt);
+      }
+    }
+    .sk-range-value {
+      color: var(--p3r-cobalt);
+      font: 900 italic 15px / 1 var(--sk-display);
+      font-variant-numeric: tabular-nums;
+    }
+    .sk-range-control {
+      .sk-range-track {
+        height: 7px;
+        border-radius: 0;
+        background: #cfe2f7;
+        clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
+      }
+      .sk-range-fill {
+        background: linear-gradient(90deg, var(--p3r-navy), var(--p3r-cobalt) 55%, var(--p3r-cyan));
+      }
+      .sk-range-thumb {
+        position: absolute;
+        left: clamp(6px, var(--range-pct, 50%), calc(100% - 6px));
+        top: 50%;
+        width: 14px;
+        height: 18px;
+        transform: translate(-50%, -50%) skewX(-12deg);
+        background: #fff;
+        border: 2px solid var(--p3r-navy);
+        box-shadow:
+          0 0 0 2px var(--p3r-cyan),
+          2px 2px 0 #08134e44;
+        pointer-events: none;
+        z-index: 15;
+        transition:
+          transform 120ms ease,
+          background 120ms ease;
+      }
+      &:hover .sk-range-thumb,
+      &:focus-within .sk-range-thumb {
+        background: var(--p3r-cyan);
+        transform: translate(-50%, -50%) skewX(-12deg) scale(1.12);
+      }
+    }
+    .sk-range-ticks {
+      color: #5b749c;
+      font-family: var(--sk-mono);
+    }
+    .sk-body-choice-group > label {
+      color: var(--p3r-navy);
+      font-weight: 850;
+      margin-bottom: 10px;
+      i {
+        color: var(--p3r-cobalt);
+      }
+    }
+    .sk-choice-chip {
+      border-radius: 0;
+      border: 1px solid #b8d3ef;
+      background: #f5faff;
+      color: #294579;
+      font-weight: 800;
+      clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+      transition:
+        background 150ms ease,
+        color 150ms ease,
+        border-color 150ms ease,
+        transform 150ms ease;
+      &:hover:not(.is-selected) {
+        background: #e4f2ff;
+        border-color: var(--p3r-cobalt);
+        color: var(--p3r-navy);
+      }
+      &.is-selected {
+        background: var(--p3r-navy);
+        border-color: var(--p3r-navy);
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow:
+          inset 0 3px 0 var(--p3r-red),
+          3px 3px 0 #a3c3ed;
+      }
+    }
+  }
+
+  // --- Step 3: Attribute Assessment (P3R Kinetic Stat Bars) ---
+  .archive-assessment {
+    .sk-assessment-console {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(112deg, #07104a 0%, #0c1f74 62%, #1535d8 100%);
+      border: 0;
+      border-bottom: 4px solid var(--p3r-cyan);
+      box-shadow: 6px 6px 0 #bfd5ef;
+      padding: 18px 22px;
+      gap: 14px;
+      flex-wrap: wrap;
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(125deg, transparent 0 66%, #24e2f81a 66% 71%, transparent 71% 75%, #ffffff0d 75% 86%, transparent 86%);
+      }
+      > * {
+        position: relative;
+        z-index: 1;
+      }
+      &.is-cheat {
+        border-bottom-color: #ffd85c;
+      }
+    }
+    .sk-assessment-summary {
+      p {
+        color: #d8edff;
+      }
+      .text-white {
+        color: #fff;
+      }
+    }
+    .sk-assessment-badge {
+      padding: 2px 8px;
+      background: var(--p3r-red);
+      color: #fff;
+      font-weight: 850;
+      clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+      &.is-cheat {
+        background: #ffd85c;
+        color: #1c1603;
+      }
+    }
+    .sk-assessment-used {
+      color: var(--p3r-cyan);
+      font-family: var(--sk-mono);
+      font-weight: 800;
+    }
+    .sk-assessment-controls {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .sk-assessment-reset {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 6px 13px;
+      border: 1px solid #5984ea;
+      background: #0d2175;
+      color: #c5eeff;
+      font-size: 11px;
+      font-weight: 850;
+      cursor: pointer;
+      clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+      transition:
+        background 150ms ease,
+        color 150ms ease,
+        border-color 150ms ease;
+      &:hover:not(:disabled) {
+        background: var(--p3r-red);
+        border-color: var(--p3r-red);
+        color: #fff;
+      }
+      &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+    }
+    .sk-assessment-step-toggle {
+      border-radius: 0;
+      min-height: 36px;
+      padding: 6px 14px;
+      border: 1px solid #5380e8;
+      background: #102685;
+      color: #d4f4ff;
+      box-shadow: none;
+      clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+      &.is-x10 {
+        background: var(--p3r-red);
+        border-color: var(--p3r-red);
+        color: #fff;
+        box-shadow: 3px 3px 0 #04092c;
+        i {
+          color: #fff;
+        }
+      }
+      &:hover:not(.is-x10) {
+        background: #1736b5;
+        color: #fff;
+      }
+    }
+    .sk-assessment-points {
+      padding-left: 12px;
+      border-left: 1px solid #304fa8;
+      > span:first-child {
+        color: #9dd4ff;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+      }
+      .text-3xl {
+        color: var(--p3r-cyan);
+        font: 950 italic 34px / 1 var(--sk-display);
+        font-variant-numeric: tabular-nums;
+        text-shadow: 3px 3px 0 #040a2c;
+        animation: none;
+        &.is-depleted {
+          color: #829ed4;
+          text-shadow: none;
+        }
+      }
+    }
+    .sk-assessment-fixed-note {
+      padding: 9px 14px;
+      background: #eef6ff;
+      border-left: 4px solid var(--p3r-cobalt);
+      color: var(--p3r-navy);
+      font-weight: 750;
+    }
+
+    // Stat Parameter Cards with Dual-Segment Kinetic Meter (Base Navy + Added Cyan)
+    .sk-stat-card {
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid #bdd7f2;
+      border-left: 4px solid var(--p3r-cobalt);
+      padding: 15px 14px 22px;
+      box-shadow: 3px 3px 0 #d2e4f7;
+      transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease;
+      // Visual dual-layer progress bar at bottom edge using CSS custom properties
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 6px;
+        background:
+          repeating-linear-gradient(
+            -60deg,
+            transparent 0 8px,
+            #ffffff2e 8px 10px
+          ),
+          linear-gradient(
+            90deg,
+            #0c1e6b 0 var(--stat-base-pct, 10%),
+            #24e2f8 var(--stat-base-pct, 10%) var(--stat-cur-pct, 10%),
+            #dceafa var(--stat-cur-pct, 10%) 100%
+          );
+        pointer-events: none;
+      }
+      &:hover:not(.is-locked) {
+        border-color: var(--p3r-cobalt);
+        box-shadow: 4px 4px 0 #b8d3f2;
+      }
+      &.is-raised {
+        border-left-color: var(--p3r-cyan);
+        background: linear-gradient(135deg, #ffffff 0 68%, #effaff 100%);
+      }
+      &.is-locked {
+        background:
+          repeating-linear-gradient(-45deg, transparent 0 12px, #e3eef944 12px 18px),
+          #f4f8fc;
+        border-left-color: #889ec4;
+        box-shadow: none;
+      }
+    }
+    .sk-stat-icon {
+      border-radius: 0;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      background: var(--p3r-navy);
+      color: var(--p3r-cyan);
+      clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+      flex-shrink: 0;
+    }
+    .sk-stat-card.is-locked .sk-stat-icon {
+      background: #6f84a8;
+      color: #eaf2fb;
+    }
+    .sk-stat-label {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      color: var(--p3r-navy);
+      font-weight: 900;
+    }
+    .sk-stat-lock-tag {
+      padding: 1px 6px;
+      background: #5b7094;
+      color: #fff;
+      font: 900 italic 8px / 1.3 var(--sk-mono);
+      letter-spacing: 0.1em;
+    }
+    .sk-stat-delta-tag {
+      padding: 1px 7px;
+      background: var(--p3r-navy);
+      color: var(--p3r-cyan);
+      font: 900 italic 9px / 1.3 var(--sk-mono);
+      clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+    }
+    .sk-stat-cost {
+      color: #5b739c;
+      font-weight: 600;
+    }
+    .font-mono.text-lg {
+      color: var(--p3r-navy);
+      font: 950 italic 22px / 1 var(--sk-display);
+      font-variant-numeric: tabular-nums;
+    }
+    .sk-stat-card.is-raised .font-mono.text-lg {
+      color: var(--p3r-cobalt);
+    }
+    .sk-stat-btn {
+      border-radius: 0;
+      width: 34px;
+      height: 34px;
+      clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+      box-shadow: none;
+      &.is-minus {
+        background: #e7f2ff;
+        border: 1px solid #9cc1ea;
+        color: var(--p3r-navy);
+        &:hover:not(:disabled) {
+          background: var(--p3r-navy);
+          border-color: var(--p3r-navy);
+          color: #fff;
+        }
+        &.is-x10 {
+          border-color: var(--p3r-red);
+          color: #b51835;
+          background: #fff0f3;
+          &:hover:not(:disabled) {
+            background: var(--p3r-red);
+            color: #fff;
+          }
+        }
+      }
+      &.is-plus {
+        background: var(--p3r-cobalt);
+        color: #fff;
+        box-shadow: 2px 2px 0 #08134e40;
+        &:hover:not(:disabled) {
+          background: var(--p3r-cyan);
+          color: var(--p3r-navy-deep);
+          transform: translateY(-1px);
+        }
+        &.is-x10 {
+          background: var(--p3r-red);
+          color: #fff;
+          box-shadow: 2px 2px 0 #08134e55;
+          &:hover:not(:disabled) {
+            background: #ff4b6a;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  // --- Step 4: Active Skills, Constitutions & Presets ---
+  .archive-abilities {
+    .sk-ability-section {
+      background: #fff;
+      border: 1px solid var(--ba-line);
+      box-shadow: 5px 5px 0 #cde0f5;
+    }
+    .sk-ability-header {
+      background: linear-gradient(105deg, #08134e 0%, #10247a 75%, #1638e8 100%);
+      border-bottom: 3px solid var(--p3r-cyan);
+      padding: 14px 18px;
+      h3 {
+        color: #fff;
+        font-style: italic;
+        font-weight: 900;
+      }
+      p {
+        color: #a9e6ff;
+      }
+    }
+    .sk-ability-head-icon {
+      border-radius: 0;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+      &.is-active {
+        background: var(--p3r-red);
+        color: #fff;
+      }
+      &.is-passive {
+        background: var(--p3r-cyan);
+        color: var(--p3r-navy-deep);
+      }
+    }
+    .sk-ability-counter {
+      border-radius: 0;
+      background: #060e3c;
+      border: 1px solid #3c65d6;
+      padding: 4px 14px;
+      clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+      font-family: var(--sk-mono);
+      > span:first-child {
+        color: var(--p3r-cyan);
+        font-weight: 900;
+        &.is-full {
+          color: #fff;
+        }
+      }
+      > span:last-child {
+        color: #82a7df;
+      }
+    }
+
+    // Equipped Loadout Slots Bar
+    .sk-loadout-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding: 10px 16px;
+      background: #ebf4ff;
+      border-bottom: 1px solid #c7ddf4;
+    }
+    .sk-loadout-slot {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 30px;
+      padding: 4px 10px 4px 8px;
+      font-size: 10px;
+      clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+      max-width: 100%;
+      .sk-loadout-idx {
+        font: 900 italic 9px / 1 var(--sk-mono);
+        opacity: 0.85;
+      }
+      &.is-filled {
+        border: 0;
+        background: var(--p3r-navy);
+        color: #fff;
+        cursor: pointer;
+        box-shadow: 2px 2px 0 #9fc0ea;
+        transition:
+          background 140ms ease,
+          transform 140ms ease;
+        .sk-loadout-idx {
+          color: var(--p3r-cyan);
+        }
+        strong {
+          font-weight: 850;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 132px;
+        }
+        i {
+          font-size: 9px;
+          color: #ff859a;
+        }
+        &:hover {
+          background: var(--p3r-red);
+          transform: translateY(-1px);
+          .sk-loadout-idx,
+          i {
+            color: #fff;
+          }
+        }
+      }
+      &.is-empty {
+        border: 1px dashed #9bbce3;
+        background: #f8fbff;
+        color: #7c96bd;
+        small {
+          font: 800 8px / 1 var(--sk-mono);
+          letter-spacing: 0.12em;
+        }
+      }
+    }
+
+    .sk-ability-scroll {
+      background: #f5faff;
+    }
+    .sk-ability-card {
+      background: #fff;
+      border: 1px solid #c4daf2;
+      border-left: 3px solid #9dc3ec;
+      padding: 12px 13px;
+      transition:
+        transform 150ms ease,
+        border-color 150ms ease,
+        box-shadow 150ms ease,
+        background 150ms ease;
+      .sk-ability-card-icon {
+        border-radius: 0;
+        background: #e7f3ff;
+        color: var(--p3r-cobalt);
+        clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+      }
+      h4 {
+        color: var(--p3r-navy);
+        font-weight: 900;
+      }
+      .sk-ability-desc {
+        color: #2f518c;
+      }
+      .sk-rarity-badge {
+        border-radius: 0;
+        font-family: var(--sk-mono);
+        font-weight: 900;
+        background: #e6f2ff;
+        color: #1638e8;
+        border: 1px solid #b8d5f5;
+        clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+        padding: 1px 7px;
+      }
+      .sk-metric-chip {
+        border-radius: 0;
+        background: #eef6ff;
+        border: 1px solid #c3dcf5;
+        color: #163270;
+        font-weight: 800;
+        &.is-pos {
+          background: #e6f9ff;
+          border-color: #7adbf0;
+          color: #095c85;
+        }
+        &.is-neg {
+          background: #fff1f4;
+          border-color: #f7a6b6;
+          color: #b41d3c;
+        }
+        &.is-sens {
+          background: #f2f1ff;
+          border-color: #bfc2f8;
+          color: #36399c;
+        }
+      }
+      .sk-ability-formula {
+        color: #536a92;
+        .sk-formula-term {
+          color: #1638e8;
+          font-weight: 850;
+        }
+      }
+      &:hover:not(:disabled) {
+        background: #fff;
+        border-color: var(--p3r-cobalt);
+        border-left-color: var(--p3r-cobalt);
+        transform: translateY(-2px);
+        box-shadow: 4px 4px 0 #c3dbf6;
+      }
+      &.is-selected {
+        background: linear-gradient(135deg, #ffffff 0 65%, #e8f8ff 100%);
+        border-color: var(--p3r-cobalt);
+        border-left-color: var(--p3r-navy);
+        box-shadow:
+          inset 0 3px 0 var(--p3r-red),
+          4px 4px 0 #abc9f0;
+        .sk-ability-card-icon {
+          background: var(--p3r-navy);
+          color: var(--p3r-cyan);
+        }
+        .sk-equipped-mark {
+          top: 6px;
+          right: 6px;
+          i {
+            color: var(--p3r-red);
+          }
+        }
+      }
+    }
+
+    // Preset Manager (Clean Navy + Ice Command Deck)
+    .sk-preset-manager {
+      background: linear-gradient(135deg, #0b1b64 0%, #08134e 100%);
+      border: 0;
+      border-top: 3px solid var(--p3r-cyan);
+      box-shadow: 5px 5px 0 #bfd5ef;
+      color: #fff;
+      padding: 18px 20px;
+      .sk-preset-title {
+        color: #fff;
+        font-weight: 900;
+        i {
+          color: var(--p3r-cyan);
+        }
+      }
+      .sk-preset-desc {
+        color: #a9cdf8;
+      }
+      .sk-preset-divider {
+        border-top-color: #274195;
+      }
+      .sk-preset-input,
+      .sk-preset-select {
+        border-radius: 0;
+        background: #f5faff;
+        border: 1px solid #88b8ec;
+        color: var(--p3r-navy);
+        box-shadow: none;
+        &::placeholder {
+          color: #6a82ac;
+        }
+        &:focus {
+          border-color: var(--p3r-cyan);
+          box-shadow: 0 0 0 2px #24e2f855;
+        }
+      }
+      .sk-preset-btn {
+        border-radius: 0;
+        border: 0;
+        clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+        font-weight: 900;
+        box-shadow: 2px 2px 0 #04092c;
+        &.is-save {
+          background: #fff;
+          color: var(--p3r-navy);
+          &:hover {
+            background: var(--p3r-cyan);
+            color: var(--p3r-navy-deep);
+          }
+        }
+        &.is-rename {
+          background: #173bf0;
+          color: #fff;
+          &:hover {
+            background: #2b54ff;
+          }
+        }
+        &.is-overwrite {
+          background: #1289c4;
+          color: #fff;
+          &:hover {
+            background: #24c6e8;
+            color: var(--p3r-navy-deep);
+          }
+        }
+        &.is-delete {
+          background: var(--p3r-red);
+          color: #fff;
+          &:hover {
+            background: #ff4c6b;
+          }
+        }
+      }
+    }
+  }
+
+  // Admitted completion card
+  .archive-admitted {
+    border-radius: 0;
+    border: 1px solid #a8c7ea;
+    border-top: 4px solid var(--p3r-cyan);
+    box-shadow: 6px 6px 0 #bfd5ef;
+    .archive-admission-stamp {
+      border-color: var(--p3r-cobalt);
+      outline-color: var(--p3r-red);
+      color: var(--p3r-navy);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    .sk-character-dossier.sk-enrollment-form {
+      .sk-dossier-section-meta {
+        display: none;
+      }
+      .sk-dossier-note-index {
+        position: static;
+        display: inline-grid;
+        margin-bottom: 4px;
+      }
+      .sk-dossier-generator {
+        padding: 14px 12px;
+      }
+    }
+    .archive-archetypes {
+      .sk-archetype-search {
+        flex: 1 1 100%;
+      }
+      .sk-body-panel {
+        padding: 14px 12px 16px;
+      }
+    }
+    .archive-assessment {
+      .sk-assessment-console {
+        padding: 12px 12px;
+      }
+      .sk-assessment-points {
+        border-left: 0;
+        padding-left: 0;
+        .text-3xl {
+          font-size: 26px;
+        }
+      }
+      .sk-stat-card {
+        padding: 10px 10px 18px;
+      }
+      .sk-stat-btn {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    .archive-abilities {
+      .sk-loadout-bar {
+        padding: 8px 10px;
+        gap: 5px;
+      }
+      .sk-loadout-slot strong {
+        max-width: 96px;
+      }
+      .sk-preset-manager {
+        padding: 14px 12px;
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+    .archive-assessment .sk-stat-btn {
+      width: 34px;
+      height: 36px;
+    }
+  }
+}
+
+// High-specificity contrast guarantees over legacy admission-archive.scss Tailwind attribute overrides.
+.academy-opening.skylink-opening.sda-ui.sk-admission-page.is-reload-theme {
+  :is(.archive-assessment, .archive-archetypes, .archive-abilities) {
+    :is(
+      .sk-archetype-list-head,
+      .sk-archetype-detail.is-populated,
+      .sk-ability-header,
+      .sk-preset-manager,
+      .sk-assessment-console
+    ) {
+      [class*='text-white'],
+      [class*='text-gray-200'] {
+        color: #ffffff;
+      }
+      [class*='text-gray-400'],
+      [class*='text-gray-500'] {
+        color: #b4dcff;
+      }
+      [class*='text-secondary'] {
+        color: #5ef0ff;
+      }
+    }
+
+    .sk-archetype-card.is-selected[class*='ring-secondary'],
+    .sk-archetype-card.is-selected[class*='ring-secondary']:hover:not(:disabled) {
+      background: linear-gradient(135deg, #0b1a64 0%, #08134e 100%);
+      border-color: #24e2f8;
+      box-shadow:
+        inset 0 3px 0 #f43252,
+        4px 4px 0 #95b5eb;
+      [class*='text-white'],
+      [class*='text-gray-200'] {
+        color: #ffffff;
+      }
+      [class*='text-gray-400'],
+      [class*='text-gray-500'] {
+        color: #c7e5ff;
+      }
+      .sk-archetype-card-icon[class*='bg-secondary'] {
+        background: #24e2f8;
+        color: #050c36;
+      }
+    }
+    .sk-ability-card.is-selected[class*='ring-secondary']:hover:not(:disabled) {
+      background: linear-gradient(135deg, #ffffff 0 65%, #e8f8ff 100%);
+      border-color: #1638e8;
+    }
+
+    .sk-archetype-head-icon[class*='bg-secondary/20'],
+    .sk-archetype-detail-icon[class*='bg-secondary/20'] {
+
+      background: #1638e8;
+      color: #24e2f8;
+    }
+    .sk-ability-counter[class*='bg-white/5'] {
+      background: #060e3c;
+      border-color: #3c65d6;
+      [class*='text-white'] {
+        color: #24e2f8;
+      }
+      [class*='text-secondary'] {
+        color: #ffffff;
+      }
+      [class*='text-gray-500'] {
+        color: #8cb2ea;
+      }
+    }
+
+    .sk-choice-chip.is-selected[class*='bg-secondary'] {
+      background: #08134e;
+      border-color: #08134e;
+      color: #ffffff;
+    }
+
+    .sk-preset-btn.is-save {
+      background: #ffffff;
+      color: #08134e;
+      &:hover {
+        background: #24e2f8;
+        color: #050c36;
+      }
+    }
+    .sk-preset-btn.is-rename {
+      background: #173bf0;
+      color: #ffffff;
+    }
+    .sk-preset-btn.is-overwrite {
+      background: #1289c4;
+      color: #ffffff;
+    }
+    .sk-preset-btn.is-delete {
+      background: #f43252;
+      color: #ffffff;
+    }
+    .sk-preset-input[class*='text-white'],
+    .sk-preset-select[class*='text-white'] {
+      background: #f5faff;
+      color: #08134e;
+    }
+  }
+}

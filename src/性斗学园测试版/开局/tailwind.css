@@ -1,0 +1,7 @@
+/* Keep class detection and webpack dependencies within the opening UI. */
+@import 'tailwindcss' source(none);
+@source './**/*.{vue,ts,html}';
+@source '../shared/**/*.{vue,ts,html}';
+@source '../../正文前端V1.99/opening/**/*.{vue,ts,html}';
+@source '../../正文前端V1.99/vector/**/*.vue';
+@source not '../../正文前端V1.99/opening/generated';

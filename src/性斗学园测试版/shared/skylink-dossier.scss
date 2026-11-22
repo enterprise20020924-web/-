@@ -1,0 +1,760 @@
+.skylink-opening.sda-ui.sk-admission-page .sk-character-dossier.sk-enrollment-form {
+  --dossier-ink: #21495f;
+  --dossier-blue: #009fcb;
+  --dossier-line: #c2e1ee;
+  --dossier-cut: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% calc(100% - 26px), calc(100% - 26px) 100%, 0 100%);
+  container: admission-dossier / inline-size;
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+  color: var(--dossier-ink);
+  font-size: 16px;
+  line-height: 1.65;
+
+  label {
+    font-size: 14px;
+  }
+  .text-xs {
+    font-size: 14px;
+  }
+  .text-sm {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .sk-required-label {
+    padding: 2px 6px;
+    font-size: 11px;
+  }
+
+  .sk-dossier-toolbar {
+    display: flex;
+    gap: 18px;
+    margin: 0 0 -9px;
+    padding: 0;
+    > button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+    .sk-admission-return {
+      padding: 8px 15px 8px 12px;
+      background: #eaf6fb;
+      clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+      color: #2583a3;
+      &:hover {
+        background: #dff2fa;
+      }
+    }
+    .sk-dossier-mode {
+      padding: 8px 0 8px 8px;
+      background: transparent;
+      color: #4f798d;
+      > i {
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #e2f3fa;
+        color: #099dca;
+      }
+      &:hover,
+      &.is-active {
+        color: #0094be;
+      }
+    }
+  }
+  .sk-dossier-toolbar-rule {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+    height: 1px;
+    background: linear-gradient(90deg, #bcdce9, #e3f2f8);
+    > i {
+      width: 9px;
+      height: 4px;
+      transform: translateY(-2px) skewX(-30deg);
+      background: #a7daed;
+    }
+  }
+
+  .sk-dossier-basics,
+  .sk-dossier-folio,
+  .sk-dossier-arrival {
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+    padding: 20px 24px 24px;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      clip-path: var(--dossier-cut);
+    }
+    &::before {
+      z-index: -2;
+      inset: 0;
+      background: var(--dossier-line);
+    }
+    &::after {
+      z-index: -1;
+      inset: 1px;
+      background: linear-gradient(135deg, #f5fbfe, #fff 58%);
+    }
+  }
+  .sk-dossier-sheet-edge {
+    position: absolute;
+    z-index: -3;
+    inset: 7px -5px -5px 8px;
+    background: #e3f2f9;
+    clip-path: var(--dossier-cut);
+  }
+  .sk-dossier-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: #32617a;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      margin-left: 7px;
+      background: linear-gradient(90deg, #c2e1ee, transparent);
+    }
+    > span {
+      padding: 3px 9px 3px 7px;
+      color: #fff;
+      background: #0da7cd;
+      clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+      font: 500 19px / 1.4 var(--sk-display);
+      letter-spacing: 0;
+    }
+  }
+  .sk-dossier-cover {
+    display: grid;
+    grid-template-columns: 146px minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+    margin: 14px 0 21px;
+  }
+  .sk-dossier-portrait {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    background:
+      linear-gradient(#56b5d710 1px, transparent 1px) 0 0 / 18px 18px,
+      linear-gradient(90deg, #56b5d710 1px, transparent 1px) 0 0 / 18px 18px;
+    clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+    > img {
+      position: absolute;
+      width: 108%;
+      height: 116%;
+      bottom: 1px;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 4px 3px #1f698d15);
+    }
+    &.has-portrait {
+      aspect-ratio: 1 / 1.18;
+    }
+  }
+  .sk-dossier-portrait-orbit {
+    position: absolute;
+    width: 82%;
+    aspect-ratio: 1;
+    border: 1px solid #b9e2f0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 10px #e7f5fb90;
+    &::after {
+      content: '';
+      position: absolute;
+      right: 7%;
+      top: 12%;
+      width: 6px;
+      height: 6px;
+      background: #75c9e2;
+      transform: rotate(45deg);
+    }
+  }
+  .sk-dossier-emblem {
+    display: grid;
+    place-items: center;
+    width: 58%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    color: #08a1ca;
+    background: #ffffffd9;
+    box-shadow: 0 4px 16px #39a5c715;
+    font-size: 38px;
+  }
+  .sk-dossier-portrait-baseline {
+    position: absolute;
+    bottom: 0;
+    left: 12%;
+    right: 12%;
+    height: 3px;
+    background: linear-gradient(90deg, #13b4d6 0 27%, #afdfef 27% 76%, #e1f3fa 76%);
+  }
+  .sk-dossier-nameplate {
+    min-width: 0;
+    > label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 19px 0 2px;
+      font-size: 14px;
+      color: #6591a7;
+    }
+    .sk-dossier-name-input {
+      width: 100%;
+      min-height: 64px;
+      padding: 0 0 8px;
+      border: 0;
+      border-bottom: 2px solid #a2d9eb;
+      border-radius: 0;
+      background: transparent;
+      color: #194459;
+      box-shadow: none;
+      font-size: clamp(30px, 3.4vw, 38px);
+      font-weight: 850;
+      line-height: 1.4;
+      letter-spacing: 0.025em;
+      &::placeholder {
+        color: #94b4c5;
+        font-weight: 650;
+      }
+      &:focus {
+        border-color: var(--dossier-blue);
+        outline: 0;
+        box-shadow: 0 3px 0 #00a5d211;
+      }
+    }
+  }
+  .sk-dossier-identity-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 20px 6px 12px;
+    color: #1786ab;
+    background: #e6f5fc;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.45;
+    > i {
+      font-size: 14px;
+    }
+  }
+  .sk-dossier-name-stripes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+    margin-top: 11px;
+    > i {
+      width: 12px;
+      height: 3px;
+      transform: skewX(-35deg);
+      background: #b3e0ed;
+      &:first-child {
+        background: #1caad1;
+      }
+    }
+  }
+  .sk-dossier-basic-grid {
+    display: grid;
+    grid-template-columns: minmax(88px, 0.55fr) minmax(186px, 1fr) minmax(200px, 1.15fr);
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #d8eaf2;
+  }
+  .sk-dossier-field {
+    min-width: 0;
+    > label,
+    .sk-dossier-field-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 7px;
+      color: #6a91a6;
+      font-size: 14px;
+      > i {
+        color: #48a4c3;
+        font-size: 13px;
+      }
+    }
+    input,
+    select {
+      width: 100%;
+      min-height: 48px;
+      padding: 8px 0;
+      border: 0;
+      border-bottom: 1px solid #bddcea;
+      border-radius: 0;
+      background-color: transparent;
+      box-shadow: none;
+      font-size: 16px;
+      font-weight: 600;
+      &:focus {
+        border-bottom-color: var(--dossier-blue);
+        box-shadow: 0 2px 0 #009fcb15;
+        background-color: #f0faff;
+      }
+    }
+    select {
+      appearance: none;
+      padding-right: 24px;
+      cursor: pointer;
+      &:disabled {
+        color: #9a7618;
+        cursor: not-allowed;
+      }
+    }
+  }
+  .sk-dossier-age-value {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    border-bottom: 1px solid #bddcea;
+    > input {
+      min-width: 0;
+      padding-block: 0;
+      border: 0;
+      color: #149ec6;
+      font: 500 34px / 1.45 var(--sk-display);
+    }
+    > span {
+      flex: none;
+      color: #85a4b4;
+      font-size: 14px;
+    }
+  }
+  .sk-dossier-gender {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0;
+    min-height: 48px;
+    border: 0;
+    border-bottom: 1px solid #bddcea;
+    border-radius: 0;
+    background: transparent;
+    > button {
+      flex: 1;
+      min-width: 0;
+      min-height: 44px;
+      padding: 8px 4px;
+      border: 0;
+      border-radius: 0;
+      clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+      color: #668b9f;
+      font-size: 16px;
+      white-space: nowrap;
+      &[aria-pressed='true'] {
+        color: #0089b3;
+        background: #dff3fc;
+        box-shadow: none;
+        font-weight: 800;
+      }
+      &:hover:not(:disabled) {
+        background: #ecf8fd;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.4;
+      }
+    }
+  }
+  .sk-dossier-locked-note {
+    margin-top: 7px;
+    color: #9b771e;
+    font-size: 13px;
+  }
+
+  .sk-dossier-folio {
+    margin-top: 2px;
+    padding-left: 38px;
+    --dossier-cut: polygon(13px 0, calc(100% - 25px) 0, 100% 25px, 100% 100%, 0 100%, 0 13px);
+    &::after {
+      background:
+        linear-gradient(90deg, #e6f2f8 0 6px, #fff 6px 18px, #d9eaf3 18px 19px, transparent 19px),
+        linear-gradient(150deg, #fff 55%, #f4fbfe);
+    }
+    > .sk-dossier-section-heading {
+      margin-bottom: 12px;
+    }
+  }
+  .sk-dossier-note {
+    position: relative;
+    min-width: 0;
+    padding-top: 23px;
+    > label {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 11px;
+      color: #336781;
+      font-size: 16px;
+      font-weight: 750;
+      > i {
+        color: #30a3c5;
+      }
+    }
+    > textarea {
+      display: block;
+      width: 100%;
+      padding: 4px 0 5px;
+      min-height: 116px;
+      border: 0;
+      border-bottom: 1px solid #c8e0eb;
+      border-radius: 0;
+      background: repeating-linear-gradient(transparent 0 35px, #dcebf3 35px 36px);
+      background-origin: content-box;
+      background-clip: content-box;
+      box-shadow: none;
+      font-size: 16px;
+      line-height: 36px;
+      resize: vertical;
+      &::placeholder {
+        color: #7495aa;
+      }
+      &:focus {
+        background: repeating-linear-gradient(#eefaff70 0 35px, #afd7e8 35px 36px);
+        background-origin: content-box;
+        border-bottom-color: #2faace;
+        outline: 0;
+        box-shadow: 0 3px 0 #1ab3d319;
+      }
+    }
+  }
+  .sk-dossier-note-index {
+    position: absolute;
+    top: 25px;
+    left: -29px;
+    display: grid;
+    place-items: center;
+    width: 21px;
+    height: 27px;
+    color: #5bacc8;
+    background: #eff8fc;
+    font: 14px var(--sk-display);
+  }
+  .sk-dossier-note-hint {
+    margin: 0 0 10px;
+    color: #68869a;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .sk-dossier-profile-warning {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    border-left: 3px solid #d8a038;
+    color: #88601f;
+    background: #fff6df;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .sk-dossier-help {
+    margin-top: 11px;
+    color: #7798aa;
+    font-size: 14px;
+    line-height: 1.9;
+    > summary {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      width: fit-content;
+      min-height: 38px;
+      color: #5d94ac;
+      cursor: pointer;
+      list-style: none;
+      &::-webkit-details-marker {
+        display: none;
+      }
+      &::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-right: 1px solid currentColor;
+        border-bottom: 1px solid currentColor;
+        transform: rotate(-45deg);
+      }
+    }
+    &[open] > summary::before {
+      transform: rotate(45deg);
+    }
+    > p {
+      margin: 5px 0 0;
+      padding-left: 12px;
+    }
+  }
+  .sk-dossier-generator {
+    position: relative;
+    isolation: isolate;
+    padding: 18px 20px;
+    margin: -8px 0 0;
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: linear-gradient(120deg, #e9f7fc, #f4fbfe);
+      clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+    }
+    > div:first-child > div:first-child > div {
+      font-size: 16px;
+    }
+    button {
+      min-height: 46px;
+      font-size: 14px;
+    }
+  }
+  .sk-dossier-arrival {
+    --dossier-cut: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+    .sk-dossier-note {
+      padding-top: 18px;
+    }
+  }
+  .sk-dossier-timeline {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(140px, 0.8fr);
+    align-items: center;
+    gap: 12px;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px dashed #c4e0ec;
+    > label {
+      color: #46819d;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    > select {
+      width: 100%;
+      border: 0;
+      border-bottom: 1px solid #b8d8e7;
+      border-radius: 0;
+      background-color: transparent;
+      cursor: pointer;
+      font-size: 16px;
+      color-scheme: light;
+      > option {
+        color: #214e65;
+        background-color: #fff;
+        font: inherit;
+      }
+    }
+    > p {
+      grid-column: 1 / -1;
+    }
+    .sk-timeline-summary {
+      grid-column: 1 / -1;
+      color: #214e65;
+      > span {
+        color: #087eaa;
+        background: #ffffffa6;
+      }
+      p:first-child {
+        color: #214e65;
+        font-size: 15px;
+      }
+      p:last-child {
+        color: #426b80;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+    }
+  }
+  .sk-dossier-caption {
+    margin: 9px 0 0;
+    color: #7093a8;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+  &.is-life-sim {
+    > .mt-4 {
+      margin-top: 0;
+    }
+  }
+}
+
+.skylink-opening.sda-ui.sk-admission-page.is-character-dossier {
+  .sk-admission-copy > p {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .sk-step-label {
+    font-size: 14px;
+  }
+  .sk-step-number {
+    font-size: 24px;
+  }
+  .opening-step-heading {
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+    h2 {
+      font-size: 32px;
+    }
+    p {
+      font-size: 15px;
+      line-height: 1.8;
+    }
+  }
+  .opening-step-index {
+    font-size: 60px;
+  }
+  .opening-live-summary {
+    gap: 16px;
+  }
+  .opening-summary-heading > strong {
+    font-size: 19px;
+    > small {
+      font-size: 12px;
+    }
+  }
+  .sk-record-identity > div > strong {
+    font-size: 22px;
+    line-height: 1.5;
+  }
+  .opening-summary-list {
+    dt {
+      font-size: 14px;
+    }
+    dd {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+  }
+  .opening-summary-metrics {
+    > span {
+      font-size: 14px;
+    }
+    strong {
+      font-size: 32px;
+    }
+  }
+  .sk-admission-checks {
+    > header h3 {
+      font-size: 17px;
+    }
+    li {
+      min-height: 48px;
+      font-size: 14px;
+      > small {
+        font-size: 13px;
+      }
+    }
+  }
+  .opening-footer :is(.opening-prev, .opening-next, .opening-start) {
+    min-height: 46px;
+    font-size: 14px;
+  }
+  .sk-footer-progress small {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 760px) {
+  .skylink-opening.sda-ui.sk-admission-page.is-character-dossier {
+    .sk-step-label {
+      font-size: 12px;
+    }
+    .sk-step-number {
+      font-size: 20px;
+    }
+    .opening-step-heading {
+      h2 {
+        font-size: 28px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+@container admission-dossier (max-width: 550px) {
+  .skylink-opening.sda-ui.sk-admission-page .sk-character-dossier.sk-enrollment-form {
+    .sk-dossier-cover {
+      grid-template-columns: 103px minmax(0, 1fr);
+      gap: 16px;
+    }
+    .sk-dossier-emblem {
+      font-size: 29px;
+    }
+    .sk-dossier-nameplate .sk-dossier-name-input {
+      font-size: 32px;
+    }
+    .sk-dossier-basic-grid {
+      grid-template-columns: minmax(72px, 0.6fr) minmax(174px, 1.4fr);
+      gap: 15px;
+    }
+    .sk-dossier-difficulty {
+      grid-column: 1 / -1;
+    }
+    .sk-dossier-generator > div:first-child {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+}
+
+@container admission-dossier (max-width: 340px) {
+  .skylink-opening.sda-ui.sk-admission-page .sk-character-dossier.sk-enrollment-form {
+    .sk-dossier-toolbar {
+      gap: 9px;
+      > button {
+        font-size: 13px;
+      }
+    }
+    .sk-dossier-basics,
+    .sk-dossier-arrival {
+      padding: 17px 15px 22px;
+    }
+    .sk-dossier-folio {
+      padding: 17px 15px 22px 29px;
+      &::after {
+        background: linear-gradient(90deg, #e6f2f8 0 4px, #fff 4px 12px, #d9eaf3 12px 13px, #fff 13px);
+      }
+    }
+    .sk-dossier-note-index {
+      left: -24px;
+    }
+    .sk-dossier-cover {
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 12px;
+      margin-bottom: 17px;
+    }
+    .sk-dossier-nameplate {
+      > label {
+        margin-top: 12px;
+      }
+      .sk-dossier-name-input {
+        font-size: 28px;
+        min-height: 54px;
+      }
+    }
+    .sk-dossier-identity-tag {
+      font-size: 16px;
+      padding-inline: 9px 15px;
+      > i {
+        font-size: 12px;
+      }
+    }
+    .sk-dossier-generator {
+      padding: 16px 14px;
+    }
+  }
+}

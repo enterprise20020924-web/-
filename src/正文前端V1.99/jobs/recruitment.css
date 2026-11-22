@@ -1,0 +1,627 @@
+.amami-jobs {
+  --jobs-ink: #173f64;
+  --jobs-muted: #6d8ca3;
+  --jobs-blue: #078dca;
+  position: absolute;
+  inset: 0;
+  container: amami-jobs / size;
+  overflow: hidden;
+  background: #d6e9f6;
+  color: var(--jobs-ink);
+  color-scheme: light;
+  font:
+    15px/1.5 'MiSans',
+    'Noto Sans SC',
+    'Microsoft YaHei',
+    sans-serif;
+  animation: amami-jobs-enter 220ms ease-out;
+}
+.amami-jobs *,
+.amami-jobs *::before,
+.amami-jobs *::after {
+  box-sizing: border-box;
+}
+.amami-jobs button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.amami-jobs button:focus-visible {
+  outline: 3px solid #08a9dd;
+  outline-offset: 3px;
+}
+.amami-jobs .amami-map-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.amami-jobs-background {
+  position: absolute;
+  top: 64px;
+  width: 100%;
+  height: calc(100% - 64px);
+  object-fit: cover;
+  object-position: center top;
+  user-select: none;
+}
+.amami-jobs-header {
+  height: 64px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 24px 0 16px;
+  background: #faffff;
+  border-bottom: 2px solid #52c8ef;
+}
+.amami-jobs-back {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 4px;
+  background: #133f70;
+  color: white !important;
+}
+.amami-jobs-header-mark {
+  display: grid;
+  place-items: center;
+  color: #00a6d6;
+}
+.amami-jobs-header-mark .amami-map-icon {
+  width: 28px;
+  height: 28px;
+}
+.amami-jobs-header > div {
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+}
+.amami-jobs-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+.amami-jobs-header > div > span,
+.amami-jobs-header-note {
+  color: var(--jobs-muted);
+  font-size: 12px;
+}
+.amami-jobs-header-note {
+  margin-left: auto;
+}
+.amami-jobs-layout {
+  position: relative;
+  height: calc(100% - 64px);
+  display: grid;
+  grid-template-columns: minmax(0, 54%) minmax(0, 34%);
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  padding: 24px;
+}
+.amami-jobs-board {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-height: 0;
+  overflow: hidden;
+  background: #f4fafff5;
+  border: 1px solid #fff;
+  border-top: 4px solid #11b6e3;
+  border-radius: 4px 18px 4px 4px;
+  box-shadow: 0 8px 30px #12375e2b;
+}
+.amami-jobs-board-heading {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px 15px;
+  background: linear-gradient(120deg, #e6f6ff 70%, #fafdff 70% 76%, #d9f1fd 76% 78%, #fafdff 78%);
+  border-bottom: 1px solid #d7e7f1;
+}
+.amami-jobs-eyebrow {
+  color: #6388a1;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.amami-jobs-board-heading h2 {
+  margin: 3px 0 0;
+  font-size: clamp(21px, 2.2cqw, 29px);
+  line-height: 1.3;
+  font-weight: 900;
+}
+.amami-jobs-count {
+  font-size: 11px;
+  color: #6390ad;
+  text-align: right;
+}
+.amami-jobs-count b {
+  display: block;
+  font:
+    800 32px/1 'Bahnschrift',
+    sans-serif;
+  color: #008fc6;
+}
+.amami-jobs-filters {
+  display: flex;
+  gap: 8px;
+  padding: 13px 18px;
+  flex-shrink: 0;
+}
+.amami-jobs-filters button {
+  border: 1px solid #ccdfeb;
+  background: #fff;
+  padding: 7px 14px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.amami-jobs-filters button[aria-pressed='true'] {
+  background: #164a76;
+  border-color: #164a76;
+  color: #fff;
+  box-shadow: 0 2px 0 #08375e;
+}
+.amami-jobs-postings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 12px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 5px 18px 18px;
+  scrollbar-width: thin;
+  scrollbar-color: #a6d7e9 transparent;
+}
+.amami-job-posting {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 12px 14px 0;
+  text-align: left;
+  border: 1px solid #c9dce8;
+  border-radius: 3px 12px 3px 3px;
+  background: #fff;
+  box-shadow: 0 3px 0 #c8deea73;
+  transition:
+    border-color 150ms,
+    box-shadow 150ms,
+    transform 150ms;
+}
+.amami-job-posting:hover {
+  border-color: #21b9e6;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px #2786b21a;
+}
+.amami-job-posting.is-selected {
+  border-color: #04aadd;
+  background: #edfaff;
+  box-shadow:
+    0 0 0 1px #04aadd,
+    0 4px 0 #aae2f1;
+}
+.amami-job-posting-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #7798ae;
+  font-size: 10px;
+}
+.amami-job-number {
+  font:
+    800 14px/1 'Bahnschrift',
+    sans-serif;
+  color: #2499c5;
+}
+.amami-job-posting-top i {
+  width: 6px;
+  height: 6px;
+  margin-left: auto;
+  background: #52c4e4;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px #edf8fc;
+}
+.amami-job-posting-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 0;
+  min-width: 0;
+}
+.amami-job-glyph {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: #1198c8;
+  background: #e9f6fc;
+  border-radius: 5px 13px 5px 5px;
+}
+.amami-job-glyph svg {
+  width: 30px;
+  height: 30px;
+}
+.amami-job-posting-main > span:last-child {
+  min-width: 0;
+}
+.amami-job-posting-main strong {
+  display: block;
+  font-size: clamp(15px, 1.5cqw, 20px);
+  line-height: 1.4;
+  font-weight: 850;
+}
+.amami-job-posting-main small {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--jobs-muted);
+}
+.amami-job-posting-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding: 8px 0;
+  border-top: 1px dashed #d5e5ee;
+  font-size: 11px;
+  color: #6b91aa;
+}
+.amami-job-posting-footer .amami-map-icon {
+  width: 16px;
+  height: 16px;
+  color: #139ccf;
+}
+.amami-jobs-board-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 10px 18px;
+  background: #eaf5fc;
+  color: #6e95ae;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.amami-jobs-board-footer .amami-map-icon {
+  width: 15px;
+  height: 15px;
+}
+.amami-jobs-service {
+  min-height: 0;
+  max-height: max(190px, calc(100% - 25cqw));
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(0 6px 12px #183e572b);
+}
+.amami-jobs-attendant {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  background: #143f6df5;
+  color: white;
+  border-radius: 3px 12px 0 0;
+  flex-shrink: 0;
+}
+.amami-jobs-attendant > span {
+  font-size: 10px;
+  color: #91d9f5;
+}
+.amami-jobs-attendant strong {
+  font-size: 16px;
+  letter-spacing: 0.1em;
+}
+.amami-jobs-attendant i {
+  height: 3px;
+  width: 30px;
+  margin-left: auto;
+  background: #3bd1ef;
+  transform: skewX(-30deg);
+}
+.amami-jobs-welcome {
+  padding: 16px 22px 22px;
+  background: #fbfefff5;
+  border: 1px solid #fff;
+  border-top: 0;
+}
+.amami-jobs-quote {
+  display: block;
+  height: 24px;
+  color: #52c4e4;
+  font:
+    700 46px/1 Georgia,
+    serif;
+}
+.amami-jobs-welcome p {
+  margin: 4px 0 12px;
+  font-size: 18px;
+  line-height: 1.8;
+  font-weight: 700;
+}
+.amami-jobs-welcome small {
+  color: var(--jobs-muted);
+  font-size: 11px;
+}
+.amami-job-detail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: #f9fdfff5;
+  padding: 17px 18px;
+  border: 1px solid #fff;
+  border-top: 0;
+}
+.amami-job-detail-back {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  padding: 0 0 12px;
+  border: 0;
+  background: transparent;
+  color: #5183a3 !important;
+  font-size: 12px !important;
+}
+.amami-job-detail-back .amami-map-icon {
+  width: 15px;
+  height: 15px;
+}
+.amami-job-detail-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+.amami-job-detail-heading small {
+  font-size: 11px;
+  color: var(--jobs-muted);
+}
+.amami-job-detail-heading h2 {
+  margin: 2px 0 0;
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 900;
+}
+.amami-job-detail-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #a6d7e9 transparent;
+}
+.amami-job-summary {
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #65869d;
+}
+.amami-job-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 7px 9px;
+  background: #e9f5fb;
+}
+.amami-job-location .amami-map-icon {
+  width: 15px;
+  height: 15px;
+  color: #029dce;
+}
+.amami-job-detail h3 {
+  margin: 14px 0 8px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.amami-job-detail ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.amami-job-detail li {
+  position: relative;
+  padding-left: 12px;
+  margin: 0 0 7px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.amami-job-detail li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  background: #17aed7;
+  transform: rotate(45deg);
+}
+.amami-job-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  flex-shrink: 0;
+}
+.amami-job-actions button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.amami-job-consult {
+  border: 1px solid #0c86b2;
+  background: #05a4d6;
+  color: white !important;
+  box-shadow: 0 3px 0 #0b799f;
+}
+.amami-job-consult:hover {
+  background: #0791c4;
+}
+.amami-job-locate {
+  border: 1px solid #c5dae7;
+  background: #eef7fc;
+}
+.amami-job-locate:hover {
+  background: #dceffa;
+}
+.amami-job-error {
+  color: #b74350;
+  font-size: 12px;
+  margin: 12px 0 0;
+}
+@container amami-jobs (width < 1050px) {
+  .amami-jobs-layout {
+    grid-template-columns: minmax(0, 56%) minmax(0, 38%);
+    gap: 18px;
+    padding: 18px;
+  }
+  .amami-jobs-board-heading {
+    padding: 16px;
+  }
+  .amami-jobs-postings {
+    gap: 10px;
+    padding: 5px 12px 14px;
+  }
+  .amami-job-posting {
+    padding: 10px 10px 0;
+  }
+  .amami-job-posting-main {
+    gap: 7px;
+  }
+  .amami-job-glyph {
+    width: 35px;
+    height: 35px;
+  }
+  .amami-job-glyph svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+@container amami-jobs (height < 650px) and (width >= 760px) {
+  .amami-jobs-layout {
+    padding: 14px 18px;
+  }
+  .amami-jobs-board-heading {
+    padding-block: 10px;
+  }
+  .amami-jobs-filters {
+    padding-block: 10px;
+  }
+  .amami-job-posting-main {
+    padding-block: 10px;
+  }
+  .amami-job-detail {
+    padding: 12px 14px;
+  }
+}
+@container amami-jobs (width < 760px) {
+  .amami-jobs-header {
+    padding: 0 12px;
+    gap: 10px;
+    height: 56px;
+  }
+  .amami-jobs-header h1 {
+    font-size: 21px;
+  }
+  .amami-jobs-header > div {
+    gap: 8px;
+  }
+  .amami-jobs-header > div > span {
+    font-size: 10px;
+  }
+  .amami-jobs-header-note,
+  .amami-jobs-header-mark {
+    display: none;
+  }
+  .amami-jobs-background {
+    top: 56px;
+    height: clamp(136px, 44cqw, 210px);
+    object-position: center top;
+  }
+  .amami-jobs-layout {
+    height: calc(100% - 56px);
+    display: block;
+    padding: clamp(124px, 40cqw, 196px) 10px 16px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .amami-jobs-board {
+    overflow: visible;
+  }
+  .has-selection .amami-jobs-layout {
+    padding-top: 12px;
+  }
+  .amami-jobs-filters button,
+  .amami-job-detail-back {
+    min-height: 44px;
+  }
+  .amami-jobs-board-heading h2 {
+    font-size: 23px;
+  }
+  .amami-jobs-postings {
+    overflow: visible;
+  }
+  .amami-job-posting-main strong {
+    font-size: 16px;
+  }
+  .amami-jobs-service {
+    display: none;
+    max-height: none;
+  }
+  .has-selection .amami-jobs-board {
+    display: none;
+  }
+  .has-selection .amami-jobs-service {
+    display: flex;
+  }
+  .amami-job-detail-back {
+    display: flex;
+  }
+  .amami-job-detail {
+    padding: 16px;
+  }
+  .amami-job-detail-scroll {
+    overflow: visible;
+  }
+  .amami-job-detail li,
+  .amami-job-summary {
+    font-size: 14px;
+  }
+}
+@container amami-jobs (width < 460px) {
+  .amami-jobs-postings {
+    grid-template-columns: 1fr;
+  }
+  .amami-jobs-filters {
+    gap: 5px;
+    padding-inline: 12px;
+  }
+  .amami-jobs-filters button {
+    padding-inline: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .amami-jobs {
+    animation: none;
+  }
+  .amami-job-posting {
+    transition: none;
+  }
+}
+@keyframes amami-jobs-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

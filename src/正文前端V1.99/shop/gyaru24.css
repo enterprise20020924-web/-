@@ -1,0 +1,966 @@
+.gyaru24-store {
+  --store-ink: #294761;
+  --store-muted: #7b92a4;
+  position: absolute;
+  inset: 0;
+  container: gyaru24 / size;
+  overflow: hidden;
+  background: #d9ecf8;
+  color: var(--store-ink);
+  font:
+    15px/1.5 'MiSans',
+    'Noto Sans SC',
+    'Microsoft YaHei',
+    sans-serif;
+  color-scheme: light;
+  animation: gyaru24-enter 220ms ease-out;
+}
+.gyaru24-store *,
+.gyaru24-store *::before,
+.gyaru24-store *::after {
+  box-sizing: border-box;
+}
+.gyaru24-store button,
+.gyaru24-store input,
+.gyaru24-store select {
+  font: inherit;
+  color: inherit;
+}
+.gyaru24-store button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background 160ms,
+    box-shadow 160ms,
+    transform 160ms;
+}
+.gyaru24-store button:active {
+  transform: translateY(1px);
+}
+.gyaru24-store button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.gyaru24-store :focus-visible {
+  outline: 2px solid #078ec1;
+  outline-offset: 3px;
+}
+.gyaru24-background {
+  position: absolute;
+  top: 66px;
+  width: 100%;
+  height: calc(100% - 66px);
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
+}
+.gyaru24-header {
+  position: relative;
+  z-index: 2;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px 0 16px;
+  background: #f9fdfff5;
+  box-shadow: 0 2px 0 #7896b53d;
+}
+.gyaru24-header::after {
+  content: '';
+  position: absolute;
+  left: 80px;
+  bottom: 0;
+  width: 122px;
+  height: 3px;
+  background: #f2df62;
+}
+.gyaru24-back {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: #455f85;
+  border: 0;
+  border-radius: 50%;
+  color: white !important;
+  box-shadow: 0 3px 0 #2d4564;
+}
+.gyaru24-back .amami-map-icon {
+  width: 27px;
+  height: 27px;
+}
+.gyaru24-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.gyaru24-brand > strong {
+  font-size: 25px;
+  font-weight: 900;
+  transform: skew(-7deg);
+  letter-spacing: 0.03em;
+}
+.gyaru24-brand strong span {
+  display: inline-block;
+  margin-left: 4px;
+  color: #079fce;
+  font:
+    900 34px/0.9 'Bahnschrift',
+    'Segoe UI',
+    sans-serif;
+}
+.gyaru24-brand > small {
+  color: #7e9cb1;
+  font:
+    750 10px/1 'Segoe UI',
+    sans-serif;
+  letter-spacing: 0.2em;
+}
+.gyaru24-open {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 2px;
+  padding: 5px 9px;
+  border-radius: 3px;
+  background: #eaf6fc;
+  color: #7697ac;
+  font:
+    700 9px/1.3 'Segoe UI',
+    sans-serif;
+}
+.gyaru24-open b {
+  font:
+    900 14px/1 'Bahnschrift',
+    sans-serif;
+  color: #0998c3;
+}
+.gyaru24-wallet {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  padding: 6px 16px;
+  background: #eaf2f8;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 2px #375d8020;
+}
+.gyaru24-wallet small {
+  color: var(--store-muted);
+  font-size: 12px;
+}
+.gyaru24-wallet strong {
+  font:
+    800 22px/1.2 'Bahnschrift',
+    'Segoe UI',
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.gyaru24-coin {
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 2px solid #dab13f;
+  border-radius: 50%;
+  color: #9b7c20;
+  background: #ffe98c;
+  box-shadow: inset 0 0 0 2px #fff4c2;
+  font:
+    900 14px/1 'Segoe UI',
+    sans-serif;
+}
+.gyaru24-layout {
+  position: relative;
+  height: calc(100% - 66px);
+  display: grid;
+  grid-template-columns: 51% 1fr;
+  align-items: end;
+  gap: 24px;
+  padding: 20px 26px;
+}
+.gyaru24-panel {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  filter: drop-shadow(0 5px 9px #2f51752b);
+}
+.gyaru24-panel-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.gyaru24-catalog {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+.gyaru24-panel-heading {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+  align-items: center;
+  height: 76px;
+  margin: 0 2px;
+  padding: 12px 24px;
+  border-bottom: 1px solid #cee2ee;
+  background: linear-gradient(
+    125deg,
+    transparent 73%,
+    #e5f2fc 73% 79%,
+    transparent 79% 82%,
+    #e5f2fc 82% 84%,
+    transparent 84%
+  );
+}
+.gyaru24-panel-heading > .amami-map-icon {
+  width: 31px;
+  height: 31px;
+  color: #12acd5;
+}
+.gyaru24-panel-heading small {
+  display: block;
+  color: #7997ac;
+  font:
+    700 9px/1.4 'Segoe UI',
+    sans-serif;
+  letter-spacing: 0.15em;
+}
+.gyaru24-panel-heading h2 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  transform: skew(-5deg);
+  font-weight: 900;
+}
+.gyaru24-panel-heading > span {
+  margin-left: auto;
+  color: #6e98b0;
+  font:
+    italic 750 25px/1 'Bahnschrift',
+    sans-serif;
+  white-space: nowrap;
+}
+.gyaru24-panel-heading > span small {
+  display: inline;
+  font:
+    500 11px/1.4 'MiSans',
+    sans-serif;
+  letter-spacing: 0;
+}
+.gyaru24-catalog-tools {
+  position: relative;
+  padding: 16px 20px 12px;
+}
+.gyaru24-categories {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.gyaru24-categories button {
+  flex: 1 0 auto;
+  padding: 9px 10px;
+  font-weight: 750;
+  font-size: 13px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #6c879d;
+}
+.gyaru24-categories button.active {
+  background: #365775;
+  color: #ffeb80;
+  box-shadow: 0 2px 0 #c0dce9;
+  transform: skew(-5deg);
+}
+.gyaru24-search {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  height: 39px;
+  padding: 0 11px;
+  margin-top: 12px;
+  background: #edf5fa;
+  border: 1px solid #d6e5ef;
+  border-radius: 4px;
+  color: #84a4ba;
+}
+.gyaru24-search .amami-map-icon {
+  width: 16px;
+  height: 16px;
+}
+.gyaru24-search input {
+  width: 100%;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: 12px;
+}
+.gyaru24-search input::placeholder {
+  color: #8fa7b8;
+}
+.gyaru24-search select {
+  max-width: 110px;
+  padding: 3px;
+  border: 0;
+  border-left: 1px solid #c9dce9;
+  background: transparent;
+  font-size: 11px;
+}
+.gyaru24-product-scroll {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  padding: 4px 20px 14px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #bddaea transparent;
+}
+.gyaru24-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px 11px;
+}
+.gyaru24-product {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #c6dae8;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 3px 0 #afc7d980;
+  text-align: left;
+}
+.gyaru24-product:hover {
+  box-shadow:
+    0 3px 0 #7abedc,
+    0 0 0 1px #83cce5;
+}
+.gyaru24-product.selected {
+  border-color: #24b4e0;
+  box-shadow:
+    0 0 0 2px #3fc4e9,
+    0 4px 0 #a4d7e9;
+}
+.gyaru24-product-picture {
+  position: relative;
+  height: 93px;
+  margin: 5px 5px 0;
+  border-radius: 4px;
+  background: linear-gradient(127deg, #f3f8fc 0 35%, #e5f1f8 35% 62%, #f6fbff 62%);
+  overflow: hidden;
+}
+.gyaru24-product-picture::after {
+  content: '';
+  position: absolute;
+  width: 57px;
+  height: 57px;
+  left: calc(50% - 28px);
+  top: 12px;
+  background: #ffffff8c;
+  border: 1px solid #fff;
+  transform: rotate(13deg);
+  border-radius: 4px;
+}
+.gyaru24-product-glyph {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 6px auto;
+}
+.gyaru24-grade {
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  left: 5px;
+  color: #87a9c0;
+  font:
+    italic 750 10px/1 'Bahnschrift',
+    'Segoe UI',
+    sans-serif;
+}
+.gyaru24-owned {
+  position: absolute;
+  z-index: 2;
+  bottom: 5px;
+  right: 5px;
+  color: #5d7c93;
+  font-size: 9px;
+}
+.gyaru24-selected-mark {
+  position: absolute;
+  z-index: 2;
+  right: 4px;
+  top: 4px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  background: #25b6dd;
+  color: #fff;
+  border-radius: 50%;
+}
+.gyaru24-selected-mark .amami-map-icon {
+  width: 13px;
+  height: 13px;
+}
+.gyaru24-product-name {
+  display: block;
+  padding: 7px 10px 0;
+  font-size: 14px;
+  font-weight: 800;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.gyaru24-product-effect {
+  display: block;
+  padding: 2px 10px 8px;
+  font-size: 10px;
+  color: #859aaa;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.gyaru24-product-price {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 9px;
+  margin-top: auto;
+  background: linear-gradient(120deg, #9fdef5 0 74%, #85d4f0 74%);
+  border-top: 1px solid #86cbe6;
+}
+.gyaru24-product-price > .gyaru24-coin {
+  width: 17px;
+  height: 17px;
+  border-width: 1px;
+  box-shadow: inset 0 0 0 1px #fff5c8;
+  font-size: 10px;
+}
+.gyaru24-product-price strong {
+  font:
+    800 16px/1.2 'Bahnschrift',
+    'Segoe UI',
+    sans-serif;
+}
+.gyaru24-product-price del {
+  margin-left: 1px;
+  color: #6a96ad;
+  font-size: 9px;
+}
+.gyaru24-product-price > .amami-map-icon {
+  width: 13px;
+  height: 13px;
+  margin-left: auto;
+}
+.gyaru24-catalog-footer {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px;
+  padding: 10px 9px 12px;
+  border-top: 1px solid #d9e9f2;
+  color: #83a0b4;
+}
+.gyaru24-catalog-footer > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+}
+.gyaru24-catalog-footer i {
+  width: 5px;
+  height: 5px;
+  background: #4cc7e9;
+  border-radius: 50%;
+}
+.gyaru24-catalog-footer small {
+  font:
+    600 8px/1.2 'Segoe UI',
+    sans-serif;
+  letter-spacing: 0.1em;
+}
+.gyaru24-no-products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  gap: 12px;
+  color: #6e8ca3;
+}
+.gyaru24-no-products > .amami-map-icon {
+  width: 38px;
+  height: 38px;
+  color: #9fc9de;
+}
+.gyaru24-no-products > span {
+  color: #90a7b7;
+  font-size: 12px;
+}
+.gyaru24-checkout {
+  display: flex;
+  flex-direction: column;
+  min-height: 228px;
+  padding: 0 22px 18px;
+}
+.gyaru24-checkout-heading {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  border-bottom: 1px solid #d6e7f0;
+}
+.gyaru24-checkout-heading > .amami-map-icon {
+  color: #0aa7d4;
+  width: 23px;
+  height: 23px;
+}
+.gyaru24-checkout-heading h2 {
+  font-size: 18px;
+  font-weight: 850;
+  margin: 0;
+  transform: skew(-5deg);
+}
+.gyaru24-checkout-heading small {
+  margin-left: auto;
+  color: #8ba8bc;
+  font:
+    650 9px/1 'Segoe UI',
+    sans-serif;
+  letter-spacing: 0.13em;
+}
+.gyaru24-selection {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 104px;
+  padding: 10px 0;
+}
+.gyaru24-selection-art {
+  flex-shrink: 0;
+  border: 1px solid #d4e5ef;
+  border-radius: 5px;
+  background: #eaf5fb;
+}
+.gyaru24-selection-art .gyaru24-product-glyph {
+  width: 66px;
+  height: 66px;
+  margin: 2px;
+}
+.gyaru24-selection-copy {
+  flex: 1;
+  min-width: 0;
+}
+.gyaru24-selection-copy strong {
+  font-size: 15px;
+  font-weight: 850;
+}
+.gyaru24-selection-copy p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 4px 0;
+  font-size: 11px;
+  color: #7b94a6;
+  line-height: 1.6;
+}
+.gyaru24-selection-copy > span {
+  color: #7b9db4;
+  font-size: 10px;
+}
+.gyaru24-quantity {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  background: #e9f4fa;
+  border: 1px solid #d4e5ef;
+  border-radius: 4px;
+}
+.gyaru24-quantity button {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: #fff;
+}
+.gyaru24-quantity .amami-map-icon {
+  width: 13px;
+  height: 13px;
+}
+.gyaru24-quantity > span {
+  min-width: 25px;
+  text-align: center;
+  font:
+    800 17px/1 'Bahnschrift',
+    sans-serif;
+}
+.gyaru24-checkout-footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #dceaf2;
+}
+.gyaru24-checkout-footer > div > span {
+  display: block;
+  color: #89a2b4;
+  font-size: 10px;
+}
+.gyaru24-checkout-footer > div > strong {
+  color: #087eae;
+  font:
+    800 29px/1.2 'Bahnschrift',
+    'Segoe UI',
+    sans-serif;
+}
+.gyaru24-checkout-footer > div small {
+  font-size: 12px;
+}
+.gyaru24-buy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  min-width: 46%;
+  min-height: 45px;
+  padding: 10px 17px;
+  border: 1px solid #6dc7e7;
+  border-radius: 5px;
+  background: linear-gradient(120deg, #91e1fa 0 68%, #6ed3f3 68% 82%, #89def7 82%);
+  box-shadow:
+    0 3px 0 #399cc5,
+    inset 0 1px 0 #e9fbff;
+  font-weight: 850 !important;
+  font-size: 16px !important;
+}
+.gyaru24-buy:hover:not(:disabled) {
+  background: #a4e9ff;
+}
+.gyaru24-buy .amami-map-icon {
+  width: 15px;
+  height: 15px;
+}
+.gyaru24-empty-selection {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  min-height: 105px;
+  padding: 14px 0;
+}
+.gyaru24-empty-selection > .amami-map-icon {
+  width: 41px;
+  height: 41px;
+  color: #93c1d9;
+  stroke-width: 1.2;
+}
+.gyaru24-empty-selection strong {
+  display: block;
+  font-size: 16px;
+}
+.gyaru24-empty-selection span {
+  display: block;
+  color: #8aa2b4;
+  font-size: 11px;
+  margin-top: 5px;
+}
+@keyframes gyaru24-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@container gyaru24 (width < 1160px) and (width >= 760px) {
+  .gyaru24-layout {
+    grid-template-columns: 53% 1fr;
+    gap: 16px;
+    padding: 14px 16px;
+  }
+  .gyaru24-panel-heading {
+    padding-inline: 17px;
+  }
+  .gyaru24-catalog-tools {
+    padding-inline: 14px;
+  }
+  .gyaru24-product-scroll {
+    padding-inline: 14px;
+  }
+  .gyaru24-product-grid {
+    gap: 10px 8px;
+  }
+  .gyaru24-product-picture {
+    height: 80px;
+  }
+  .gyaru24-product-glyph {
+    width: 68px;
+    height: 68px;
+  }
+  .gyaru24-product-name {
+    font-size: 12px;
+    padding-inline: 7px;
+  }
+  .gyaru24-product-effect {
+    padding-inline: 7px;
+    font-size: 9px;
+  }
+  .gyaru24-product-price {
+    padding-inline: 7px;
+  }
+  .gyaru24-product-price strong {
+    font-size: 14px;
+  }
+  .gyaru24-checkout {
+    padding-inline: 16px;
+  }
+  .gyaru24-selection {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .gyaru24-selection-art .gyaru24-product-glyph {
+    width: 48px;
+    height: 48px;
+  }
+  .gyaru24-quantity {
+    margin-left: auto;
+  }
+  .gyaru24-quantity button {
+    width: 23px;
+  }
+  .gyaru24-selection-copy p {
+    font-size: 10px;
+  }
+  .gyaru24-catalog-footer small {
+    display: none;
+  }
+}
+@container gyaru24 (height < 720px) and (width >= 760px) {
+  .gyaru24-header {
+    height: 54px;
+  }
+  .gyaru24-background {
+    top: 54px;
+    height: calc(100% - 54px);
+  }
+  .gyaru24-layout {
+    height: calc(100% - 54px);
+    padding-block: 12px;
+  }
+  .gyaru24-panel-heading {
+    height: 61px;
+  }
+  .gyaru24-panel-heading h2 {
+    font-size: 21px;
+  }
+  .gyaru24-catalog-tools {
+    padding-block: 8px 9px;
+  }
+  .gyaru24-categories button {
+    padding: 6px 9px;
+    font-size: 12px;
+  }
+  .gyaru24-search {
+    margin-top: 7px;
+    height: 33px;
+  }
+  .gyaru24-checkout {
+    min-height: 190px;
+    padding-bottom: 13px;
+  }
+  .gyaru24-checkout-heading {
+    min-height: 40px;
+  }
+  .gyaru24-selection,
+  .gyaru24-empty-selection {
+    min-height: 86px;
+  }
+  .gyaru24-buy {
+    min-height: 39px;
+    padding-block: 8px;
+    font-size: 14px !important;
+  }
+  .gyaru24-checkout-footer {
+    padding-top: 9px;
+  }
+  .gyaru24-checkout-footer > div > strong {
+    font-size: 25px;
+  }
+}
+.gyaru24-browse {
+  display: none;
+}
+@container gyaru24 (width < 760px) {
+  .gyaru24-header {
+    height: 56px;
+    gap: 10px;
+    padding-inline: 12px;
+  }
+  .gyaru24-back {
+    width: 44px;
+    height: 44px;
+  }
+  .gyaru24-brand > strong {
+    font-size: 20px;
+  }
+  .gyaru24-brand strong span {
+    font-size: 28px;
+  }
+  .gyaru24-brand > small,
+  .gyaru24-open,
+  .gyaru24-wallet small {
+    display: none;
+  }
+  .gyaru24-wallet {
+    gap: 6px;
+    padding: 5px 8px;
+  }
+  .gyaru24-wallet strong {
+    font-size: 16px;
+  }
+  .gyaru24-wallet .gyaru24-coin {
+    width: 21px;
+    height: 21px;
+    font-size: 11px;
+  }
+  .gyaru24-background {
+    top: 56px;
+    height: clamp(136px, 44cqw, 210px);
+    object-position: 70% top;
+  }
+  .gyaru24-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    height: calc(100% - 56px);
+    padding: clamp(124px, 40cqw, 196px) 10px 14px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    background: linear-gradient(transparent 30cqw, #dcecf7 56cqw);
+  }
+  .gyaru24-catalog {
+    flex-shrink: 0;
+    min-height: 0;
+  }
+  .gyaru24-panel-heading {
+    height: 66px;
+    padding-inline: 18px;
+  }
+  .gyaru24-panel-heading h2 {
+    font-size: 22px;
+  }
+  .gyaru24-catalog-tools {
+    padding: 12px 14px;
+  }
+  .gyaru24-categories button {
+    padding-inline: 8px;
+    font-size: 12px;
+  }
+  .gyaru24-product-scroll {
+    padding-inline: 14px;
+    overflow: visible;
+  }
+  .gyaru24-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .gyaru24-product-name {
+    font-size: 13px;
+  }
+  .gyaru24-checkout {
+    display: none;
+    flex-shrink: 0;
+    min-height: 228px;
+    padding-inline: 17px;
+  }
+  .is-reviewing .gyaru24-checkout {
+    display: flex;
+  }
+  .is-reviewing .gyaru24-catalog {
+    display: none;
+  }
+  .gyaru24-browse {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-left: auto;
+    padding-inline: 12px;
+    border: 1px solid #bedce9;
+    border-radius: 3px 9px 3px 3px;
+    background: #f3fbff;
+    font-size: 13px;
+  }
+  .gyaru24-checkout-heading small {
+    display: none;
+  }
+  .gyaru24-categories {
+    flex-wrap: wrap;
+  }
+  .gyaru24-categories button {
+    min-height: 40px;
+  }
+  .gyaru24-quantity button {
+    width: 44px;
+    height: 44px;
+  }
+  .gyaru24-search input {
+    min-width: 0;
+    font-size: 16px;
+  }
+  .gyaru24-selection-art .gyaru24-product-glyph {
+    width: 52px;
+    height: 52px;
+  }
+  .gyaru24-selection-copy p {
+    font-size: 13px;
+  }
+  .gyaru24-selection {
+    flex-wrap: wrap;
+  }
+  .gyaru24-quantity {
+    margin-left: auto;
+  }
+  .gyaru24-catalog-footer small {
+    display: none;
+  }
+  .gyaru24-checkout-footer > div > strong {
+    font-size: 26px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gyaru24-store {
+    animation: none;
+  }
+  .gyaru24-store button {
+    transition: none;
+  }
+}

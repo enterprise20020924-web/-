@@ -1,0 +1,954 @@
+// Admission archive: student cards and personal dossier, scoped to the fork entry.
+.academy-opening.skylink-opening.sda-ui.sk-admission-page {
+  .sk-character-selection {
+    container: admission-cards / inline-size;
+  }
+
+  .sk-character-gender-switch {
+    width: 230px;
+    max-width: 100%;
+    padding: 4px;
+    gap: 4px;
+    border: 1px solid #b5d3e6;
+    border-radius: 3px;
+    background: #e8f1f7;
+
+    > button {
+      gap: 10px;
+      min-height: 40px;
+      border: 0;
+      border-radius: 2px;
+      color: #5b7890;
+      font-size: 15px;
+      transition:
+        background 160ms,
+        color 160ms,
+        box-shadow 160ms;
+
+      > i:first-child {
+        font-size: 17px;
+      }
+
+      &[aria-pressed='true'] {
+        color: #fff;
+        background: #087cde;
+        box-shadow: 0 3px 7px #163f6120;
+      }
+
+      &:hover:not([aria-pressed='true']) {
+        color: #087cde;
+        background: #fff;
+      }
+    }
+  }
+
+  .sk-character-book {
+    border-radius: 2px;
+  }
+
+  .sk-character-card-grid {
+    gap: clamp(12px, 2.2cqi, 26px);
+  }
+
+  .sk-character-card {
+    border: 1px solid #afc9db;
+    border-radius: 3px 3px 18px 3px;
+    background: #fff;
+    box-shadow:
+      0 5px 0 #dbe7ef,
+      0 8px 16px #163f610b;
+
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 3;
+      inset: 6px;
+      border: 1px solid #ffffff70;
+      border-radius: 1px 1px 11px 1px;
+      pointer-events: none;
+    }
+
+    &:hover {
+      border-color: #087cde;
+      box-shadow:
+        0 5px 0 #90c5ed,
+        0 14px 22px #163f611a;
+
+      .sk-character-card-action {
+        color: #163f61;
+        background: #f2df6a;
+      }
+
+      .sk-character-card-art > img {
+        transform: translate(-50%, -50%) scale(1.025);
+      }
+    }
+  }
+
+  .sk-character-card-index {
+    top: 12px;
+    left: 12px;
+    display: grid;
+    place-items: center;
+    width: 37px;
+    height: 34px;
+    padding-right: 3px;
+    color: #fff;
+    background: #087cde;
+    font: 800 19px / 1 var(--sk-display);
+    letter-spacing: -0.04em;
+    clip-path: polygon(0 0, 100% 0, 100% 78%, 78% 100%, 0 100%);
+  }
+
+  .sk-character-card-kind {
+    top: 16px;
+    right: 13px;
+    padding: 4px 0 4px 8px;
+    border: 0;
+    border-left: 2px solid #37cee6;
+    border-radius: 0;
+    color: #345f7f;
+    background: transparent;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .sk-character-card-art {
+    aspect-ratio: 3 / 4;
+    background:
+      linear-gradient(90deg, #087cde08 1px, transparent 1px) 0 0 / 32px 32px,
+      linear-gradient(#087cde08 1px, transparent 1px) 0 0 / 32px 32px,
+      linear-gradient(145deg, #f5fbff 12%, #e1f4fb 100%);
+
+    &::before {
+      top: 10%;
+      left: -36%;
+      width: 110%;
+      height: 85%;
+      border-right: 2px solid #fff;
+      background: #fff8;
+      transform: rotate(28deg);
+    }
+
+    &::after {
+      height: 8px;
+      border: 0;
+      background: linear-gradient(90deg, #087cde 0 15%, #37cee6 15% 65%, #fff 65% 68%, #b8dce9 68%);
+    }
+
+    > img {
+      top: 54%;
+      left: 50%;
+      width: 110%;
+      height: 90%;
+      object-fit: contain;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(4px 5px 0 #163f6112);
+      transition: transform 240ms var(--sk-ease);
+    }
+  }
+
+  .sk-character-art-ring {
+    top: 52%;
+    width: 79%;
+    border-color: #a8d7e9;
+    box-shadow:
+      0 0 0 10px #fff7,
+      0 0 0 11px #c3e4ef;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      background: #37cee6;
+      transform: rotate(45deg);
+    }
+    &::before {
+      top: 11%;
+      left: 11%;
+    }
+    &::after {
+      right: 11%;
+      bottom: 11%;
+      background: #fff;
+    }
+  }
+
+  .sk-character-art-corner {
+    width: 22px;
+    height: 22px;
+    right: 13px;
+    bottom: 20px;
+    border-color: #087cde;
+  }
+
+  .sk-character-identity-placeholder {
+    position: absolute;
+    inset: 50px 12px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+
+    > svg {
+      flex: 1 1 auto;
+      width: min(76%, 160px);
+      min-height: 0;
+      max-height: 65%;
+      overflow: visible;
+      transform: rotate(-5deg);
+      filter: drop-shadow(2px 5px 0 #163f6108);
+    }
+
+    > strong {
+      max-width: 100%;
+      color: #315b79;
+      font-size: clamp(15px, 2.2cqi, 23px);
+      font-weight: 800;
+      line-height: 1.45;
+      letter-spacing: 0.09em;
+      overflow-wrap: anywhere;
+    }
+
+    > small {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #7695aa;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+
+      &::before,
+      &::after {
+        content: '';
+        width: 12px;
+        height: 1px;
+        background: #9dbed3;
+      }
+    }
+  }
+
+  .sk-character-card-info {
+    gap: 7px;
+    min-height: 104px;
+    padding: 20px 54px 24px 20px;
+    background: #163f61;
+
+    > strong {
+      color: #fff;
+      font-size: clamp(18px, 2.4cqi, 25px);
+      font-weight: 800;
+      letter-spacing: 0.025em;
+    }
+
+    > small {
+      color: #b4d5e8;
+      font-size: 12px;
+      letter-spacing: 0.035em;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 15px;
+      bottom: 14px;
+      width: 30px;
+      height: 5px;
+      background: repeating-linear-gradient(
+        90deg,
+        #b6dcf0 0 1px,
+        transparent 1px 3px,
+        #b6dcf0 3px 5px,
+        transparent 5px 7px
+      );
+      opacity: 0.6;
+    }
+  }
+
+  .sk-character-card-action {
+    right: 15px;
+    top: 23px;
+    width: 30px;
+    height: 30px;
+    border-radius: 2px;
+    color: #163f61;
+    background: #37cee6;
+    font-size: 13px;
+  }
+
+  .sk-character-card-stripe {
+    height: 3px;
+    background: linear-gradient(90deg, #37cee6 0 16%, #087cde 16% 87%, #f2df6a 87%);
+  }
+
+  .sk-character-card-custom {
+    border-color: #9cbdd3;
+
+    .sk-character-card-kind {
+      padding: 4px 8px;
+      border: 0;
+      color: #163f61;
+      background: #f2df6a;
+      transform: rotate(3deg);
+    }
+    .sk-character-card-art {
+      background-color: #edf6fa;
+    }
+  }
+
+  .sk-custom-character-sheet {
+    width: 46%;
+    height: 53%;
+    padding: 11% 9% 8%;
+    border: 1px solid #9cbdd3;
+    border-top: 5px solid #087cde;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow:
+      -7px 7px 0 #d1e7f3,
+      -8px 8px 0 #a9cddf,
+      0 9px 12px #163f610c;
+    transform: translate(-50%, -50%) rotate(-7deg);
+
+    > i {
+      margin-bottom: 18%;
+      color: #7ea8c6;
+      font-size: clamp(27px, 5cqi, 54px);
+    }
+    > span {
+      height: 3px;
+      margin-top: 8px;
+      border-radius: 0;
+      background: #cadde9;
+      &:last-child {
+        background: #087cde;
+      }
+    }
+  }
+
+  .sk-custom-character-add {
+    width: clamp(32px, 5.5cqi, 54px);
+    height: auto;
+    aspect-ratio: 1;
+    border: 4px solid #fff;
+    border-radius: 2px;
+    color: #163f61;
+    background: #f2df6a;
+    box-shadow: 3px 4px 0 #163f6116;
+    transform: rotate(5deg);
+  }
+
+  .sk-custom-character-orbit {
+    border-color: #afccde;
+    border-radius: 1px;
+  }
+
+  .sk-character-card-empty {
+    opacity: 0.5;
+    border-style: dashed;
+    box-shadow: none;
+    .sk-character-card-info {
+      background: #e4edf4;
+    }
+    &::after {
+      border-color: #fff;
+    }
+  }
+
+  .sk-book-back,
+  .sk-book-front::after {
+    border-radius: 3px 3px 18px 3px;
+  }
+
+  .sk-character-pagination {
+    gap: 16px;
+    margin-top: 28px;
+
+    &::before,
+    &::after {
+      background: #bed4e3;
+    }
+
+    > button {
+      flex-basis: 44px;
+      border: 1px solid #9cbdd3;
+      border-radius: 2px;
+      color: #163f61;
+      background: #fff;
+      box-shadow: 0 3px 0 #dbe7ef;
+
+      &:hover:not(:disabled) {
+        border-color: #087cde;
+        color: #fff;
+        background: #087cde;
+      }
+      &:disabled {
+        box-shadow: none;
+      }
+    }
+  }
+
+  .sk-character-page-status {
+    flex-basis: 122px;
+
+    > span:first-child {
+      strong {
+        color: #163f61;
+        font-size: 26px;
+        font-weight: 800;
+      }
+      small {
+        color: #66899f;
+      }
+    }
+  }
+
+  .sk-character-page-marks > i {
+    height: 3px;
+    background: #c9dde9;
+    &.is-current {
+      background: #087cde;
+    }
+  }
+
+  .sk-character-dossier.sk-enrollment-form {
+    --dossier-ink: #163f61;
+    --dossier-blue: #087cde;
+    --dossier-line: #b7cddd;
+    --dossier-cut: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+    gap: 28px;
+
+    .sk-dossier-toolbar {
+      gap: 12px;
+
+      .sk-admission-return {
+        padding-inline: 14px;
+        border: 1px solid #bdd3e1;
+        border-radius: 2px;
+        color: #163f61;
+        background: #fff;
+        clip-path: none;
+        &:hover {
+          border-color: #087cde;
+          color: #087cde;
+          background: #f0f8fd;
+        }
+      }
+      .sk-dossier-mode {
+        color: #44647c;
+        > i {
+          background: #e5f2fb;
+          color: #087cde;
+        }
+      }
+    }
+
+    .sk-dossier-basics,
+    .sk-dossier-folio,
+    .sk-dossier-arrival {
+      padding: 24px 26px 26px;
+
+      &::after {
+        background: #fff;
+      }
+    }
+
+    .sk-dossier-sheet-edge {
+      inset: 6px -4px -4px 6px;
+      background: #e1edf5;
+    }
+
+    .sk-dossier-section-heading {
+      gap: 12px;
+      color: #163f61;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+
+      > span {
+        padding: 5px 10px 5px 8px;
+        color: #fff;
+        background: #087cde;
+        font-size: 18px;
+        font-weight: 800;
+      }
+      &::after {
+        background: #c8dce9;
+      }
+    }
+
+    .sk-dossier-cover {
+      grid-template-columns: 156px minmax(0, 1fr);
+      gap: 28px;
+      margin-block: 24px;
+    }
+
+    .sk-dossier-portrait {
+      border: 1px solid #b7d3e3;
+      border-bottom: 4px solid #087cde;
+      background: linear-gradient(125deg, #fff9 0 38%, transparent 38%), linear-gradient(150deg, #e5f1f9, #d9f3f7);
+      clip-path: none;
+      overflow: hidden;
+
+      > img {
+        left: 50%;
+        top: -7px;
+        bottom: auto;
+        width: 240%;
+        max-width: none;
+        height: auto;
+        object-position: center top;
+        transform: translateX(-50%);
+      }
+
+      &[data-identity-id='f_bimbo'] > img {
+        top: 0;
+        width: 160%;
+        transform: translate(-50%, -7%);
+      }
+    }
+
+    .sk-dossier-portrait-orbit {
+      border-color: #b0d4e7;
+      box-shadow: 0 0 0 8px #ffffff70;
+    }
+
+    .sk-dossier-emblem {
+      border: 1px solid #c2dbe9;
+      border-radius: 2px;
+      color: #087cde;
+      background: #fff;
+      box-shadow: 5px 5px 0 #c5deed;
+      transform: rotate(-5deg);
+    }
+
+    .sk-dossier-portrait-baseline {
+      display: none;
+    }
+
+    .sk-dossier-nameplate {
+      > label {
+        color: #5f7c93;
+        font-size: 13px;
+      }
+
+      .sk-dossier-name-input {
+        min-height: 62px;
+        border-bottom: 2px solid #163f61;
+        color: #163f61;
+        font-size: clamp(28px, 3.2vw, 40px);
+        letter-spacing: 0.025em;
+        &:focus {
+          background: #f5fbff;
+          border-color: #087cde;
+        }
+      }
+    }
+
+    .sk-dossier-identity-tag {
+      padding: 6px 18px 6px 10px;
+      color: #fff;
+      background: #163f61;
+      font-size: 16px;
+      > i {
+        color: #37cee6;
+      }
+    }
+
+    .sk-required-label {
+      border-radius: 1px;
+      color: #766323;
+      background: #fff3b4;
+    }
+
+    .sk-dossier-name-stripes > i {
+      width: 16px;
+      background: #c6dce9;
+      &:first-child {
+        background: #37cee6;
+      }
+    }
+
+    .sk-dossier-basic-grid {
+      grid-template-columns: minmax(68px, 0.5fr) minmax(160px, 1fr) minmax(170px, 1.15fr);
+      gap: 20px;
+      border-top-color: #c8dce9;
+    }
+
+    .sk-dossier-field {
+      > label,
+      .sk-dossier-field-label {
+        color: #57758c;
+        font-size: 13px;
+        > i {
+          color: #087cde;
+        }
+      }
+
+      input,
+      select {
+        padding: 8px 10px;
+        border: 1px solid #cadce8;
+        border-radius: 2px;
+        background-color: #f5f9fc;
+        color: #163f61;
+        &:focus {
+          border-color: #087cde;
+          background-color: #fff;
+          box-shadow: 0 0 0 2px #087cde0c;
+        }
+      }
+      select {
+        padding-right: 26px;
+      }
+    }
+
+    .sk-dossier-age-value {
+      border: 1px solid #cadce8;
+      border-radius: 2px;
+      background: #f5f9fc;
+      padding-right: 8px;
+
+      > input {
+        border: 0;
+        background: transparent;
+        font-size: 29px;
+        color: #087cde;
+        padding-block: 3px;
+      }
+    }
+
+    .sk-dossier-gender {
+      gap: 2px;
+      border: 1px solid #cadce8;
+      border-radius: 2px;
+      padding: 3px;
+      background: #f5f9fc;
+
+      > button {
+        min-height: 40px;
+        padding: 7px 3px;
+        border-radius: 1px;
+        clip-path: none;
+        font-size: 14px;
+        &[aria-pressed='true'] {
+          color: #fff;
+          background: #087cde;
+        }
+        &:hover:not(:disabled):not([aria-pressed='true']) {
+          color: #087cde;
+          background: #e5f2fb;
+        }
+      }
+    }
+
+    .sk-dossier-folio {
+      padding-left: 42px;
+      --dossier-cut: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+
+      &::after {
+        background: linear-gradient(90deg, #e9f2f8 0 8px, #fff 8px 21px, #cddfe9 21px 22px, #fff 22px);
+      }
+    }
+
+    .sk-dossier-note {
+      > label {
+        color: #163f61;
+        font-size: 15px;
+        > i {
+          color: #087cde;
+        }
+      }
+      > textarea {
+        color: #254961;
+        border-bottom-color: #b9d2e1;
+        background: repeating-linear-gradient(transparent 0 35px, #dce8f0 35px 36px);
+        background-origin: content-box;
+        background-clip: content-box;
+        font-size: 15px;
+        &:focus {
+          border-bottom-color: #087cde;
+        }
+        &::placeholder {
+          color: #8198a9;
+        }
+      }
+    }
+
+    .sk-dossier-note-index {
+      left: -30px;
+      color: #087cde;
+      background: #e9f2f8;
+      font-weight: 800;
+    }
+
+    .sk-dossier-help {
+      color: #68869a;
+      font-size: 13px;
+      > summary {
+        color: #087cde;
+      }
+    }
+
+    .sk-dossier-generator {
+      padding: 20px;
+      border-left: 3px solid #37cee6;
+      &::before {
+        background: #edf5fa;
+        clip-path: none;
+      }
+      button {
+        border-radius: 2px;
+      }
+    }
+
+    .sk-dossier-timeline {
+      border-top-color: #b9d2e1;
+      > label {
+        color: #163f61;
+      }
+      > select {
+        padding: 10px;
+        border: 1px solid #cadce8;
+        border-radius: 2px;
+        color: #163f61;
+        background-color: #f5f9fc;
+      }
+    }
+  }
+
+  &[data-motion='reduced'] .sk-character-card:hover .sk-character-card-art > img {
+    transform: translate(-50%, -50%);
+    transition: none;
+  }
+}
+
+@container admission-cards (max-width: 600px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page {
+    .sk-character-card-grid {
+      gap: 12px;
+    }
+    .sk-character-card-art {
+      aspect-ratio: 2 / 3;
+    }
+    .sk-character-card-info {
+      padding: 16px 42px 22px 14px;
+      min-height: 98px;
+    }
+    .sk-character-card-info > strong {
+      font-size: 19px;
+    }
+    .sk-character-card-info > small {
+      font-size: 11px;
+    }
+    .sk-character-card-index {
+      width: 29px;
+      height: 29px;
+      top: 10px;
+      left: 10px;
+      font-size: 16px;
+    }
+    .sk-character-card-kind {
+      top: 12px;
+      right: 10px;
+      font-size: 9px;
+      padding-left: 5px;
+    }
+    .sk-character-card-action {
+      right: 12px;
+      top: 20px;
+      width: 24px;
+      height: 27px;
+      font-size: 11px;
+    }
+    .sk-custom-character-sheet > i {
+      font-size: 37px;
+    }
+    .sk-character-pagination {
+      gap: 12px;
+    }
+  }
+}
+
+@container admission-cards (max-width: 360px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page {
+    .sk-character-card-grid {
+      gap: 9px;
+    }
+    .sk-character-card-index {
+      top: 9px;
+      left: 9px;
+      width: 24px;
+      height: 25px;
+      font-size: 14px;
+    }
+    .sk-character-card-kind {
+      right: 8px;
+      top: 12px;
+      font-size: 8px;
+      letter-spacing: 0;
+    }
+    .sk-character-card-info {
+      padding: 14px 31px 22px 12px;
+      min-height: 94px;
+      gap: 5px;
+    }
+    .sk-character-card-info > strong {
+      font-size: 16px;
+    }
+    .sk-character-card-info > small {
+      font-size: 10px;
+    }
+    .sk-character-card-action {
+      width: 20px;
+      height: 23px;
+      right: 8px;
+      top: 17px;
+    }
+    .sk-character-card-info::after {
+      width: 22px;
+      right: 8px;
+      bottom: 12px;
+    }
+    .sk-custom-character-sheet {
+      border-top-width: 3px;
+    }
+    .sk-custom-character-sheet > i {
+      font-size: 29px;
+    }
+    .sk-custom-character-sheet > span {
+      height: 2px;
+      margin-top: 5px;
+    }
+    .sk-character-pagination > button {
+      flex-basis: 40px;
+      height: 40px;
+    }
+    .sk-character-page-status {
+      flex-basis: 100px;
+    }
+    .sk-character-identity-placeholder {
+      inset: 44px 8px 20px;
+      gap: 7px;
+    }
+    .sk-character-identity-placeholder > small {
+      font-size: 8px;
+      gap: 4px;
+      letter-spacing: 0.04em;
+    }
+    .sk-character-identity-placeholder > small::before,
+    .sk-character-identity-placeholder > small::after {
+      width: 8px;
+    }
+  }
+}
+
+@container admission-dossier (max-width: 550px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page .sk-character-dossier.sk-enrollment-form {
+    .sk-dossier-cover {
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 20px;
+    }
+    .sk-dossier-basic-grid {
+      grid-template-columns: minmax(65px, 0.6fr) minmax(150px, 1.4fr);
+      gap: 16px;
+    }
+    .sk-dossier-difficulty {
+      grid-column: 1 / -1;
+    }
+    .sk-dossier-basics,
+    .sk-dossier-arrival {
+      padding: 20px;
+    }
+    .sk-dossier-nameplate .sk-dossier-name-input {
+      font-size: 32px;
+    }
+  }
+}
+
+@container admission-dossier (max-width: 340px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page .sk-character-dossier.sk-enrollment-form {
+    gap: 22px;
+    .sk-dossier-toolbar {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sk-dossier-toolbar > button {
+      font-size: 12px;
+    }
+    .sk-dossier-toolbar-rule {
+      display: none;
+    }
+    .sk-dossier-toolbar .sk-dossier-mode {
+      margin-left: auto;
+    }
+    .sk-dossier-basics,
+    .sk-dossier-arrival {
+      padding: 17px 14px 20px;
+    }
+    .sk-dossier-folio {
+      padding: 17px 14px 20px 31px;
+    }
+    .sk-dossier-folio::after {
+      background: linear-gradient(90deg, #e9f2f8 0 5px, #fff 5px 14px, #cddfe9 14px 15px, #fff 15px);
+    }
+    .sk-dossier-note-index {
+      left: -24px;
+      width: 19px;
+    }
+    .sk-dossier-cover {
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 12px;
+      margin-block: 18px;
+    }
+    .sk-dossier-nameplate .sk-dossier-name-input {
+      font-size: 27px;
+      min-height: 54px;
+    }
+    .sk-dossier-identity-tag {
+      padding: 5px 12px 5px 8px;
+      font-size: 13px;
+      gap: 6px;
+    }
+    .sk-dossier-section-heading {
+      gap: 8px;
+      font-size: 16px;
+    }
+    .sk-dossier-section-heading > span {
+      font-size: 16px;
+      padding: 4px 9px 4px 7px;
+    }
+    .sk-dossier-basic-grid {
+      grid-template-columns: minmax(60px, 0.6fr) minmax(0, 1.4fr);
+      gap: 12px;
+    }
+    .sk-dossier-gender > button {
+      font-size: 13px;
+    }
+    .sk-dossier-note > textarea {
+      font-size: 14px;
+    }
+    .sk-dossier-generator {
+      padding: 16px 14px;
+    }
+    .sk-dossier-timeline {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .academy-opening.skylink-opening.sda-ui.sk-admission-page .sk-character-gender-switch {
+    width: 180px;
+    padding: 3px;
+    > button {
+      min-height: 40px;
+      gap: 7px;
+      font-size: 14px;
+    }
+  }
+}

@@ -1,0 +1,144 @@
+.bp-chat-midnight-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 4px 12px;
+  border: 2px solid #08144a;
+  border-radius: 0;
+  background: #ffffff;
+  color: #08144a;
+  box-shadow: 3px 3px 0 #24e2f8;
+  transform: skewX(-10deg);
+  font-family: var(--bp-title-font, sans-serif);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+
+.bp-chat-midnight-icon {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  flex: none;
+}
+
+.bp-chat-midnight-toggle:hover {
+  background: #08144a;
+  color: #ffffff;
+  border-color: #ffffff;
+  transform: skewX(-10deg) translate(-1px, -1px);
+}
+
+.bp-chat-midnight-toggle:focus-visible {
+  outline: 2px solid #24e2f8;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   Midnight Refined Velvet-Obsidian Comic Mode (clean, high-craft contrast)
+   ========================================================= */
+.bp-chat-thread.is-midnight {
+  color-scheme: dark;
+  --p5-paper: linear-gradient(142deg, #05091d 0%, #091234 48%, #060a22 100%);
+  --p5-plane-a: rgba(20, 44, 134, 0.24);
+  --p5-plane-b: rgba(16, 36, 114, 0.3);
+  --p5-sweep-0: rgba(24, 66, 224, 0.16);
+  --p5-sweep-1: rgba(36, 226, 248, 0.06);
+  --p5-sweep-2: rgba(5, 9, 29, 0);
+  --p5-spine-top: rgba(36, 226, 248, 0.04);
+  --p5-spine-mid: rgba(244, 50, 82, 0.2);
+  --p5-spine-line: rgba(36, 226, 248, 0.45);
+  --p5-hairline-a: rgba(36, 226, 248, 0.52);
+  --p5-hairline-b: rgba(244, 50, 82, 0.55);
+  --p5-dot-color: rgba(160, 215, 255, 0.08);
+  --p5-ink: #f4f9ff;
+  --p5-scene-opacity: 0.1;
+}
+
+.bp-chat-thread.is-midnight .bp-chat-midnight-toggle {
+  background: #10205c;
+  color: #82f6ff;
+  border-color: #24e2f8;
+  box-shadow: 3px 3px 0 #f43252;
+}
+
+.bp-chat-thread.is-midnight .bp-chat-midnight-toggle:hover {
+  background: #24e2f8;
+  color: #060d30;
+  border-color: #ffffff;
+}
+
+.bp-chat-thread.is-midnight .bp-chat-count {
+  background: #060d30;
+  color: #24e2f8;
+  border-color: #24e2f8;
+  box-shadow: 3px 3px 0 #f43252;
+}
+
+.bp-chat-thread.is-midnight .bp-chat-thread-viewport {
+  scrollbar-color: rgba(36, 226, 248, 0.45) transparent;
+}
+
+.bp-chat-thread.is-midnight .bp-chat-narration {
+  background: linear-gradient(108deg, #060b24 0%, #0d1a52 78%, #162e88 100%);
+  border-color: #24e2f8;
+  border-left-color: #f43252;
+  box-shadow: 6px 6px 0 rgba(244, 50, 82, 0.42);
+}
+
+.bp-chat-thread.is-midnight .bp-chat-bubble-shell {
+  --p5-bub-fill: #09133c;
+  --p5-bub-stroke: #ffffff;
+  --p5-bub-shadow: rgba(244, 50, 82, 0.54);
+  --p5-bub-accent: #f43252;
+  --p5-bub-inner: rgba(36, 226, 248, 0.52);
+  --p5-bub-sheen: rgba(255, 255, 255, 0.05);
+}
+
+.bp-chat-thread.is-midnight .bp-chat-dialogue.is-right .bp-chat-bubble-shell {
+  --p5-bub-fill: #ffffff;
+  --p5-bub-stroke: #24e2f8;
+  --p5-bub-shadow: rgba(22, 62, 232, 0.72);
+  --p5-bub-accent: #163ee8;
+  --p5-bub-inner: rgba(22, 62, 232, 0.2);
+}
+
+.bp-chat-thread.is-midnight .bp-chat-cutin-frame {
+  --p5-port-ink: #04081a;
+  --p5-port-shadow: rgba(36, 226, 248, 0.36);
+}
+
+.bp-chat-thread.is-midnight .bp-chat-dialogue.is-right .bp-chat-cutin-frame {
+  --p5-port-shadow: rgba(244, 50, 82, 0.48);
+}
+
+.bp-chat-thread.is-midnight .bp-chat-latest-button {
+  background: #f43252;
+  border-color: #ffffff;
+  box-shadow: 5px 5px 0 #24e2f8;
+}
+
+.bp-chat-thread.is-midnight .bp-chat-latest-button:hover {
+  background: #24e2f8;
+  color: #060d30;
+  box-shadow: 7px 7px 0 #f43252;
+}
+
+.bp-chat-thread.is-midnight .bp-chat-empty-state {
+  color: #9cb8e4;
+}
+
+.bp-chat-thread.is-midnight .bp-chat-empty-state strong {
+  color: #ffffff;
+}

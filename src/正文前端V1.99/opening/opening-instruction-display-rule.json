@@ -1,0 +1,15 @@
+{
+  "id": "7d34d109-a47b-4d92-86c7-0b165bb824d7",
+  "scriptName": "开局指令 · 阿洛娜秘密卡片",
+  "findRegex": "/<amami_opening_instruction\\b[^>]*>[\\s\\S]*?<\\/amami_opening_instruction\\s*>/gi",
+  "replaceString": "<div style=\"position:relative;width:100%;max-width:620px;aspect-ratio:1637/356;margin:12px auto;isolation:isolate;\"><img src=\"https://testingcf.jsdelivr.net/gh/enterprise20020924-web/-@main/llm1/全身立绘/阿洛娜选项.png\" alt=\"阿洛娜\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;\"><div style=\"position:absolute;inset:19% 5.4% 17% 20.5%;display:flex;align-items:center;\"><span style=\"color:#20394a;font-family:'Segoe UI','Microsoft YaHei',sans-serif;font-size:clamp(12px,1.2vw,16px);font-weight:800;line-height:1.5;\">这里写着什么指令是阿洛娜的秘密哦？不会给老师看的啦~</span></div></div>",
+  "trimStrings": [],
+  "placement": [1],
+  "disabled": false,
+  "markdownOnly": true,
+  "promptOnly": false,
+  "runOnEdit": true,
+  "substituteRegex": 0,
+  "minDepth": null,
+  "maxDepth": null
+}

@@ -1,0 +1,621 @@
+/* Phone-only semantic colors. Text, surfaces and selected states travel together. */
+.skylink-phone.sda-phone-ui .phone-frame {
+  --sk-ink: #142d50;
+  --sk-muted: #415773;
+  --sk-blue: #0755a3;
+  --sk-success: #075943;
+  --sk-warning: #6e4b00;
+  --sk-danger: #a32137;
+  --sk-violet: #573399;
+  --sk-pink: #922651;
+  --sk-action: #0864bd;
+  --sk-on-action: #fff;
+  --sk-disabled-bg: #e2eaf3;
+  --sk-disabled-ink: #4c6078;
+  --sk-ex-text-gradient: linear-gradient(110deg, #006078, #49449b, #78378c, #94245f, #705000, #0b6048, #006078);
+  color-scheme: light;
+
+  &.theme-midnight {
+    --sk-ink: #e3f1ff;
+    --sk-muted: #b4cbe0;
+    --sk-blue: #8ecaff;
+    --sk-success: #8ae4c2;
+    --sk-warning: #ffe09b;
+    --sk-danger: #ffb2bd;
+    --sk-violet: #d5baff;
+    --sk-pink: #ffb3d6;
+    --sk-disabled-bg: #263b53;
+    --sk-disabled-ink: #bed0e2;
+    --sk-ex-text-gradient: var(--sk-ex-gradient);
+    color-scheme: dark;
+  }
+
+  /* Wallpaper must not determine the contrast of launcher labels or page text. */
+  .sk-phone-hardware,
+  .sk-system-nav {
+    background: var(--sk-soft);
+  }
+  .sk-home-metrics,
+  .sk-home-apps {
+    background: var(--sk-paper);
+    border-radius: 8px;
+    padding: 10px 6px;
+  }
+  .sk-app-index {
+    color: var(--sk-muted);
+  }
+  &.has-custom-wallpaper .app-page-shell {
+    background: var(--sk-soft);
+  }
+  &.has-custom-wallpaper .sk-home-hero {
+    background: var(--sk-paper);
+  }
+  .sk-location-strip {
+    background: var(--sk-action);
+    color: var(--sk-on-action);
+  }
+  .sk-location-strip > small {
+    color: inherit;
+  }
+
+  .status-content {
+    /* These components previously supplied their own fixed dark backgrounds. */
+    :is(
+      .modal-content,
+      .tooltip,
+      .talent-tooltip,
+      .shop-detail-card,
+      .shop-detail-footer,
+      .help-modal,
+      .confirm-modal,
+      .location-detail,
+      .exchange-card,
+      .my-talent-section,
+      .time-card,
+      .feed-section,
+      .wheel-section
+    ) {
+      color: var(--sk-ink);
+      background: var(--sk-paper);
+      border-color: var(--sk-line);
+    }
+    :is(
+      .item-bonus-inline,
+      .selected-item-preview,
+      .item-details,
+      .qty-btn,
+      .avatar-locked-panel,
+      .avatar-slide-label,
+      .modal-description,
+      .reputation-card,
+      .trait-toggle,
+      .state-tag .turns-badge,
+      .category-tab .count-badge
+    ) {
+      background: var(--sk-soft);
+      color: var(--sk-ink);
+      border-color: var(--sk-line);
+    }
+    :is(.avatar-slide-label.locked, .modal-fallback, .detail-counter) {
+      color: var(--sk-muted);
+    }
+    :is(input, textarea)::placeholder {
+      color: var(--sk-muted);
+      opacity: 1;
+    }
+    option {
+      background: var(--sk-paper);
+      color: var(--sk-ink);
+    }
+
+    /* Solid actions use a fixed dark blue and its own foreground in both themes. */
+    :is(
+      .upgrade-btn,
+      .equip-btn,
+      .buy-btn,
+      .purchase-btn,
+      .confirm-btn,
+      .replace-btn,
+      .gacha-btn,
+      .talent-gacha-btn,
+      .exchange-btn,
+      .reroll-btn,
+      .wheel-draw-btn,
+      .unlock-btn,
+      .settings-action-primary,
+      .group-create,
+      .group-invite-btn,
+      .composer-send,
+      .send-btn,
+      .send-button,
+      .cheat-code-form > button
+    ) {
+      color: var(--sk-on-action);
+      background: var(--sk-action);
+      border-color: var(--sk-action);
+    }
+    :is(.gacha-btn, .talent-gacha-btn, .wheel-draw-btn) :is(.btn-cost, .discount-price, small) {
+      color: inherit;
+      opacity: 1;
+    }
+    :is(
+      .tab-btn,
+      .category-tab,
+      .filter-btn,
+      .slot-btn,
+      .gender-btn,
+      .attr-btn,
+      .icon-style-button,
+      .wallpaper-preset-button,
+      .wheel-type-btn,
+      .thread-tab,
+      .nav-tab,
+      .difficulty-option,
+      .upgrade-mode-toggle button
+    ).active {
+      color: var(--sk-on-action);
+      background: var(--sk-action);
+      border-color: var(--sk-action);
+    }
+    :is(
+        .tab-btn,
+        .category-tab,
+        .filter-btn,
+        .slot-btn,
+        .gender-btn,
+        .attr-btn,
+        .wallpaper-preset-button,
+        .wheel-type-btn
+      ):hover:not(.active) {
+      background: var(--sk-soft);
+      color: var(--sk-blue);
+    }
+    .icon-style-button.active .icon-style-label,
+    .difficulty-option.active :is(span, i) {
+      color: inherit;
+    }
+    .icon-style-button.active .icon-style-preview {
+      color: var(--sk-blue);
+      background: var(--sk-paper);
+    }
+
+    /* Disabled controls and completed content remain readable; state is not opacity. */
+    :is(
+      button:disabled,
+      select:disabled,
+      input:disabled,
+      textarea:disabled,
+      [aria-disabled='true'],
+      .difficulty-option.disabled
+    ) {
+      opacity: 1;
+      color: var(--sk-disabled-ink);
+      background: var(--sk-disabled-bg);
+      border-color: var(--sk-line);
+      box-shadow: none;
+      filter: none;
+    }
+    .difficulty-option.disabled :is(span, i) {
+      color: inherit;
+    }
+    :is(
+      .equipment-slot.empty,
+      .cg-item.locked,
+      .quest-card.side.completed,
+      .item-price .original-price,
+      .gacha-btn .original-price
+    ) {
+      opacity: 1;
+    }
+
+    /* EX still has multicolor lettering, with a separate dark rainbow for light paper. */
+    .talent-rarity-badge.rarity-ex,
+    .rarity-ex :is(.rarity-text, .item-name-text, .skill-name, .talent-rarity, .result-rarity) {
+      background-image: var(--sk-ex-text-gradient);
+    }
+    :is(.rate-item.rarity-a, .rate-item.rarity-s, .rate-item.rarity-ss, .quest-reward) {
+      color: var(--sk-warning);
+      background: color-mix(in srgb, var(--sk-warning) 9%, var(--sk-paper));
+    }
+    :is(.rate-item, .talent-badge, .talent-card, .my-talent-card, .talent-select-item).rarity-sin {
+      background: color-mix(in srgb, var(--sk-danger) 9%, var(--sk-paper));
+      border-color: var(--sk-danger);
+    }
+    .rarity-sin :is(.talent-name, .talent-rarity, .talent-rarity-badge, .talent-icon i),
+    :is(.rate-item, .talent-badge, .talent-rarity-badge).rarity-sin {
+      color: var(--sk-danger);
+    }
+    .rarity-sin .talent-desc {
+      color: var(--sk-ink);
+    }
+
+    /* 01 / dashboard and 02 / dossier */
+    .coins-card :is(.card-label, .card-value) {
+      color: var(--sk-on-action);
+    }
+    .dashboard-page .coins-card {
+      background: var(--sk-action);
+    }
+    .dashboard-page .coins-card .card-icon {
+      color: #fff1ae;
+    }
+    .difficulty-option:not(.active):not(.disabled) i {
+      color: var(--difficulty-color, var(--sk-blue));
+    }
+    .difficulty-hint-text {
+      color: var(--sk-muted);
+    }
+    .trait-toggle.active {
+      background: var(--sk-soft);
+      color: var(--sk-success);
+    }
+    .profile-page .level-badge {
+      color: var(--sk-ink);
+      background: var(--sk-paper);
+    }
+    .profile-page .help-btn {
+      right: 44px;
+    }
+    .avatar-upload-hint {
+      background: var(--sk-action);
+    }
+    .avatar-upload-hint i {
+      color: var(--sk-on-action);
+    }
+
+    /* 03–06 / skills, inventory, quests, relationships */
+    .inventory-page .coins-icon i {
+      color: var(--sk-blue);
+    }
+    .quest-page .quest-badge {
+      color: var(--sk-on-action);
+      background: var(--sk-action);
+    }
+    .relationship-page .present-name {
+      color: var(--sk-ink);
+    }
+    .relationship-page :is(.rel-type.type-unknown, .rel-type.type-stranger, .rel-oath.oath-none) {
+      color: var(--sk-muted);
+      background: var(--sk-soft);
+    }
+    :is(.discard-btn, .modal-close) {
+      color: var(--sk-on-action);
+      background: #ad2944;
+      border-color: #ad2944;
+    }
+    :is(.discard-btn, .modal-close):hover {
+      color: var(--sk-on-action);
+      background: #92203a;
+    }
+    /* Avatar navigation sits on an arbitrary image, so it needs an opaque surface. */
+    .avatar-nav {
+      color: var(--sk-ink);
+      background: var(--sk-paper);
+      border-color: var(--sk-line);
+    }
+    .avatar-nav:hover {
+      color: var(--sk-blue);
+      background: var(--sk-soft);
+    }
+    .dominance-midline {
+      background: var(--sk-muted);
+    }
+
+    /* 07–09 / map, shop, gallery */
+    .map-cell.current-position {
+      color: var(--sk-ink);
+      background: var(--sk-soft);
+    }
+    .map-cell.player-position :is(.location-label, .cell-coord) {
+      color: var(--sk-on-action);
+    }
+    .item-price .discount-tag {
+      color: var(--sk-on-action);
+      background: #17633e;
+    }
+    .fetish-reroll-tip {
+      color: var(--sk-blue);
+      background: var(--sk-soft);
+    }
+    .wheel-cost-bar {
+      color: var(--sk-ink);
+    }
+    .wheel-last-result {
+      color: var(--sk-success);
+    }
+    .wheel-prob-header {
+      color: var(--sk-blue);
+    }
+    /* The illustrated wheel remains dark, independent of the selected phone theme. */
+    .wheel-segment-label {
+      width: max-content;
+      max-width: 64px;
+      padding: 3px 5px;
+      border-radius: 4px;
+      color: #fff;
+      background: #142b46;
+      font-size: 11px;
+      text-shadow: none;
+    }
+    .wheel-segment-label.rare,
+    .wheel-pointer {
+      color: #ffe09b;
+    }
+    .wheel-center,
+    .wheel-sss-burst,
+    .wheel-sss-title {
+      color: #fff;
+    }
+    .wheel-sss-burst i,
+    .wheel-sss-name {
+      color: #ffe09b;
+    }
+    .wheel-sss-title {
+      background: #142b46;
+    }
+    .sin-effect-overlay :is(.sin-symbol, .sin-text) {
+      color: #ffb2bd;
+    }
+    .cg-page :is(.cg-thumbnail, .image-container) {
+      background: var(--sk-soft);
+    }
+    .cg-page .locked-overlay {
+      background: #142b46e6;
+    }
+    .cg-page .locked-overlay i {
+      color: #e3f1ff;
+    }
+    .cg-page .unlock-badge {
+      color: #fff;
+      background: #922651;
+    }
+
+    /* 10 / Backstreet: directory, group editor, conversation, emoji and attachments. */
+    .backstreet-page {
+      :is(
+        .group-creator,
+        .group-manager,
+        .mention-panel,
+        .emoji-panel,
+        .emoji-tabs,
+        .sticker-preview,
+        .composer-attachment-preview,
+        .thread-tabs,
+        .composer,
+        .chat-header
+      ) {
+        background: var(--sk-paper);
+        color: var(--sk-ink);
+        border-color: var(--sk-line);
+      }
+      :is(
+        .group-launch-card,
+        .contact-launch-card,
+        .contact-item,
+        .member-option,
+        .managed-member,
+        .load-older-messages,
+        .composer textarea,
+        .composer-attach-toggle,
+        .composer-emoji-toggle,
+        .emoji-tab,
+        .message-image-loading,
+        .message-image-prompt-state,
+        .chat-title-avatar,
+        .contact-avatar,
+        .msg-avatar,
+        .mention-avatar
+      ) {
+        background: var(--sk-soft);
+        color: var(--sk-ink);
+        border-color: var(--sk-line);
+      }
+      :is(
+        .contact-name,
+        .chat-title-name,
+        .group-manager-head span,
+        .managed-member,
+        .member-option,
+        .mention-option,
+        .sticker-preview span
+      ) {
+        color: var(--sk-ink);
+      }
+      :is(
+        .contact-last,
+        .contact-time,
+        .group-launch-main span,
+        .group-creator-title span,
+        .group-name-field span,
+        .member-picker-header,
+        .member-empty,
+        .search-row,
+        .time-divider span,
+        .sticker-state,
+        .thread-tab strong,
+        .empty-state
+      ) {
+        color: var(--sk-muted);
+      }
+      :is(.group-creator-icon, .contact-loading) {
+        color: var(--sk-success);
+      }
+      :is(input, textarea)::placeholder {
+        color: var(--sk-muted);
+        opacity: 1;
+      }
+      :is(
+        .group-launch-card,
+        .contact-launch-card,
+        .contact-item,
+        .member-option,
+        .load-older-messages,
+        .mention-option
+      ):hover,
+      :is(.member-option, .mention-option).selected {
+        background: var(--sk-soft);
+        color: var(--sk-blue);
+      }
+      :is(.group-launch-icon, .group-launch-action, .member-avatar, .mention-avatar) {
+        color: var(--sk-blue);
+      }
+      .contact-badge {
+        color: var(--sk-violet);
+      }
+      .contact-badge.dissolved {
+        color: var(--sk-danger);
+      }
+      .thread-tab.active strong {
+        background: var(--sk-paper);
+        color: var(--sk-ink);
+      }
+      :is(
+        .emoji-tab.active,
+        .composer-attach-toggle.active,
+        .composer-emoji-toggle.active,
+        .composer-attach-toggle:not(:disabled):hover,
+        .composer-emoji-toggle:not(:disabled):hover
+      ) {
+        background: var(--sk-action);
+        color: var(--sk-on-action);
+      }
+      .message-row.user .message-bubble,
+      .user-avatar {
+        background: var(--sk-action);
+        color: var(--sk-on-action);
+      }
+      .message-action {
+        color: #fff;
+        background: #142b46;
+      }
+      .message-action:hover,
+      .message-prompt-toggle.active {
+        background: #0864bd;
+      }
+      .message-row.contact .message-bubble,
+      .message-row.system .message-bubble {
+        color: var(--sk-ink);
+        background: var(--sk-paper);
+      }
+      .sticker-prompt-toggle::after {
+        color: var(--sk-ink);
+        background: var(--sk-paper);
+      }
+      .composer-attachment-item button {
+        color: var(--sk-ink);
+        background: var(--sk-soft);
+      }
+    }
+
+    /* Settings had a second, hardcoded light palette that survived midnight mode. */
+    .settings-page {
+      background: var(--sk-soft);
+      color: var(--sk-ink);
+      :is(
+        .settings-quick-stat,
+        .settings-category-heading,
+        .settings-section,
+        .settings-advanced-panel summary,
+        .settings-reset-grid label,
+        .settings-version-grid > div,
+        .combat-feature-card,
+        .combat-pool-card,
+        .npc-skill-pool-option
+      ) {
+        background: var(--sk-paper);
+        color: var(--sk-ink);
+        border-color: var(--sk-line);
+      }
+      :is(
+        .settings-quick-stat strong,
+        .settings-category-heading span,
+        .settings-section-title span,
+        .combat-feature-text strong,
+        .settings-row-label,
+        .settings-changelog-heading span
+      ) {
+        color: var(--sk-ink);
+      }
+      :is(
+        .settings-quick-stat small,
+        .settings-category-heading small,
+        .settings-section-title small,
+        .settings-advanced-panel summary small,
+        .settings-param-help,
+        .settings-help-text,
+        .combat-feature-text small,
+        .settings-changelog-heading small,
+        .settings-changelog-release ul,
+        .settings-changelog-release p,
+        .settings-changelog-empty,
+        .settings-version-grid span
+      ) {
+        color: var(--sk-muted);
+      }
+      :is(.settings-category-heading, .settings-changelog > summary)::after {
+        color: var(--sk-muted);
+      }
+      :is(
+        .settings-version-grid strong,
+        .settings-slider-row strong,
+        .settings-category-title i,
+        .settings-changelog-release-heading strong,
+        .settings-changelog-heading i
+      ) {
+        color: var(--sk-blue);
+      }
+      :is(.settings-category-badge, .settings-changelog-release-heading span) {
+        background: var(--sk-soft);
+        color: var(--sk-violet);
+      }
+      .settings-category-heading .settings-category-badge {
+        color: var(--sk-violet);
+      }
+      .settings-helper.ready {
+        background: var(--sk-soft);
+        color: var(--sk-success);
+      }
+      .cheat-code-status {
+        color: var(--sk-danger);
+      }
+      .cheat-code-status.success {
+        color: var(--sk-success);
+      }
+      .settings-reset-grid label {
+        border-color: var(--sk-line);
+      }
+      .npc-skill-pool-option.selected {
+        background: var(--sk-soft);
+      }
+      .npc-skill-pool-mark {
+        background: var(--sk-soft);
+        color: var(--sk-violet);
+      }
+      .npc-skill-pool-option.selected .npc-skill-pool-check {
+        background: var(--sk-action);
+        color: #fff;
+      }
+      .settings-page-intro {
+        background: #173e56;
+        color: #fff;
+      }
+      .settings-intro-copy h1 {
+        color: #fff;
+      }
+      .settings-intro-copy p,
+      .settings-intro-eyebrow {
+        color: #d4eaf4;
+      }
+      .settings-sync-state {
+        color: #d9fff5;
+        background: #103249;
+      }
+      .wallpaper-preview-status {
+        color: #fff;
+        background: #142b46e6;
+        padding: 4px 6px;
+        border-radius: 5px;
+      }
+    }
+  }
+}
